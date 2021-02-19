@@ -7,18 +7,39 @@ namespace Task_1._1
     {
         static void Main(string[] args)
 		{
+			/* Task 1.1.3 */
+			sumArray(18);
+
 			/* Task 1.1.6 */
-			string[] fonts = new string[] { "bold", "italic", "underline" };
+			/*string[] fonts = new string[] { "bold", "italic", "underline" };
 			List<string> usersChoise = new List<string>() { };
-			fontAdjustment(fonts, usersChoise);
-  
+			fontAdjustment(fonts, usersChoise);*/
+
 			/* Task 1.1.8 */
 			/*float[,,] mainArray = new float[,,] { { { -7, 6, 7 }, { 7, -8, -5.4f } }, { { 6, 14, 8 }, { 12, 0, 9 } }, { { 5, 7, -32f }, { 0, 0, 0 } } };
 			noPositive(mainArray);*/
 		}
 
+		/* Task 1.1.3 */
+		static void sumArray(int count)
+		{
+			string text = "*";
+			string symbol = "**";
+			int consolePositionWidth = Console.WindowWidth / 2;
+			int consolePositionHeight = 0;
+			do
+			{
+				Console.SetCursorPosition(consolePositionWidth-(text.Length/2), consolePositionHeight);
+				Console.WriteLine(text);
+				text += symbol;
+				count--;
+				consolePositionHeight++;
+			}
+			while (count > 0);
+		}
+
 		/*Task 1.1.6 */
-		static void fontAdjustment(string[] array, List<string> usersChoise) 
+		/*static void fontAdjustment(string[] array, List<string> usersChoise) 
 		{
 			Console.WriteLine("Введите: ");
 			showMenu(array);
@@ -36,11 +57,15 @@ namespace Task_1._1
 					usersChoise.RemoveAt(index);
 					showList(usersChoise);
 				}
-
 				fontAdjustment(array, usersChoise);
+			}
+			else 
+			{
+				Console.Write("Ваше значение недопустимо");
 			}
 
 			Console.ReadKey();
+
 		}
 
 		static public void showMenu(string[] array) 
@@ -68,7 +93,7 @@ namespace Task_1._1
 				}
 				Console.WriteLine(text);
 			}
-		}
+		}*/
 
 		/* Task 1.1.8 */
 		/*static void noPositive(float[,,] array)
