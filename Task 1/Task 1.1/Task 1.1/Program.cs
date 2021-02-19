@@ -8,12 +8,16 @@ namespace Task_1._1
         static void Main(string[] args)
 		{
 			/* Task 1.1.3 */
-			sumArray(18);
+			/*sumArray(18);*/
 
 			/* Task 1.1.6 */
 			/*string[] fonts = new string[] { "bold", "italic", "underline" };
 			List<string> usersChoise = new List<string>() { };
 			fontAdjustment(fonts, usersChoise);*/
+
+			/* Task 1.1.7 */
+			int[] mainArray = new int[5];
+			arrayProcessing(mainArray);
 
 			/* Task 1.1.8 */
 			/*float[,,] mainArray = new float[,,] { { { -7, 6, 7 }, { 7, -8, -5.4f } }, { { 6, 14, 8 }, { 12, 0, 9 } }, { { 5, 7, -32f }, { 0, 0, 0 } } };
@@ -21,7 +25,7 @@ namespace Task_1._1
 		}
 
 		/* Task 1.1.3 */
-		static void sumArray(int count)
+		/*static void sumArray(int count)
 		{
 			string text = "*";
 			string symbol = "**";
@@ -36,7 +40,7 @@ namespace Task_1._1
 				consolePositionHeight++;
 			}
 			while (count > 0);
-		}
+		}*/
 
 		/*Task 1.1.6 */
 		/*static void fontAdjustment(string[] array, List<string> usersChoise) 
@@ -94,6 +98,17 @@ namespace Task_1._1
 				Console.WriteLine(text);
 			}
 		}*/
+
+		/* Task 1.1.7 */
+		static void arrayProcessing (int[] array)
+        {
+			Random element = new Random();
+
+			for (int i = 0; i < array.Length; i++) 
+			{
+				array[i] = element.Next();
+			}
+        }
 
 		/* Task 1.1.8 */
 		/*static void noPositive(float[,,] array)
