@@ -22,10 +22,14 @@ namespace Task_1._1
 			/* Task 1.1.8 */
 			/*float[,,] mainArray = new float[,,] { { { -7, 6, 7 }, { 7, -8, -5.4f } }, { { 6, 14, 8 }, { 12, 0, 9 } }, { { 5, 7, -32f }, { 0, 0, 0 } } };
 			noPositive(mainArray);*/
+
+			/* Task 1.1.9 */
+			/*float[] array = new[] { -5, 13, 0, -19, 0, -2.45f, 1.412f, -10, -76.5f };
+			Non_negative_sum(array);*/
 		}
 
-		/* Task 1.1.3 */
-		/*static void sumArray(int count)
+        /* Task 1.1.3 */
+        /*static void sumArray(int count)
 		{
 			string text = "*";
 			string symbol = "**";
@@ -42,8 +46,8 @@ namespace Task_1._1
 			while (count > 0);
 		}*/
 
-		/*Task 1.1.6 */
-		/*static void fontAdjustment(string[] array, List<string> usersChoise) 
+        /*Task 1.1.6 */
+        /*static void fontAdjustment(string[] array, List<string> usersChoise) 
 		{
 			Console.WriteLine("Введите: ");
 			showMenu(array);
@@ -99,8 +103,8 @@ namespace Task_1._1
 			}
 		}*/
 
-		/* Task 1.1.7 */
-		/*static void arrayProcessing(int[] array)
+        /* Task 1.1.7 */
+        /*static void arrayProcessing(int[] array)
 		{
 			Random element = new Random();
 
@@ -172,8 +176,8 @@ namespace Task_1._1
 			return min;
 		}*/
 
-		/* Task 1.1.8 */
-		/*static void noPositive(float[,,] array)
+        /* Task 1.1.8 */
+        /*static void noPositive(float[,,] array)
 		{
 			for (int i = 0; i <= array.GetUpperBound(0); i++)
 			{
@@ -198,5 +202,22 @@ namespace Task_1._1
 
 			Console.ReadKey();
 		}*/
+
+        /* Task 1.1.9 */
+        /*static void Non_negative_sum(float[] array)
+        {
+            float sum = 0;
+            foreach (float elem in array)
+            {
+                if (elem > 0)
+                {
+                    sum += elem;
+                }
+            }
+
+            Console.Write("Сумма всех неотрицательных элементов вмассиве равна - " + sum);
+
+			Console.ReadKey();
+        }*/
 	}
 }
