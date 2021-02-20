@@ -8,7 +8,18 @@ namespace Task_1._1
         static void Main(string[] args)
 		{
 			/* Task 1.1.3 */
-			/*sumArray(18);*/
+			/*anotherTriangle(12);*/
+
+			/* Task 1.1.4 */
+			int count = 1;
+			string result = "";
+			int height = 0;
+			while (count < 8)
+            {
+				height = xmasTree(count, height);
+				count++;
+			}
+			Console.ReadKey();
 
 			/* Task 1.1.6 */
 			/*string[] fonts = new string[] { "bold", "italic", "underline" };
@@ -28,14 +39,14 @@ namespace Task_1._1
 			Non_negative_sum(array);*/
 		}
 
-        /* Task 1.1.3 */
-        /*static void sumArray(int count)
+		/* Task 1.1.3 */
+		/*static void anotherTriangle(int count)
 		{
 			string text = "*";
 			string symbol = "**";
 			int consolePositionWidth = Console.WindowWidth / 2;
 			int consolePositionHeight = 0;
-			do
+			while (count > 0)
 			{
 				Console.SetCursorPosition(consolePositionWidth-(text.Length/2), consolePositionHeight);
 				Console.WriteLine(text);
@@ -43,11 +54,28 @@ namespace Task_1._1
 				count--;
 				consolePositionHeight++;
 			}
-			while (count > 0);
 		}*/
 
-        /*Task 1.1.6 */
-        /*static void fontAdjustment(string[] array, List<string> usersChoise) 
+		/* Task 1.1.4 */
+		static int xmasTree(int count, int consolePositionHeight)
+        {
+			string text = "*";
+			string symbol = "**";
+			int consolePositionWidth = Console.WindowWidth / 2;
+			while (count > 0)
+            {
+				Console.SetCursorPosition(consolePositionWidth - (text.Length / 2), consolePositionHeight);
+				Console.WriteLine(text);
+				text += symbol;
+				count--;
+				consolePositionHeight++;
+			}
+
+			return consolePositionHeight;
+		}
+
+		/*Task 1.1.6 */
+		/*static void fontAdjustment(string[] array, List<string> usersChoise) 
 		{
 			Console.WriteLine("Введите: ");
 			showMenu(array);
@@ -67,13 +95,10 @@ namespace Task_1._1
 				}
 				fontAdjustment(array, usersChoise);
 			}
-			else 
+			else if (chosenNumber < 1 && chosenNumber > array.Length)
 			{
-				Console.Write("Ваше значение недопустимо");
+				Console.WriteLine("Ваше значение недопустимо");
 			}
-
-			Console.ReadKey();
-
 		}
 
 		static public void showMenu(string[] array) 
@@ -97,14 +122,14 @@ namespace Task_1._1
 			{
 				for (int i = 0; i < usersChoise.Count; i++)
                 {
-					text = text + usersChoise[i] + ", ";
+					text = text + usersChoise[i] + " ";
 				}
 				Console.WriteLine(text);
 			}
 		}*/
 
-        /* Task 1.1.7 */
-        /*static void arrayProcessing(int[] array)
+		/* Task 1.1.7 */
+		/*static void arrayProcessing(int[] array)
 		{
 			Random element = new Random();
 
@@ -176,8 +201,8 @@ namespace Task_1._1
 			return min;
 		}*/
 
-        /* Task 1.1.8 */
-        /*static void noPositive(float[,,] array)
+		/* Task 1.1.8 */
+		/*static void noPositive(float[,,] array)
 		{
 			for (int i = 0; i <= array.GetUpperBound(0); i++)
 			{
@@ -203,8 +228,8 @@ namespace Task_1._1
 			Console.ReadKey();
 		}*/
 
-        /* Task 1.1.9 */
-        /*static void Non_negative_sum(float[] array)
+		/* Task 1.1.9 */
+		/*static void Non_negative_sum(float[] array)
         {
             float sum = 0;
             foreach (float elem in array)
