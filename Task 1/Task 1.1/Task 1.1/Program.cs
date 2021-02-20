@@ -16,8 +16,8 @@ namespace Task_1._1
 			fontAdjustment(fonts, usersChoise);*/
 
 			/* Task 1.1.7 */
-			int[] mainArray = new int[5];
-			arrayProcessing(mainArray);
+			/*int[] mainArray = new int[7];
+			arrayProcessing(mainArray);*/
 
 			/* Task 1.1.8 */
 			/*float[,,] mainArray = new float[,,] { { { -7, 6, 7 }, { 7, -8, -5.4f } }, { { 6, 14, 8 }, { 12, 0, 9 } }, { { 5, 7, -32f }, { 0, 0, 0 } } };
@@ -100,15 +100,77 @@ namespace Task_1._1
 		}*/
 
 		/* Task 1.1.7 */
-		static void arrayProcessing (int[] array)
-        {
+		/*static void arrayProcessing(int[] array)
+		{
 			Random element = new Random();
 
-			for (int i = 0; i < array.Length; i++) 
+			for (int i = 0; i < array.Length; i++)
 			{
-				array[i] = element.Next();
+				array[i] = element.Next(1, 1000);
 			}
+
+			Console.WriteLine("Максимальное значение массива равно: " + findArrayMax(array));
+			Console.WriteLine("Минимальное значение массива равно: " + findArrayMin(array));
+
+			sortArrayIncrease(array);
+
+			Console.WriteLine("Отсортированный по возрастанию массив выглядит следующим образом: ");
+			foreach (int elem in array)
+            {
+				Console.Write(elem + " ");
+			}
+
+			Console.ReadKey();
         }
+
+		public static int[] sortArrayIncrease (int[] array)
+        {
+			for (int i = 0; i < array.Length - 1; i++)
+			{
+				int min = array[i];
+
+				for (int j = i + 1; j < array.Length; j++)
+				{
+					if (array[j] < array[i])
+					{
+						array[i] = array[j];
+						array[j] = min;
+					}
+				}
+			}
+
+			return array;
+		}
+
+		public static int findArrayMax(int[] array)
+        {
+			int max = array[0];
+
+			for (int i = 1; i < array.Length; i++)
+            {
+				if (array[i] > max)
+				{
+					max = array[i];
+				}
+			}
+
+			return max;
+		}
+
+		public static int findArrayMin(int[] array)
+		{
+			int min = array[0];
+
+			for (int i = 1; i < array.Length; i++)
+			{
+				if (array[i] < min)
+				{
+					min = array[i];
+				}
+			}
+
+			return min;
+		}*/
 
 		/* Task 1.1.8 */
 		/*static void noPositive(float[,,] array)
