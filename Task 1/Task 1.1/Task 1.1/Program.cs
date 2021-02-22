@@ -8,18 +8,10 @@ namespace Task_1._1
         static void Main(string[] args)
 		{
 			/* Task 1.1.3 */
-			/*anotherTriangle(12);*/
+			/*anotherTriangle(40);*/
 
 			/* Task 1.1.4 */
-			int count = 1;
-			string result = "";
-			int height = 0;
-			while (count < 8)
-            {
-				height = xmasTree(count, height);
-				count++;
-			}
-			Console.ReadKey();
+			/*xmasTree(19);*/
 
 			/* Task 1.1.6 */
 			/*string[] fonts = new string[] { "bold", "italic", "underline" };
@@ -54,10 +46,43 @@ namespace Task_1._1
 				count--;
 				consolePositionHeight++;
 			}
+
+			Console.ReadKey();
+		}*/
+
+		/* Task 1.1.3 (alternative) */
+
+		/*static void anotherTriangle(int count)
+		{
+			string text = "*";
+			string symbol = "**";
+			char padLeft = ' ';
+			int countSymbols = 1;
+			while (count > 0)
+			{
+				Console.WriteLine(text.PadLeft(count + countSymbols, padLeft));
+				text += symbol;
+                count--;
+				countSymbols += 2;
+			}
+
+			Console.ReadKey();
 		}*/
 
 		/* Task 1.1.4 */
-		static int xmasTree(int count, int consolePositionHeight)
+		/*static void xmasTree (int lines)
+        {
+			int count = 1;
+			int height = 0;
+			while (count <= lines)
+			{
+				height = drawTree(count, height);
+				count++;
+			}
+			Console.ReadKey();
+		}
+
+		static int drawTree(int count, int consolePositionHeight)
         {
 			string text = "*";
 			string symbol = "**";
@@ -72,7 +97,7 @@ namespace Task_1._1
 			}
 
 			return consolePositionHeight;
-		}
+		}*/
 
 		/*Task 1.1.6 */
 		/*static void fontAdjustment(string[] array, List<string> usersChoise) 
