@@ -7,11 +7,17 @@ namespace Task_1._1
     {
         static void Main(string[] args)
 		{
+			/*Task 1.1.2 */
+			/*Triangle(25);*/
+
 			/* Task 1.1.3 */
 			/*anotherTriangle(40);*/
 
 			/* Task 1.1.4 */
 			/*xmasTree(19);*/
+
+			/* Task 1.1.5 */
+			/*sumOfNumbers(700);*/
 
 			/* Task 1.1.6 */
 			/*string[] fonts = new string[] { "bold", "italic", "underline" };
@@ -30,6 +36,19 @@ namespace Task_1._1
 			/*float[] array = new[] { -5, 13, 0, -19, 0, -2.45f, 1.412f, -10, -76.5f };
 			Non_negative_sum(array);*/
 		}
+
+		/* Task 1.1.2 */
+		/*static void Triangle(int count) 
+		{
+			string text = "*";
+			char symbol = '*';
+			while (count > 0)
+            {
+				Console.WriteLine(text);
+				text += symbol;
+				count--;
+			}
+		}*/
 
 		/* Task 1.1.3 */
 		/*static void anotherTriangle(int count)
@@ -51,7 +70,6 @@ namespace Task_1._1
 		}*/
 
 		/* Task 1.1.3 (alternative) */
-
 		/*static void anotherTriangle(int count)
 		{
 			string text = "*";
@@ -97,6 +115,24 @@ namespace Task_1._1
 			}
 
 			return consolePositionHeight;
+		}*/
+
+		/* Task 1.1.5 */
+		/*static void sumOfNumbers(int number)
+		{
+			int sum = 0;
+			int count = 1;
+			while (count < number)
+			{
+				if (count % 3 == 0 || count % 5 == 0)
+				{
+					sum += count;
+				}
+				count++;
+			}
+
+			Console.WriteLine("Сумма чисел будет равна: " + sum);
+			Console.ReadKey();
 		}*/
 
 		/*Task 1.1.6 */
