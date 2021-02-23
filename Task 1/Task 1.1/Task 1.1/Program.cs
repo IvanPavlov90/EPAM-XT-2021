@@ -7,6 +7,13 @@ namespace Task_1._1
 	{
 		static void Main(string[] args)
 		{
+			/* Task 1.1.1 */
+			Console.WriteLine("Введеите ширину прямоугольника: ");
+			string a = Console.ReadLine();
+			Console.WriteLine("Введеите высоту прямоугольника: ");
+			string b = Console.ReadLine();
+			rectangle(a, b);
+
 			/*Task 1.1.2 */
 			/*Triangle(25);*/
 
@@ -22,6 +29,7 @@ namespace Task_1._1
 			/* Task 1.1.6 */
 			/*string[] fonts = new string[] { "bold", "italic", "underline" };
 			List<string> usersChoise = new List<string>() { };
+			showList(usersChoise);
 			fontAdjustment(fonts, usersChoise);*/
 
 			/* Task 1.1.7 */
@@ -40,6 +48,21 @@ namespace Task_1._1
 			/*int[,] array = new int[,] { { 1, 5, 7, 8 }, { -5, 6, 8, 0 }, { 15, 4, 10, -124} };
 			sumArray(array);*/
 		}
+
+		/* Task 1.1.1 */
+		static void rectangle (string width, string height)
+        {
+			int a = Convert.ToInt32(width);
+			int b = Convert.ToInt32(height);
+			if (a <= 0 || b <= 0) 
+			{
+				Console.WriteLine("Введеные Вами значения некорректны (должны быть больше 0).");
+				Console.ReadKey();
+			} else
+            {
+				Console.WriteLine("Площадь прямоугольника равна - " + a * b);
+			}
+        }
 
 		/* Task 1.1.2 */
 		/*static void Triangle(int count) 
