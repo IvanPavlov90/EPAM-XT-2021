@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Task_1._1
 {
-    class Program
-    {
-        static void Main(string[] args)
+	class Program
+	{
+		static void Main(string[] args)
 		{
 			/*Task 1.1.2 */
 			/*Triangle(25);*/
@@ -35,6 +35,10 @@ namespace Task_1._1
 			/* Task 1.1.9 */
 			/*float[] array = new[] { -5, 13, 0, -19, 0, -2.45f, 1.412f, -10, -76.5f };
 			Non_negative_sum(array);*/
+
+			/*Task 1.1.10 */
+			/*int[,] array = new int[,] { { 1, 5, 7, 8 }, { -5, 6, 8, 0 }, { 15, 4, 10, -124} };
+			sumArray(array);*/
 		}
 
 		/* Task 1.1.2 */
@@ -305,5 +309,25 @@ namespace Task_1._1
 
 			Console.ReadKey();
         }*/
+
+		/* Task 1.1.10 */
+		/*static void sumArray(int[,] array)
+		{
+			int sum = 0;
+			for (int i = 0; i <= array.GetUpperBound(0); i++)
+			{
+				for (int j = 0; j <= array.GetUpperBound(1); j++)
+				{
+					if ((i != 0 || j != 0) && (i + j) % 2 == 0)
+					{
+						sum += array[i, j];
+					}
+				}
+			}
+
+			Console.WriteLine("Сумма чисел, стоящих на четных позициях равна - " + sum);
+
+			Console.ReadKey();
+		}*/
 	}
 }
