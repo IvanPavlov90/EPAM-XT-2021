@@ -12,7 +12,7 @@ namespace Task_1._1
 			string a = Console.ReadLine();
 			Console.WriteLine("Введеите высоту прямоугольника: ");
 			string b = Console.ReadLine();
-			rectangle(a, b);
+			Rectangle(a, b);
 
 			/*Task 1.1.2 */
 			/*Triangle(25);*/
@@ -50,17 +50,18 @@ namespace Task_1._1
 		}
 
 		/* Task 1.1.1 */
-		static void rectangle (string width, string height)
+		static void Rectangle (string width, string heigth)
         {
-			int a = Convert.ToInt32(width);
-			int b = Convert.ToInt32(height);
-			if (a <= 0 || b <= 0) 
+			int rectangleWidth, rectangleHeigth;
+			Int32.TryParse(width, out rectangleWidth);
+			Int32.TryParse(heigth, out rectangleHeigth);
+			if (rectangleWidth <= 0 || rectangleHeigth <= 0) 
 			{
 				Console.WriteLine("Введеные Вами значения некорректны (должны быть больше 0).");
 				Console.ReadKey();
 			} else
             {
-				Console.WriteLine("Площадь прямоугольника равна - " + a * b);
+				Console.WriteLine("Площадь прямоугольника равна - " + rectangleWidth * rectangleHeigth);
 			}
         }
 
