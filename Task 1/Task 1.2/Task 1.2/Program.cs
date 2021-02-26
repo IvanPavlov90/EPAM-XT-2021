@@ -13,66 +13,114 @@ namespace Task_1._2
             //Averages(text);
 
             /* Task 1.2.2 */
-            Console.WriteLine("Введите Вашу строку: ");
-            string firstPhrase = Console.ReadLine();
-            Console.WriteLine("Введите строку для дублирования: ");
-            string secondPhrase = Console.ReadLine();
-            Doubler(ref firstPhrase, secondPhrase);
+            //Console.WriteLine("Введите Вашу строку: ");
+            //string firstPhrase = Console.ReadLine();
+            //Console.WriteLine("Введите строку для дублирования: ");
+            //string secondPhrase = Console.ReadLine();
+            //Doubler(ref firstPhrase, secondPhrase);
+
+            /* Task 1.2.3 */
+            //Console.WriteLine("Please enter you text here:");
+            //string text = Console.ReadLine();
+            //Lowercase(text);
+
+            /* Task 1.2.4 */
+            Console.WriteLine("Please enter you text here:");
+            string text = Console.ReadLine();
+            Validator(text);
         }
 
         /* Task 1.2.1 */
-        //static void Averages (string text)
+        //static void Averages(string text)
         //{
-        //    char[] charSeparators = new char[] { ' ', ',', ':', '-', ';', '?', '.', '!' };
-        //    string[] array;
+        //    char[] charSeparators = new char[] { ' ', ',', ':', '-', ';', '?', '.', '!', '(', ')', '[', ']' };
+        //    string[] array = text.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
         //    float sumLetters = 0;
-        //    float stringsAreNotWhiteSpaces = 0;
-        //    array = text.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
+        //    float sumWords = 0;
 
         //    foreach (string elem in array)
         //    {
         //        sumLetters += elem.Length;
-        //        stringsAreNotWhiteSpaces++;
+        //        sumWords++;
         //        Console.WriteLine(elem);
         //    }
 
-        //    float result = sumLetters/stringsAreNotWhiteSpaces;
+        //    float result = sumLetters / sumWords;
         //    //Округление до целого числа
-        //    Console.WriteLine($"{result}, {sumLetters}, {stringsAreNotWhiteSpaces}");
         //    Console.WriteLine(Math.Round(result));
         //    Console.ReadKey();
         //}
 
         /* Task 1.2.2 */
-        static void Doubler(ref string firstPhrase, string secondPhrase)
+        //static void Doubler(ref string firstPhrase, string secondPhrase)
+        //{
+        //    char[] charSecondPhrase = secondPhrase.ToCharArray();
+        //    DeleteDoubles(charSecondPhrase);
+
+        //    foreach (char elem in charSecondPhrase)
+        //    {
+        //        string forReplacing = elem.ToString() + elem.ToString();
+        //        firstPhrase = firstPhrase.Replace(elem.ToString(), forReplacing);
+        //    }
+
+        //    Console.WriteLine(firstPhrase);
+        //}
+
+        //public static char[] DeleteDoubles (char[] charSecondPhrase)
+        //{
+        //    for (int firstCount = 0; firstCount < charSecondPhrase.Length - 1; firstCount++)
+        //    {
+        //        for (int secondCount = firstCount + 1; secondCount < charSecondPhrase.Length; secondCount++)
+        //        {
+        //            if (charSecondPhrase[firstCount] == charSecondPhrase[secondCount])
+        //            {
+        //                Array.Clear(charSecondPhrase, secondCount, 1);
+        //            }
+
+        //        }
+        //    }
+
+        //    return charSecondPhrase;
+        //}
+
+        /* Task 1.2.3 */
+        //static void Lowercase(string text)
+        //{
+        //    char[] charSeparators = new char[] {' ', ',', ':', '-', ';', '?', '.', '!', '(', ')', '[', ']'};
+        //    string[] array = text.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);;
+        //    int sumWords = 0;
+
+        //    foreach (string elem in array)
+        //    {
+        //        char[] letters = elem.ToCharArray();
+        //        if (Char.IsLower(letters[0])) sumWords++;
+        //    }
+
+        //    Console.WriteLine($"{sumWords}");
+        //    Console.ReadKey();
+        //}
+
+        /* Task 1.2.4 */
+        static void Validator(string text)
         {
-            char[] charSecondPhrase = secondPhrase.ToCharArray();
-            DeleteDoubles(charSecondPhrase);
+            char[] charSeparators = new char[] {'?', '.', '!'};
+            string[] array = text.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (char elem in charSecondPhrase)
+            for (int count = 0; count < array.Length; count++)
             {
-                string forReplacing = elem.ToString() + elem.ToString();
-                firstPhrase = firstPhrase.Replace(elem.ToString(), forReplacing);
-            }
-
-            Console.WriteLine(firstPhrase);
-        }
-
-        public static char[] DeleteDoubles (char[] charSecondPhrase)
-        {
-            for (int firstCount = 0; firstCount < charSecondPhrase.Length - 1; firstCount++)
-            {
-                for (int secondCount = firstCount + 1; secondCount < charSecondPhrase.Length; secondCount++)
+                int i = 0;
+                while (String.IsNullOrWhiteSpace(array[count][i].ToString())) 
                 {
-                    if (charSecondPhrase[firstCount] == charSecondPhrase[secondCount])
-                    {
-                        Array.Clear(charSecondPhrase, secondCount, 1);
-                    }
-
+                    i++;
                 }
+                Type myType = array[count][i].GetType();
+                char forReplacing = Char.ToUpper(array[count][i]);
+                //array[count][i] = array[count][i].Replace(array[count][i], forReplacing));
+                Console.WriteLine($"{myType}, {array[count]}, {i}");
             }
 
-            return charSecondPhrase;
+            Console.ReadKey();
         }
+
     }
 }
