@@ -8,9 +8,9 @@ namespace Task_1._2
         static void Main(string[] args)
         {
             /* Task 1.2.1 */
-            //Console.WriteLine("Please enter you text here:");
-            //string text = Console.ReadLine();
-            //Averages(text);
+            Console.WriteLine("Please enter you text here:");
+            string text = Console.ReadLine();
+            Averages(text);
 
             /* Task 1.2.2 */
             //Console.WriteLine("Введите Вашу строку: ");
@@ -25,31 +25,63 @@ namespace Task_1._2
             //Lowercase(text);
 
             /* Task 1.2.4 */
-            Console.WriteLine("Please enter you text here:");
-            string text = Console.ReadLine();
-            Validator(text);
+            //Console.WriteLine("Please enter you text here:");
+            //string text = Console.ReadLine();
+            //Validator(text);
         }
 
         /* Task 1.2.1 */
-        //static void Averages(string text)
-        //{
-        //    char[] charSeparators = new char[] { ' ', ',', ':', '-', ';', '?', '.', '!', '(', ')', '[', ']' };
-        //    string[] array = text.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
-        //    float sumLetters = 0;
-        //    float sumWords = 0;
+        static void Averages(string text)
+        {
+            char[] charSeparators = GetArrayOfSeparators(text);
+            string[] array = text.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
+            float sumLetters = 0;
+            float sumWords = 0;
 
-        //    foreach (string elem in array)
-        //    {
-        //        sumLetters += elem.Length;
-        //        sumWords++;
-        //        Console.WriteLine(elem);
-        //    }
+            foreach (string elem in array)
+            {
+                sumLetters += elem.Length;
+                sumWords++;
+                Console.WriteLine(elem);
+            }
 
-        //    float result = sumLetters / sumWords;
-        //    //Округление до целого числа
-        //    Console.WriteLine(Math.Round(result));
-        //    Console.ReadKey();
-        //}
+            float result = sumLetters / sumWords;
+            //Округление до целого числа
+            Console.WriteLine($"{sumLetters}, {sumWords}, {result}");
+            Console.WriteLine(Math.Round(result));
+            Console.ReadKey();
+        }
+
+        static int FindNumberOfSeparators(string text) 
+        {
+            int countSeparators = 1;
+
+            foreach (char elem in text)
+            {
+                if (!Char.IsLetterOrDigit(elem) && !Char.IsWhiteSpace(elem)) countSeparators++;
+            }
+
+            return countSeparators;
+        }
+
+        static char[] GetArrayOfSeparators(string text)
+        {
+            char[] Separators = new char[FindNumberOfSeparators(text)];
+            int i = 0;
+
+            foreach (char elem in text)
+            {
+                if (!Char.IsLetterOrDigit(elem) && !Char.IsWhiteSpace(elem)) 
+                {
+                    Separators[i] = elem;
+                    i++;
+                }
+            }
+
+            Separators[i] = ' ';
+
+            return Separators;
+        }
 
         /* Task 1.2.2 */
         //static void Doubler(ref string firstPhrase, string secondPhrase)
@@ -101,26 +133,26 @@ namespace Task_1._2
         //}
 
         /* Task 1.2.4 */
-        static void Validator(string text)
-        {
-            char[] charSeparators = new char[] {'?', '.', '!'};
-            string[] array = text.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
+        //static void Validator(string text)
+        //{
+        //    char[] charSeparators = new char[] {'?', '.', '!'};
+        //    string[] array = text.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
 
-            for (int count = 0; count < array.Length; count++)
-            {
-                int i = 0;
-                while (String.IsNullOrWhiteSpace(array[count][i].ToString())) 
-                {
-                    i++;
-                }
-                Type myType = array[count][i].GetType();
-                char forReplacing = Char.ToUpper(array[count][i]);
-                //array[count][i] = array[count][i].Replace(array[count][i], forReplacing));
-                Console.WriteLine($"{myType}, {array[count]}, {i}");
-            }
+        //    for (int count = 0; count < array.Length; count++)
+        //    {
+        //        int i = 0;
+        //        while (String.IsNullOrWhiteSpace(array[count][i].ToString())) 
+        //        {
+        //            i++;
+        //        }
+        //        Type myType = array[count][i].GetType();
+        //        char forReplacing = Char.ToUpper(array[count][i]);
+        //        //array[count][i] = array[count][i].Replace(array[count][i], forReplacing));
+        //        Console.WriteLine($"{myType}, {array[count]}, {i}");
+        //    }
 
-            Console.ReadKey();
-        }
+        //    Console.ReadKey();
+        //}
 
     }
 }
