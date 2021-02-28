@@ -20,14 +20,14 @@ namespace Task_1._2
             //Doubler(ref firstPhrase, secondPhrase);
 
             /* Task 1.2.3 */
-            Console.WriteLine("Please enter you text here:");
-            string text = Console.ReadLine();
-            Lowercase(text);
-
-            /* Task 1.2.4 */
             //Console.WriteLine("Please enter you text here:");
             //string text = Console.ReadLine();
-            //Validator(text);
+            //Lowercase(text);
+
+            /* Task 1.2.4 */
+            Console.WriteLine("Please enter you text here:");
+            string text = Console.ReadLine();
+            Validator(text);
         }
 
         /* Task 1.2.1 */
@@ -116,25 +116,90 @@ namespace Task_1._2
         //}
 
         /* Task 1.2.3 */
-        static void Lowercase(string text)
-        {
-            char[] Separators = GetArrayOfSeparators(text);
-            string[] array = text.Split(Separators, StringSplitOptions.RemoveEmptyEntries);
-            int sumWords = 0;
+        //static void Lowercase(string text)
+        //{
+        //    char[] Separators = GetArrayOfSeparators(text);
+        //    string[] array = text.Split(Separators, StringSplitOptions.RemoveEmptyEntries);
+        //    int sumWords = 0;
 
-            foreach (string elem in array)
+        //    foreach (string elem in array)
+        //    {
+        //        char[] letters = elem.ToCharArray();
+        //        if (Char.IsLower(letters[0])) sumWords++;
+        //    }
+
+        //    Console.WriteLine($"{sumWords}");
+        //    Console.ReadKey();
+        //}
+
+        //static int FindNumberOfSeparators(string text)
+        //{
+        //    int countSeparators = 1;
+
+        //    foreach (char elem in text)
+        //    {
+        //        if (!Char.IsLetterOrDigit(elem) && !Char.IsWhiteSpace(elem)) countSeparators++;
+        //    }
+
+        //    return countSeparators;
+        //}
+
+        //static char[] GetArrayOfSeparators(string text)
+        //{
+        //    char[] Separators = new char[FindNumberOfSeparators(text)];
+        //    int i = 0;
+
+        //    foreach (char elem in text)
+        //    {
+        //        if (!Char.IsLetterOrDigit(elem) && !Char.IsWhiteSpace(elem))
+        //        {
+        //            Separators[i] = elem;
+        //            i++;
+        //        }
+        //    }
+
+        //    Separators[i] = ' ';
+
+        //    return Separators;
+        //}
+
+        /* Task 1.2.4 */
+        static void Validator(string text)
+        {
+            char[] charSeparators = GetArrayOfSeparators(text);
+            string[] array = text.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
+            string result = "";
+
+            for (int count = 0; count < array.Length; count++)
             {
-                char[] letters = elem.ToCharArray();
-                if (Char.IsLower(letters[0])) sumWords++;
+                result += ChangeSymbols(array[count]) + charSeparators[count];
             }
 
-            Console.WriteLine($"{sumWords}");
+            Console.WriteLine(result);
             Console.ReadKey();
         }
 
+        static string ChangeSymbols(string text)
+        {
+            char[] symbols = text.ToCharArray();
+
+            int i = 0;
+            while (!Char.IsLetterOrDigit(symbols[i]))
+            {
+                i++;
+            }
+
+            symbols[i] = Char.ToUpper(symbols[i]);
+
+            string output = new string(symbols);
+
+            return output;
+        }
+
+
         static int FindNumberOfSeparators(string text)
         {
-            int countSeparators = 1;
+            int countSeparators = 0;
 
             foreach (char elem in text)
             {
@@ -151,39 +216,14 @@ namespace Task_1._2
 
             foreach (char elem in text)
             {
-                if (!Char.IsLetterOrDigit(elem) && !Char.IsWhiteSpace(elem))
+                if (!Char.IsLetterOrDigit(elem) && !Char.IsWhiteSpace(elem) && (elem == '.' || elem == '?' || elem == '!'))
                 {
                     Separators[i] = elem;
                     i++;
                 }
             }
 
-            Separators[i] = ' ';
-
             return Separators;
         }
-
-        /* Task 1.2.4 */
-        //static void Validator(string text)
-        //{
-        //    char[] charSeparators = new char[] {'?', '.', '!'};
-        //    string[] array = text.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
-
-        //    for (int count = 0; count < array.Length; count++)
-        //    {
-        //        int i = 0;
-        //        while (String.IsNullOrWhiteSpace(array[count][i].ToString())) 
-        //        {
-        //            i++;
-        //        }
-        //        Type myType = array[count][i].GetType();
-        //        char forReplacing = Char.ToUpper(array[count][i]);
-        //        //array[count][i] = array[count][i].Replace(array[count][i], forReplacing));
-        //        Console.WriteLine($"{myType}, {array[count]}, {i}");
-        //    }
-
-        //    Console.ReadKey();
-        //}
-
     }
 }
