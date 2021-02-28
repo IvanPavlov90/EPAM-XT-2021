@@ -167,14 +167,22 @@ namespace Task_1._2
         static void Validator(string text)
         {
             char[] charSeparators = GetArrayOfSeparators(text);
-            string[] array = text.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
             string result = "";
-
-            for (int count = 0; count < array.Length; count++)
+            switch (charSeparators.Length) 
             {
-                result += ChangeSymbols(array[count]) + charSeparators[count];
-            }
+                case 0:
+                    result += ChangeSymbols(text);
+                    break;
+                default:
+                    string[] array = text.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
 
+                    for (int count = 0; count < array.Length; count++)
+                    {
+                        result += ChangeSymbols(array[count]) + charSeparators[count];
+                    }
+                    break;
+            }
+            
             Console.WriteLine(result);
             Console.ReadKey();
         }
