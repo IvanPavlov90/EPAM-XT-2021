@@ -211,7 +211,7 @@ namespace Task_1._2
 
             foreach (char elem in text)
             {
-                if (!Char.IsLetterOrDigit(elem) && !Char.IsWhiteSpace(elem)) countSeparators++;
+                if (!Char.IsLetterOrDigit(elem) && !Char.IsWhiteSpace(elem) && (elem == '.' || elem == '?' || elem == '!')) countSeparators++;
             }
 
             return countSeparators;

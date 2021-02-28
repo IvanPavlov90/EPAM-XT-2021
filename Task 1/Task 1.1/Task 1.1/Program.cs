@@ -7,143 +7,151 @@ namespace Task_1._1
 	{
 		static void Main(string[] args)
 		{
-			/* Task 1.1.1 */
-			Console.WriteLine("Введеите ширину прямоугольника: ");
-			string a = Console.ReadLine();
-			Console.WriteLine("Введеите высоту прямоугольника: ");
-			string b = Console.ReadLine();
-			Rectangle(a, b);
+            /* Task 1.1.1 */
+            //Console.WriteLine("Введеите ширину прямоугольника: ");
+            //string a = Console.ReadLine();
+            //Console.WriteLine("Введеите высоту прямоугольника: ");
+            //string b = Console.ReadLine();
+            //Rectangle(a, b);
 
-			/*Task 1.1.2 */
-			/*Triangle(25);*/
+            /*Task 1.1.2 */
+            //Triangle(25);
 
-			/* Task 1.1.3 */
-			/*anotherTriangle(40);*/
+            /* Task 1.1.3 */
+            //Console.WriteLine("Введеите количество строк: ");
+            //string lines = Console.ReadLine();
+            //int numberOfLines;
+            //Int32.TryParse(lines, out numberOfLines);
+            //AnotherTriangle(numberOfLines);
 
-			/* Task 1.1.4 */
-			/*xmasTree(19);*/
+            /* Task 1.1.4 */
+            //Console.WriteLine("Введеите количество ёлочек: ");
+            //string lines = Console.ReadLine();
+            //int numberOfTrees;
+            //Int32.TryParse(lines, out numberOfTrees);
+            //XmasTree(numberOfTrees);
 
-			/* Task 1.1.5 */
-			/*sumOfNumbers(700);*/
+            /* Task 1.1.5 */
+            /*sumOfNumbers(700);*/
 
-			/* Task 1.1.6 */
-			/*string[] fonts = new string[] { "bold", "italic", "underline" };
+            /* Task 1.1.6 */
+            /*string[] fonts = new string[] { "bold", "italic", "underline" };
 			List<string> usersChoise = new List<string>() { };
 			showList(usersChoise);
 			fontAdjustment(fonts, usersChoise);*/
 
-			/* Task 1.1.7 */
-			/*int[] mainArray = new int[7];
+            /* Task 1.1.7 */
+            /*int[] mainArray = new int[7];
 			arrayProcessing(mainArray);*/
 
-			/* Task 1.1.8 */
-			/*float[,,] mainArray = new float[,,] { { { -7, 6, 7 }, { 7, -8, -5.4f } }, { { 6, 14, 8 }, { 12, 0, 9 } }, { { 5, 7, -32f }, { 0, 0, 0 } } };
+            /* Task 1.1.8 */
+            /*float[,,] mainArray = new float[,,] { { { -7, 6, 7 }, { 7, -8, -5.4f } }, { { 6, 14, 8 }, { 12, 0, 9 } }, { { 5, 7, -32f }, { 0, 0, 0 } } };
 			noPositive(mainArray);*/
 
-			/* Task 1.1.9 */
-			/*float[] array = new[] { -5, 13, 0, -19, 0, -2.45f, 1.412f, -10, -76.5f };
+            /* Task 1.1.9 */
+            /*float[] array = new[] { -5, 13, 0, -19, 0, -2.45f, 1.412f, -10, -76.5f };
 			Non_negative_sum(array);*/
 
-			/*Task 1.1.10 */
-			/*int[,] array = new int[,] { { 1, 5, 7, 8 }, { -5, 6, 8, 0 }, { 15, 4, 10, -124} };
+            /*Task 1.1.10 */
+            /*int[,] array = new int[,] { { 1, 5, 7, 8 }, { -5, 6, 8, 0 }, { 15, 4, 10, -124} };
 			sumArray(array);*/
-		}
-
-		/* Task 1.1.1 */
-		static void Rectangle (string width, string heigth)
-        {
-			int rectangleWidth, rectangleHeigth;
-			Int32.TryParse(width, out rectangleWidth);
-			Int32.TryParse(heigth, out rectangleHeigth);
-			if (rectangleWidth <= 0 || rectangleHeigth <= 0) 
-			{
-				Console.WriteLine("Введеные Вами значения некорректны (должны быть больше 0).");
-				Console.ReadKey();
-			} else
-            {
-				Console.WriteLine("Площадь прямоугольника равна - " + rectangleWidth * rectangleHeigth);
-			}
         }
 
+		/* Task 1.1.1 */
+		//static void Rectangle (string width, string heigth)
+  //      {
+		//	int rectangleWidth, rectangleHeigth;
+		//	Int32.TryParse(width, out rectangleWidth);
+		//	Int32.TryParse(heigth, out rectangleHeigth);
+		//	if (rectangleWidth <= 0 || rectangleHeigth <= 0) 
+		//	{
+		//		Console.WriteLine("Введеные Вами значения некорректны (должны быть больше 0).");
+		//		Console.ReadKey();
+		//	} else
+  //          {
+		//		Console.WriteLine("Площадь прямоугольника равна - " + rectangleWidth * rectangleHeigth);
+		//	}
+  //      }
+
 		/* Task 1.1.2 */
-		/*static void Triangle(int count) 
-		{
-			string text = "*";
-			char symbol = '*';
-			while (count > 0)
-            {
-				Console.WriteLine(text);
-				text += symbol;
-				count--;
-			}
-		}*/
+		//static void Triangle(int count) 
+		//{
+		//	string text = "*";
+		//	char symbol = '*';
+		//	while (count > 0)
+  //          {
+		//		Console.WriteLine(text);
+		//		text += symbol;
+		//		count--;
+		//	}
+		//}
 
 		/* Task 1.1.3 */
-		/*static void anotherTriangle(int count)
-		{
-			string text = "*";
-			string symbol = "**";
-			int consolePositionWidth = Console.WindowWidth / 2;
-			int consolePositionHeight = 0;
-			while (count > 0)
-			{
-				Console.SetCursorPosition(consolePositionWidth-(text.Length/2), consolePositionHeight);
-				Console.WriteLine(text);
-				text += symbol;
-				count--;
-				consolePositionHeight++;
-			}
+		//static void AnotherTriangle(int count)
+		//{
+		//	string text = "*";
+		//	string symbol = "**";
+		//	int consolePositionWidth = Console.WindowWidth / 2;
+		//	int consolePositionHeight = 2;
+		//	while (count > 0)
+		//	{
+		//		Console.SetCursorPosition(consolePositionWidth-(text.Length/2), consolePositionHeight);
+		//		Console.WriteLine(text);
+		//		text += symbol;
+		//		count--;
+		//		consolePositionHeight++;
+		//	}
 
-			Console.ReadKey();
-		}*/
+		//	Console.ReadKey();
+		//}
 
 		/* Task 1.1.3 (alternative) */
-		/*static void anotherTriangle(int count)
-		{
-			string text = "*";
-			string symbol = "**";
-			char padLeft = ' ';
-			int countSymbols = 1;
-			while (count > 0)
-			{
-				Console.WriteLine(text.PadLeft(count + countSymbols, padLeft));
-				text += symbol;
-                count--;
-				countSymbols += 2;
-			}
+		//static void AnotherTriangle(int count)
+		//{
+		//	string text = "*";
+		//	string symbol = "**";
+		//	char padLeft = ' ';
+		//	int countSymbols = 1;
+		//	while (count > 0)
+		//	{
+		//		Console.WriteLine(text.PadLeft(count + countSymbols, padLeft));
+		//		text += symbol;
+  //              count--;
+		//		countSymbols += 2;
+		//	}
 
-			Console.ReadKey();
-		}*/
+		//	Console.ReadKey();
+		//}
 
 		/* Task 1.1.4 */
-		/*static void xmasTree (int lines)
-        {
-			int count = 1;
-			int height = 0;
-			while (count <= lines)
-			{
-				height = drawTree(count, height);
-				count++;
-			}
-			Console.ReadKey();
-		}
+		//static void XmasTree (int lines)
+  //      {
+		//	int count = 1;
+		//	int height = 2;
+		//	while (count <= lines)
+		//	{
+		//		height = DrawTree(count, height);
+		//		count++;
+		//	}
+		//	Console.ReadKey();
+		//}
 
-		static int drawTree(int count, int consolePositionHeight)
-        {
-			string text = "*";
-			string symbol = "**";
-			int consolePositionWidth = Console.WindowWidth / 2;
-			while (count > 0)
-            {
-				Console.SetCursorPosition(consolePositionWidth - (text.Length / 2), consolePositionHeight);
-				Console.WriteLine(text);
-				text += symbol;
-				count--;
-				consolePositionHeight++;
-			}
+		//static int DrawTree(int count, int consolePositionHeight)
+  //      {
+		//	string text = "*";
+		//	string symbol = "**";
+		//	int consolePositionWidth = Console.WindowWidth / 2;
+		//	while (count > 0)
+  //          {
+		//		Console.SetCursorPosition(consolePositionWidth - (text.Length / 2), consolePositionHeight);
+		//		Console.WriteLine(text);
+		//		text += symbol;
+		//		count--;
+		//		consolePositionHeight++;
+		//	}
 
-			return consolePositionHeight;
-		}*/
+		//	return consolePositionHeight;
+		//}
 
 		/* Task 1.1.5 */
 		/*static void sumOfNumbers(int number)
