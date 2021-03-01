@@ -167,7 +167,7 @@ namespace Task_1._2
         static void Validator(string text)
         {
             char[] charSeparators = GetArrayOfSeparators(text);
-            string result = "";
+            string result = String.Empty;
             switch (charSeparators.Length) 
             {
                 case 0:
@@ -178,7 +178,7 @@ namespace Task_1._2
 
                     for (int count = 0; count < array.Length; count++)
                     {
-                        result += ChangeSymbols(array[count]) + charSeparators[count];
+                        result += ChangeSymbols(array[count]) + charSeparators[count] + ' ';
                     }
                     break;
             }
@@ -189,15 +189,10 @@ namespace Task_1._2
 
         static string ChangeSymbols(string text)
         {
+            text = text.Trim();
             char[] symbols = text.ToCharArray();
 
-            int i = 0;
-            while (!Char.IsLetterOrDigit(symbols[i]))
-            {
-                i++;
-            }
-
-            symbols[i] = Char.ToUpper(symbols[i]);
+            symbols[0] = Char.ToUpper(symbols[0]);
 
             string output = new string(symbols);
 
