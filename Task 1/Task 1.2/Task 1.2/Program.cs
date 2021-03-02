@@ -25,9 +25,9 @@ namespace Task_1._2
             //Lowercase(text);
 
             /* Task 1.2.4 */
-            Console.WriteLine("Please enter you text here:");
-            string text = Console.ReadLine();
-            Validator(text);
+            //Console.WriteLine("Please enter you text here:");
+            //string text = Console.ReadLine();
+            //Validator(text);
         }
 
         /* Task 1.2.1 */
@@ -42,17 +42,16 @@ namespace Task_1._2
         //    {
         //        sumLetters += elem.Length;
         //        sumWords++;
-        //        Console.WriteLine(elem);
         //    }
 
         //    float result = sumLetters / sumWords;
         //    //Округление до целого числа
-        //    Console.WriteLine($"{sumLetters}, {sumWords}, {result}");
-        //    Console.WriteLine(Math.Round(result));
+        //    Console.WriteLine($"Общее количество символов - {sumLetters}, общее количество слов -  {sumWords}, полученный результат - {result}");
+        //    Console.WriteLine($"Результат после окргуления - {Math.Round(result)}");
         //    Console.ReadKey();
         //}
 
-        //static int FindNumberOfSeparators(string text) 
+        //static int FindNumberOfSeparators(string text)
         //{
         //    int countSeparators = 1;
 
@@ -71,7 +70,7 @@ namespace Task_1._2
 
         //    foreach (char elem in text)
         //    {
-        //        if (!Char.IsLetterOrDigit(elem) && !Char.IsWhiteSpace(elem)) 
+        //        if (!Char.IsLetterOrDigit(elem) && !Char.IsWhiteSpace(elem))
         //        {
         //            Separators[i] = elem;
         //            i++;
@@ -96,9 +95,11 @@ namespace Task_1._2
         //    }
 
         //    Console.WriteLine(firstPhrase);
+
+        //    Console.ReadKey();
         //}
 
-        //public static char[] DeleteDoubles (char[] charSecondPhrase)
+        //public static char[] DeleteDoubles(char[] charSecondPhrase)
         //{
         //    for (int firstCount = 0; firstCount < charSecondPhrase.Length - 1; firstCount++)
         //    {
@@ -128,7 +129,7 @@ namespace Task_1._2
         //        if (Char.IsLower(letters[0])) sumWords++;
         //    }
 
-        //    Console.WriteLine($"{sumWords}");
+        //    Console.WriteLine($"Количество слов, начинающихся с маленькой буквы равно {sumWords}");
         //    Console.ReadKey();
         //}
 
@@ -164,69 +165,69 @@ namespace Task_1._2
         //}
 
         /* Task 1.2.4 */
-        static void Validator(string text)
-        {
-            char[] charSeparators = GetArrayOfSeparators(text);
-            string result = String.Empty;
-            switch (charSeparators.Length) 
-            {
-                case 0:
-                    result += ChangeSymbols(text);
-                    break;
-                default:
-                    string[] array = text.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
+        //static void Validator(string text)
+        //{
+        //    char[] charSeparators = GetArrayOfSeparators(text);
+        //    string result = String.Empty;
+        //    switch (charSeparators.Length) 
+        //    {
+        //        case 0:
+        //            result += ChangeSymbols(text);
+        //            break;
+        //        default:
+        //            string[] array = text.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
 
-                    for (int count = 0; count < array.Length; count++)
-                    {
-                        result += ChangeSymbols(array[count]) + charSeparators[count] + ' ';
-                    }
-                    break;
-            }
-            
-            Console.WriteLine(result);
-            Console.ReadKey();
-        }
+        //            for (int count = 0; count < array.Length; count++)
+        //            {
+        //                result += ChangeSymbols(array[count]) + charSeparators[count] + ' ';
+        //            }
+        //            break;
+        //    }
 
-        static string ChangeSymbols(string text)
-        {
-            text = text.Trim();
-            char[] symbols = text.ToCharArray();
+        //    Console.WriteLine(result);
+        //    Console.ReadKey();
+        //}
 
-            symbols[0] = Char.ToUpper(symbols[0]);
+        //static string ChangeSymbols(string text)
+        //{
+        //    text = text.Trim();
+        //    char[] symbols = text.ToCharArray();
 
-            string output = new string(symbols);
+        //    symbols[0] = Char.ToUpper(symbols[0]);
 
-            return output;
-        }
+        //    string output = new string(symbols);
+
+        //    return output;
+        //}
 
 
-        static int FindNumberOfSeparators(string text)
-        {
-            int countSeparators = 0;
+        //static int FindNumberOfSeparators(string text)
+        //{
+        //    int countSeparators = 0;
 
-            foreach (char elem in text)
-            {
-                if (!Char.IsLetterOrDigit(elem) && !Char.IsWhiteSpace(elem) && (elem == '.' || elem == '?' || elem == '!')) countSeparators++;
-            }
+        //    foreach (char elem in text)
+        //    {
+        //        if (!Char.IsLetterOrDigit(elem) && !Char.IsWhiteSpace(elem) && (elem == '.' || elem == '?' || elem == '!')) countSeparators++;
+        //    }
 
-            return countSeparators;
-        }
+        //    return countSeparators;
+        //}
 
-        static char[] GetArrayOfSeparators(string text)
-        {
-            char[] Separators = new char[FindNumberOfSeparators(text)];
-            int i = 0;
+        //static char[] GetArrayOfSeparators(string text)
+        //{
+        //    char[] Separators = new char[FindNumberOfSeparators(text)];
+        //    int i = 0;
 
-            foreach (char elem in text)
-            {
-                if (!Char.IsLetterOrDigit(elem) && !Char.IsWhiteSpace(elem) && (elem == '.' || elem == '?' || elem == '!'))
-                {
-                    Separators[i] = elem;
-                    i++;
-                }
-            }
+        //    foreach (char elem in text)
+        //    {
+        //        if (!Char.IsLetterOrDigit(elem) && !Char.IsWhiteSpace(elem) && (elem == '.' || elem == '?' || elem == '!'))
+        //        {
+        //            Separators[i] = elem;
+        //            i++;
+        //        }
+        //    }
 
-            return Separators;
-        }
+        //    return Separators;
+        //}
     }
 }

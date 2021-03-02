@@ -32,29 +32,29 @@ namespace Task_1._1
             //XmasTree(numberOfTrees);
 
             /* Task 1.1.5 */
-            /*sumOfNumbers(700);*/
+            //SumOfNumbers(700);
 
             /* Task 1.1.6 */
-            /*string[] fonts = new string[] { "bold", "italic", "underline" };
-			List<string> usersChoise = new List<string>() { };
-			showList(usersChoise);
-			fontAdjustment(fonts, usersChoise);*/
+   //         string[] fonts = new string[] { "bold", "italic", "underline" };
+			//List<string> usersChoise = new List<string>() { };
+			//ShowList(usersChoise);
+			//FontAdjustment(fonts, usersChoise);
 
             /* Task 1.1.7 */
-            /*int[] mainArray = new int[7];
-			arrayProcessing(mainArray);*/
+   //         int[] mainArray = new int[7];
+			//ArrayProcessing(mainArray);
 
             /* Task 1.1.8 */
-            /*float[,,] mainArray = new float[,,] { { { -7, 6, 7 }, { 7, -8, -5.4f } }, { { 6, 14, 8 }, { 12, 0, 9 } }, { { 5, 7, -32f }, { 0, 0, 0 } } };
-			noPositive(mainArray);*/
+   //         float[,,] mainArray = new float[,,] { { { -7, 6, 7 }, { 7, -8, -5.4f } }, { { 6, 14, 8 }, { 12, 0, 9 } }, { { 5, 7, -32f }, { 0, 0, 0 } } };
+			//NoPositive(mainArray);
 
             /* Task 1.1.9 */
-            /*float[] array = new[] { -5, 13, 0, -19, 0, -2.45f, 1.412f, -10, -76.5f };
-			Non_negative_sum(array);*/
+   //         float[] array = new[] { -5, 13, 0, -19, 0, -2.45f, 1.412f, -10, -76.5f };
+			//NonNegativeSum(array);
 
             /*Task 1.1.10 */
-            /*int[,] array = new int[,] { { 1, 5, 7, 8 }, { -5, 6, 8, 0 }, { 15, 4, 10, -124} };
-			sumArray(array);*/
+   //         int[,] array = new int[,] { { 1, 5, 7, 8 }, { -5, 6, 8, 0 }, { 15, 4, 10, -124} };
+			//SumArray(array);
         }
 
 		/* Task 1.1.1 */
@@ -154,212 +154,212 @@ namespace Task_1._1
 		//}
 
 		/* Task 1.1.5 */
-		/*static void sumOfNumbers(int number)
-		{
-			int sum = 0;
-			int count = 1;
-			while (count < number)
-			{
-				if (count % 3 == 0 || count % 5 == 0)
-				{
-					sum += count;
-				}
-				count++;
-			}
+		//static void SumOfNumbers(int number)
+		//{
+		//	int sum = 0;
+		//	int count = 1;
+		//	while (count < number)
+		//	{
+		//		if (count % 3 == 0 || count % 5 == 0)
+		//		{
+		//			sum += count;
+		//		}
+		//		count++;
+		//	}
 
-			Console.WriteLine("Сумма чисел будет равна: " + sum);
-			Console.ReadKey();
-		}*/
+		//	Console.WriteLine("Сумма чисел будет равна: " + sum);
+		//	Console.ReadKey();
+		//}
 
 		/*Task 1.1.6 */
-		/*static void fontAdjustment(string[] array, List<string> usersChoise) 
-		{
-			Console.WriteLine("Введите: ");
-			showMenu(array);
-			int chosenNumber = Convert.ToInt32(Console.ReadLine());
-			if (chosenNumber >= 1 && chosenNumber <= array.Length)
-			{
-				int index = usersChoise.IndexOf(array[chosenNumber - 1]);
-				if (index == -1)
-				{
-					usersChoise.Add(array[chosenNumber - 1]);
-					showList(usersChoise);
-				}
-				else
-				{
-					usersChoise.RemoveAt(index);
-					showList(usersChoise);
-				}
-				fontAdjustment(array, usersChoise);
-			}
-			else if (chosenNumber < 1 && chosenNumber > array.Length)
-			{
-				Console.WriteLine("Ваше значение недопустимо");
-			}
-		}
+		//static void FontAdjustment(string[] array, List<string> usersChoise) 
+		//{
+		//	Console.WriteLine("Введите: ");
+		//	ShowMenu(array);
+		//	int chosenNumber = Convert.ToInt32(Console.ReadLine());
+		//	if (chosenNumber >= 1 && chosenNumber <= array.Length)
+		//	{
+		//		int index = usersChoise.IndexOf(array[chosenNumber - 1]);
+		//		if (index == -1)
+		//		{
+		//			usersChoise.Add(array[chosenNumber - 1]);
+		//			ShowList(usersChoise);
+		//		}
+		//		else
+		//		{
+		//			usersChoise.RemoveAt(index);
+		//			ShowList(usersChoise);
+		//		}
+		//		FontAdjustment(array, usersChoise);
+		//	}
+		//	else if (chosenNumber < 1 && chosenNumber > array.Length)
+		//	{
+		//		Console.WriteLine("Ваше значение недопустимо");
+		//	}
+		//}
 
-		static public void showMenu(string[] array) 
-		{
-			int i = 1;
-			foreach (string elem in array)
-			{
-				Console.WriteLine("\t" + i + ":" + elem);
-				i++;
-			}
-		}
+		//static public void ShowMenu(string[] array) 
+		//{
+		//	int i = 1;
+		//	foreach (string elem in array)
+		//	{
+		//		Console.WriteLine("\t" + i + ":" + elem);
+		//		i++;
+		//	}
+		//}
 
-		static public void showList(List<string> usersChoise)
-		{
-			string text = "Параметры надписи: ";
-			if (usersChoise.Count == 0)
-			{
-				Console.WriteLine("Параметры надписи: None");
-			}
-			else 
-			{
-				for (int i = 0; i < usersChoise.Count; i++)
-                {
-					text = text + usersChoise[i] + " ";
-				}
-				Console.WriteLine(text);
-			}
-		}*/
+		//static public void ShowList(List<string> usersChoise)
+		//{
+		//	string text = "Параметры надписи: ";
+		//	if (usersChoise.Count == 0)
+		//	{
+		//		Console.WriteLine("Параметры надписи: None");
+		//	}
+		//	else 
+		//	{
+		//		for (int i = 0; i < usersChoise.Count; i++)
+  //              {
+		//			text = text + usersChoise[i] + " ";
+		//		}
+		//		Console.WriteLine(text);
+		//	}
+		//}
 
 		/* Task 1.1.7 */
-		/*static void arrayProcessing(int[] array)
-		{
-			Random element = new Random();
+		//static void ArrayProcessing(int[] array)
+		//{
+		//	Random element = new Random();
 
-			for (int i = 0; i < array.Length; i++)
-			{
-				array[i] = element.Next(1, 1000);
-			}
+		//	for (int i = 0; i < array.Length; i++)
+		//	{
+		//		array[i] = element.Next(1, 1000);
+		//	}
 
-			Console.WriteLine("Максимальное значение массива равно: " + findArrayMax(array));
-			Console.WriteLine("Минимальное значение массива равно: " + findArrayMin(array));
+		//	Console.WriteLine("Максимальное значение массива равно: " + FindArrayMax(array));
+		//	Console.WriteLine("Минимальное значение массива равно: " + FindArrayMin(array));
 
-			sortArrayIncrease(array);
+		//	SortArrayIncrease(array);
 
-			Console.WriteLine("Отсортированный по возрастанию массив выглядит следующим образом: ");
-			foreach (int elem in array)
-            {
-				Console.Write(elem + " ");
-			}
+		//	Console.WriteLine("Отсортированный по возрастанию массив выглядит следующим образом: ");
+		//	foreach (int elem in array)
+  //          {
+		//		Console.Write(elem + " ");
+		//	}
 
-			Console.ReadKey();
-        }
+		//	Console.ReadKey();
+  //      }
 
-		public static int[] sortArrayIncrease (int[] array)
-        {
-			for (int i = 0; i < array.Length - 1; i++)
-			{
-				int min = array[i];
+		//public static int[] SortArrayIncrease (int[] array)
+  //      {
+		//	for (int i = 0; i < array.Length - 1; i++)
+		//	{
+		//		int min = array[i];
 
-				for (int j = i + 1; j < array.Length; j++)
-				{
-					if (array[j] < array[i])
-					{
-						array[i] = array[j];
-						array[j] = min;
-					}
-				}
-			}
+		//		for (int j = i + 1; j < array.Length; j++)
+		//		{
+		//			if (array[j] < array[i])
+		//			{
+		//				array[i] = array[j];
+		//				array[j] = min;
+		//			}
+		//		}
+		//	}
 
-			return array;
-		}
+		//	return array;
+		//}
 
-		public static int findArrayMax(int[] array)
-        {
-			int max = array[0];
+		//public static int FindArrayMax(int[] array)
+  //      {
+		//	int max = array[0];
 
-			for (int i = 1; i < array.Length; i++)
-            {
-				if (array[i] > max)
-				{
-					max = array[i];
-				}
-			}
+		//	for (int i = 1; i < array.Length; i++)
+  //          {
+		//		if (array[i] > max)
+		//		{
+		//			max = array[i];
+		//		}
+		//	}
 
-			return max;
-		}
+		//	return max;
+		//}
 
-		public static int findArrayMin(int[] array)
-		{
-			int min = array[0];
+		//public static int FindArrayMin(int[] array)
+		//{
+		//	int min = array[0];
 
-			for (int i = 1; i < array.Length; i++)
-			{
-				if (array[i] < min)
-				{
-					min = array[i];
-				}
-			}
+		//	for (int i = 1; i < array.Length; i++)
+		//	{
+		//		if (array[i] < min)
+		//		{
+		//			min = array[i];
+		//		}
+		//	}
 
-			return min;
-		}*/
+		//	return min;
+		//}
 
 		/* Task 1.1.8 */
-		/*static void noPositive(float[,,] array)
-		{
-			for (int i = 0; i <= array.GetUpperBound(0); i++)
-			{
-				for (int j = 0; j <= array.GetUpperBound(1); j++)
-				{
-					for (int k = 0; k <= array.GetUpperBound(2); k++)
-					{
-						if (array[i, j, k] > 0)
-						{
-							array[i, j, k] = 0;
-						}
-					}
-				}
-			}
+		//static void NoPositive(float[,,] array)
+		//{
+		//	for (int i = 0; i <= array.GetUpperBound(0); i++)
+		//	{
+		//		for (int j = 0; j <= array.GetUpperBound(1); j++)
+		//		{
+		//			for (int k = 0; k <= array.GetUpperBound(2); k++)
+		//			{
+		//				if (array[i, j, k] > 0)
+		//				{
+		//					array[i, j, k] = 0;
+		//				}
+		//			}
+		//		}
+		//	}
 
-			Console.WriteLine("Измененный массив выглядит следующим образом: ");
+		//	Console.WriteLine("Измененный массив выглядит следующим образом: ");
 
-			foreach (float elem in array)
-			{
-				Console.Write(elem + " ");
-			}
+		//	foreach (float elem in array)
+		//	{
+		//		Console.Write(elem + " ");
+		//	}
 
-			Console.ReadKey();
-		}*/
+		//	Console.ReadKey();
+		//}
 
 		/* Task 1.1.9 */
-		/*static void Non_negative_sum(float[] array)
-        {
-            float sum = 0;
-            foreach (float elem in array)
-            {
-                if (elem > 0)
-                {
-                    sum += elem;
-                }
-            }
+		//static void NonNegativeSum(float[] array)
+  //      {
+  //          float sum = 0;
+  //          foreach (float elem in array)
+  //          {
+  //              if (elem > 0)
+  //              {
+  //                  sum += elem;
+  //              }
+  //          }
 
-            Console.Write("Сумма всех неотрицательных элементов вмассиве равна - " + sum);
+  //          Console.Write("Сумма всех неотрицательных элементов вмассиве равна - " + sum);
 
-			Console.ReadKey();
-        }*/
+		//	Console.ReadKey();
+  //      }
 
 		/* Task 1.1.10 */
-		/*static void sumArray(int[,] array)
-		{
-			int sum = 0;
-			for (int i = 0; i <= array.GetUpperBound(0); i++)
-			{
-				for (int j = 0; j <= array.GetUpperBound(1); j++)
-				{
-					if ((i != 0 || j != 0) && (i + j) % 2 == 0)
-					{
-						sum += array[i, j];
-					}
-				}
-			}
+		//static void SumArray(int[,] array)
+		//{
+		//	int sum = 0;
+		//	for (int i = 0; i <= array.GetUpperBound(0); i++)
+		//	{
+		//		for (int j = 0; j <= array.GetUpperBound(1); j++)
+		//		{
+		//			if ((i != 0 || j != 0) && (i + j) % 2 == 0)
+		//			{
+		//				sum += array[i, j];
+		//			}
+		//		}
+		//	}
 
-			Console.WriteLine("Сумма чисел, стоящих на четных позициях равна - " + sum);
+		//	Console.WriteLine("Сумма чисел, стоящих на четных позициях равна - " + sum);
 
-			Console.ReadKey();
-		}*/
+		//	Console.ReadKey();
+		//}
 	}
 }
