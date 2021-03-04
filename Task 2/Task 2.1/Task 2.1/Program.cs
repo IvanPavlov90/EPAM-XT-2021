@@ -7,57 +7,94 @@ namespace Task_2._1
         static void Main(string[] args)
         {
             CustomString first = new CustomString();
-            CustomString second = new CustomString();
-            first.Concat("modern", "talking");
-            second.ConvertToString(first.ConvertToCharArray());
-            second.Print();
-            Console.WriteLine(second.SearchSymbol('i')); 
         }
     }
 
     class CustomString
     {
-        public string value;
+        public string myString = String.Empty;
 
         public void Print ()
         {
-            Console.WriteLine(value);
+            Console.WriteLine(myString);
         }
 
         public char[] ConvertToCharArray()
         {
-            char[] Symbols = value.ToCharArray();
+            char[] Symbols = myString.ToCharArray();
             return Symbols;
         }
 
-        public string ConvertToString (char[] SomeSymbols)
+        public string CreateStringFromChar(params char[] items)
         {
-            value = String.Empty;
+            myString = String.Empty;
 
-            foreach (char item in SomeSymbols)
+            foreach (char item in items)
             {
-                value += item.ToString();
+                myString += item.ToString();
             }
 
-            return value;
-        }
-
-        public int SearchSymbol (char Symbol)
-        {
-            int index = value.IndexOf(Symbol);
-            return index;
+            return myString;
         }
 
         public string Concat (params string[] items)
         {
-            value = String.Empty;
+            myString = String.Empty;
 
             foreach (string item in items)
             {
-                value += item;
+                myString += item;
             }
 
-            return value;
+            return myString;
+        }
+
+        public int SearchSymbol(char Symbol)
+        {
+            int index = myString.IndexOf(Symbol);
+            return index;
+        }
+
+        public int SearchSubstring(string text)
+        {
+            int index = myString.IndexOf(text);
+            return index;
+        }
+
+        public bool CheckEquality (CustomString obj1, CustomString obj2)
+        {
+            return obj1.myString.Equals(obj2.myString);
+        }
+
+        public int Comparison (CustomString obj1, CustomString obj2)
+        {
+            return obj1.myString.CompareTo(obj2.myString);
+        }
+
+        public char this[int index]
+        {
+            get
+            {
+                if (index > myString.Length - 1 || index < 0)
+                {
+                    return ' ';
+                } else
+                {
+                    return myString[index];
+                }   
+            }
+            set
+            {
+                char[] data = ConvertToCharArray();
+                if (index > myString.Length - 1 || index < 0)
+                {
+                    Console.WriteLine("Такого индекса не существует! Сначала инициализируйте строку необходимой длины для того, чтобы что-то менять.");
+                } else
+                {
+                    data[index] = value;
+                    CreateStringFromChar(data);
+                }
+            }
         }
     }
 }
