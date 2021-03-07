@@ -24,19 +24,36 @@ namespace Task_2._1._2
                     ShowFigures(figures, figuresChoise);
                     break;
                 case "2":
-                    foreach (object item in figures)
+                    if (figures.Count == 0)
                     {
-                        foreach (FieldInfo field in item.GetType().GetFields())
+                        Console.WriteLine("Вы ничего еще не нарисовали");
+                    }
+                    else
+                    {
+                        foreach (object item in figures)
                         {
-                            Console.WriteLine($"{field.Name} - {field.GetValue(item)}");
+                            foreach (FieldInfo field in item.GetType().GetFields())
+                            {
+                                Console.WriteLine($"{field.Name} - {field.GetValue(item)}");
+                            }
                         }
                     }
                     Console.WriteLine("Нажмите клавишу для продолжения");
                     Console.ReadKey();
                     CustomPaint(figures);
                     break;
+                case "3":
+                    figures.Clear();
+                    Console.Clear();
+                    Console.WriteLine("Перед Вами чистый холст, то, что Вы здесь изобразите зависит только от Вас!");
+                    CustomPaint(figures);
+                    break;
+                case "4":
+                    Environment.Exit(0);
+                    break;
                 default:
-                    Console.ReadKey();
+                    Console.WriteLine("Такой команды не существует! Введите другую команду.");
+                    CustomPaint(figures);
                     break;
             }
             Console.ReadKey();
@@ -50,7 +67,7 @@ namespace Task_2._1._2
                 "1. Добавить фигуру",
                 "2. Вывести фигуры",
                 "3. Очистить холст",
-                "4. Вывод"
+                "4. Выход"
             };
 
             foreach (string item in menu)
@@ -80,9 +97,11 @@ namespace Task_2._1._2
             {
                 case "1":
                     Console.WriteLine("Введите параметры фигуры Круг:");
-                    Console.WriteLine("Введите координаты центра");
+                    Console.WriteLine("Введите координаты центра круга");
                     Circle circle = new Circle();
                     figures.Add(circle);
+                    Console.WriteLine("Введите радиус");
+                    CheckRadius(circle);
                     Console.WriteLine("Фигура Круг создана");
                     CustomPaint(figures);
                     break;
@@ -97,6 +116,22 @@ namespace Task_2._1._2
                 default: break;
             }
         }
+
+        static void CheckRadius (object circle)
+        {
+            string userradius = Console.ReadLine();
+            double radius;
+            Double.TryParse(userradius, out radius);
+            if (radius <= 0)
+            {
+                Console.WriteLine("Такой радиус недопустим, введите его еще раз.");
+                CheckRadius(circle);
+            }
+            else
+            {
+                circle.(userradius);
+            }
+        }
     }
 
     class Circle
@@ -104,21 +139,36 @@ namespace Task_2._1._2
         public string name = "Круг";
         public float centerX;
         public float centerY;
-        public double radius
+        private double _radius;
+        //public double radius
+        //{
+        //    get
+        //    {
+        //        return _radius;
+        //    }
+        //    set
+        //    {
+        //        if (value <= 0)
+        //        {
+        //            Console.WriteLine("Такого просто не может быть.");
+        //        }
+        //        else
+        //        {
+        //            _radius = value;
+        //        }
+        //    }
+        //}
+
+        public double radius;
+
+        public void SetRadius(double value)
         {
-            get
+            if (value <= 0)
             {
-                return radius;
-            }
-            set
+                Console.WriteLine("Неверное значение радиуса, введите его заново");
+            } else
             {
-                if (radius <= 0)
-                {
-                    Console.WriteLine("Такого просто не может быть.");
-                } else
-                {
-                    radius = value;
-                }
+                this.radius = value;
             }
         }
 
