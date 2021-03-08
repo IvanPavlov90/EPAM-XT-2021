@@ -7,6 +7,10 @@ namespace Task_2._1
         static void Main(string[] args)
         {
             CustomString first = new CustomString();
+            first.Concat("Good", "day", "?");
+            Console.WriteLine(first.ContainsSymbols('s'));
+            first[7] = 'j';
+            first.Print();
         }
     }
 
@@ -47,6 +51,15 @@ namespace Task_2._1
             }
 
             return myString;
+        }
+
+        public bool ContainsSymbols(char Symbol)
+        {
+            int index = myString.IndexOf(Symbol);
+            if (index == -1)
+                return false;
+            else
+                return true;
         }
 
         public int SearchSymbol(char Symbol)
