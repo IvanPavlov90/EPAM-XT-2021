@@ -32,10 +32,22 @@ namespace Task_2._1._2
                     {
                         foreach (object item in figures)
                         {
-                            foreach (FieldInfo field in item.GetType().GetFields())
+                            Type t = item.GetType();
+                            Console.WriteLine(t);
+                            FieldInfo[] fields = t.GetFields();
+                            foreach (FieldInfo field in fields)
                             {
-                                Console.WriteLine($"{field.Name} - {field.GetValue(item)}");
+                                Console.WriteLine("{0} - {1}", field.Name, field.GetValue(item));
                             }
+                            MethodInfo[] methods = t.GetMethods();
+                            foreach (MethodInfo method in methods)
+                            {
+                                Console.WriteLine("{0}", method.Name);
+                            }
+                            //foreach (FieldInfo field in item.GetType().GetFields(BindingFlags.DeclaredOnly| BindingFlags.Public | BindingFlags.NonPublic))
+                            //{
+                            //    Console.WriteLine($"{field.Name} - {field.GetValue(item)}");
+                            //}
                         }
                     }
                     Console.WriteLine("Нажмите клавишу для продолжения");
@@ -97,39 +109,66 @@ namespace Task_2._1._2
             {
                 case "1":
                     Console.WriteLine("Введите параметры фигуры Круг:");
-                    Console.WriteLine("Введите координаты центра круга");
                     Circle circle = new Circle();
-                    figures.Add(circle);
-                    Console.WriteLine("Введите радиус");
-                    CheckRadius(circle);
-                    Console.WriteLine("Фигура Круг создана");
-                    CustomPaint(figures);
-                    break;
+                    Console.WriteLine("Введите координаты центра круга, координата Х:");
+                    string userscirclecenterX = Console.ReadLine();
+                    float circlecenterX;
+                    float.TryParse(userscirclecenterX, out circlecenterX);
+                    circle.centerX = circlecenterX;
+                    Console.WriteLine("Введите координаты центра круга, координата Y:");
+                    string userscirclecenterY = Console.ReadLine();
+                    float circlecenterY;
+                    float.TryParse(userscirclecenterY, out circlecenterY);
+                    circle.centerY = circlecenterY;
+                    Console.WriteLine("Введите радиус (дробный радиус вводится через запятую)");
+                    string userradius = Console.ReadLine();
+                    float radius;
+                    float.TryParse(userradius, out radius);
+                    if (radius <= 0)
+                    {
+                        Console.WriteLine("Вы ввели некорректные параметры фигуры, перевведите значения.");
+                        goto case "1";
+                    }
+                    else
+                    {
+                        circle.radius = radius;
+                        Console.WriteLine("Фигура Круг создана");
+                        figures.Add(circle);
+                        CustomPaint(figures);
+                        break;
+                    }
                 case "2":
                     Console.WriteLine("Введите параметры фигуры Кольцо:");
-                    Console.WriteLine("Введите координаты центра");
                     Ring ring = new Ring();
-                    figures.Add(ring);
+                    ring.name = "Кольцо";
+                    Console.WriteLine("Введите координаты центра кольца, координата Х:");
+                    string usersringcenterX = Console.ReadLine();
+                    float ringcenterX;
+                    float.TryParse(usersringcenterX, out ringcenterX);
+                    ring.centerX = ringcenterX;
+                    Console.WriteLine("Введите координаты центра кольца, координата Y:");
+                    string usersringcenterY = Console.ReadLine();
+                    float ringcenterY;
+                    float.TryParse(usersringcenterY, out ringcenterY);
+                    ring.centerY = ringcenterY;
+                    Console.WriteLine("Введите внешний радиус (дробный радиус вводится через запятую)");
+                    string userringradius = Console.ReadLine();
+                    float outerringradius;
+                    float.TryParse(userringradius, out outerringradius);
+                    if (outerringradius <= 0)
+                    {
+                        Console.WriteLine("Вы ввели некорректные параметры фигуры, перевведите значения.");
+                        goto case "2";
+                    }
+                    else
+                    {
+                        ring.radius = outerringradius;
+                    }
                     Console.WriteLine("Фигура Кольцо создана");
+                    figures.Add(ring);
                     CustomPaint(figures);
                     break;
                 default: break;
-            }
-        }
-
-        static void CheckRadius (object circle)
-        {
-            string userradius = Console.ReadLine();
-            double radius;
-            Double.TryParse(userradius, out radius);
-            if (radius <= 0)
-            {
-                Console.WriteLine("Такой радиус недопустим, введите его еще раз.");
-                CheckRadius(circle);
-            }
-            else
-            {
-                circle.(userradius);
             }
         }
     }
@@ -139,36 +178,16 @@ namespace Task_2._1._2
         public string name = "Круг";
         public float centerX;
         public float centerY;
-        private double _radius;
-        //public double radius
-        //{
-        //    get
-        //    {
-        //        return _radius;
-        //    }
-        //    set
-        //    {
-        //        if (value <= 0)
-        //        {
-        //            Console.WriteLine("Такого просто не может быть.");
-        //        }
-        //        else
-        //        {
-        //            _radius = value;
-        //        }
-        //    }
-        //}
-
-        public double radius;
-
-        public void SetRadius(double value)
+        private float _radius;
+        public float radius
         {
-            if (value <= 0)
+            get
             {
-                Console.WriteLine("Неверное значение радиуса, введите его заново");
-            } else
+                return _radius;
+            }
+            set
             {
-                this.radius = value;
+                _radius = value;
             }
         }
 
@@ -191,21 +210,16 @@ namespace Task_2._1._2
 
     class Ring : Circle
     {
-        public double innerRadius 
+        private float _innerRadius;
+        public float innerRadius 
         {
             get
             {
-                return innerRadius;
+                return _innerRadius;
             }
             set
             {
-                if (innerRadius >= radius)
-                {
-                    Console.WriteLine("Такого просто не может быть.");
-                } else
-                {
-                    innerRadius = value;
-                }
+                _innerRadius = value;
             } 
         }
 
