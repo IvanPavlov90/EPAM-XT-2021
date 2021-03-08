@@ -32,21 +32,15 @@ namespace Task_2._1._2
                     {
                         foreach (object item in figures)
                         {
-                            Type t = item.GetType();
-                            Console.WriteLine(t);
-                            FieldInfo[] fields = t.GetFields();
+                            FieldInfo[] fields = item.GetType().GetFields();
                             foreach (FieldInfo field in fields)
                             {
                                 Console.WriteLine("{0} - {1}", field.Name, field.GetValue(item));
                             }
-                            MethodInfo[] methods = t.GetMethods();
-                            foreach (MethodInfo method in methods)
-                            {
-                                Console.WriteLine("{0}", method.Name);
-                            }
-                            //foreach (FieldInfo field in item.GetType().GetFields(BindingFlags.DeclaredOnly| BindingFlags.Public | BindingFlags.NonPublic))
+                            //MethodInfo[] methods = item.GetType().GetMethods();
+                            //foreach (MethodInfo method in methods)
                             //{
-                            //    Console.WriteLine($"{field.Name} - {field.GetValue(item)}");
+                            //    Console.WriteLine("{0}", method.Name);
                             //}
                         }
                     }
@@ -131,7 +125,7 @@ namespace Task_2._1._2
                     }
                     else
                     {
-                        circle.radius = radius;
+                        circle._radius = radius;
                         Console.WriteLine("Фигура Круг создана");
                         figures.Add(circle);
                         CustomPaint(figures);
@@ -162,7 +156,19 @@ namespace Task_2._1._2
                     }
                     else
                     {
-                        ring.radius = outerringradius;
+                        ring._radius = outerringradius;
+                    }
+                    Console.WriteLine("Введите внутренний радиус кольца (дробный радиус вводится через запятую)");
+                    string userinnerringradius = Console.ReadLine();
+                    float innerringradius;
+                    float.TryParse(userinnerringradius, out innerringradius);
+                    if (innerringradius <= 0 || innerringradius >= outerringradius)
+                    {
+                        Console.WriteLine("Внутренний радиус не может быть равен нулю или больше внешнего, перевведите значения.");
+                        goto case "2";
+                    } else
+                    {
+                        ring._innerRadius = innerringradius;
                     }
                     Console.WriteLine("Фигура Кольцо создана");
                     figures.Add(ring);
@@ -178,16 +184,16 @@ namespace Task_2._1._2
         public string name = "Круг";
         public float centerX;
         public float centerY;
-        private float _radius;
-        public float radius
+        public float radius;
+        public float _radius
         {
             get
             {
-                return _radius;
+                return radius;
             }
             set
             {
-                _radius = value;
+                radius = value;
             }
         }
 
@@ -210,16 +216,16 @@ namespace Task_2._1._2
 
     class Ring : Circle
     {
-        private float _innerRadius;
-        public float innerRadius 
+        public float innerRadius;
+        public float _innerRadius 
         {
             get
             {
-                return _innerRadius;
+                return innerRadius;
             }
             set
             {
-                _innerRadius = value;
+                innerRadius = value;
             } 
         }
 
