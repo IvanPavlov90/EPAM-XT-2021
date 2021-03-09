@@ -6,4 +6,8 @@
     <RootNamespace>Task_2._1</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CustomString\CustomString.csproj" />
+  </ItemGroup>
+
 </Project>
