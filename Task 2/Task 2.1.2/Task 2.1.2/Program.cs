@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace Task_2._1._2
 {
@@ -36,16 +35,7 @@ namespace Task_2._1._2
                     {
                         foreach (object item in figures)
                         {
-                            FieldInfo[] fields = item.GetType().GetFields();
-                            foreach (FieldInfo field in fields)
-                            {
-                                Console.WriteLine("{0} - {1}", field.Name, field.GetValue(item));
-                            }
-                            //MethodInfo[] methods = item.GetType().GetMethods();
-                            //foreach (MethodInfo method in methods)
-                            //{
-                            //    Console.WriteLine("{0}", method.Name);
-                            //}
+                            Console.WriteLine(item.ToString());
                         }
                     }
                     Console.WriteLine("Нажмите клавишу для продолжения");
@@ -251,6 +241,11 @@ namespace Task_2._1._2
                 return 2 * Math.PI * radius;
             }
         }
+
+        public override string ToString()
+        {
+            return $"Фигура Круг. Координаты центра круга - {centerX} и {centerY}, радиус круга - {radius}, площадь круга - {CircleSquare}, длина окружности - {CircleLength}";
+        }
     }
 
     class Ring : Circle
@@ -298,7 +293,7 @@ namespace Task_2._1._2
         public float endlinepointY;
 
         /// <summary>
-        /// Метод получающий начальные и конечные координаты линии. В последствии должен использоваться при подсчете других величин, где необходимо знать длину стороны.
+        /// Метод получающий начальные и конечные координаты линии. В последствии должен использоваться при подсчете других величин, где необходимо знать длину стороны+-+-=-=-=-=
         /// </summary>
         /// <param name="startpointX"></param>
         /// <param name="startpointY"></param>
