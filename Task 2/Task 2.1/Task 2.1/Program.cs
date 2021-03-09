@@ -7,10 +7,10 @@ namespace Task_2._1
         static void Main(string[] args)
         {
             CustomString first = new CustomString();
-            first.Concat("Good", "day", "?");
-            Console.WriteLine(first.ContainsSymbols('s'));
-            first[7] = 'j';
-            first.Print();
+            first.Concat("Gooooojood ", "day", "?");
+            Console.WriteLine(first.CountSymbol(first[5]));
+            string reverse = first.Reverse();
+            Console.WriteLine(reverse);
         }
     }
 
@@ -62,6 +62,23 @@ namespace Task_2._1
                 return true;
         }
 
+        public int CountSymbol (char Symbol)
+        {
+            int startIndex = 0;
+            int count = -1;
+            int index;
+
+            do
+            {
+                index = myString.IndexOf(Symbol, startIndex + 1);
+                count++;
+                startIndex = index;
+            }
+            while (index != -1);
+
+            return count;
+        }
+
         public int SearchSymbol(char Symbol)
         {
             int index = myString.IndexOf(Symbol);
@@ -72,6 +89,18 @@ namespace Task_2._1
         {
             int index = myString.IndexOf(text);
             return index;
+        }
+
+        public string Reverse ()
+        {
+            string reverse = string.Empty;
+
+            for (int i = myString.Length - 1; i > 0; i--)
+            {
+                reverse += myString[i];
+            }
+
+            return reverse;
         }
 
         public bool CheckEquality (CustomString obj1, CustomString obj2)
