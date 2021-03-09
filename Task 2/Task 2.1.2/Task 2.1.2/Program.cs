@@ -12,6 +12,10 @@ namespace Task_2._1._2
             CustomPaint(figures);
         }
 
+        /// <summary>
+        /// Основное меню приложения, в котором происходит выбор действия.
+        /// </summary>
+        /// <param name="figures"></param>
         static void CustomPaint(List<object> figures)
         {
             showMainMenu();
@@ -82,13 +86,18 @@ namespace Task_2._1._2
             }
         }
 
+        /// <summary>
+        /// Метод, выводящий меню выбора фиугр.
+        /// </summary>
         static void ShowFiguresMenu ()
         {
             List<string> menu = new List<string>()
             {
                 "Выберите тип фигуры:",
                 "1. Круг",
-                "2. Кольцо"
+                "2. Кольцо",
+                "3. Точка",
+                "4. Линия",
             };
 
             foreach (string item in menu)
@@ -97,6 +106,11 @@ namespace Task_2._1._2
             }
         }
 
+        /// <summary>
+        /// Метод, который создает фигуры, в зависимости от выбора пользователя.
+        /// </summary>
+        /// <param name="figures"></param>
+        /// <param name="figuresChoise"></param>
         static void ShowFigures (List<object> figures, string figuresChoise)
         {
             switch (figuresChoise)
@@ -104,16 +118,8 @@ namespace Task_2._1._2
                 case "1":
                     Console.WriteLine("Введите параметры фигуры Круг:");
                     Circle circle = new Circle();
-                    Console.WriteLine("Введите координаты центра круга, координата Х:");
-                    string userscirclecenterX = Console.ReadLine();
-                    float circlecenterX;
-                    float.TryParse(userscirclecenterX, out circlecenterX);
-                    circle.centerX = circlecenterX;
-                    Console.WriteLine("Введите координаты центра круга, координата Y:");
-                    string userscirclecenterY = Console.ReadLine();
-                    float circlecenterY;
-                    float.TryParse(userscirclecenterY, out circlecenterY);
-                    circle.centerY = circlecenterY;
+                    Console.WriteLine("Введите координаты центра круга:");
+                    InputCoordinats(ref circle.centerX, ref circle.centerY);
                     Console.WriteLine("Введите радиус (дробный радиус вводится через запятую)");
                     string userradius = Console.ReadLine();
                     float radius;
@@ -135,16 +141,8 @@ namespace Task_2._1._2
                     Console.WriteLine("Введите параметры фигуры Кольцо:");
                     Ring ring = new Ring();
                     ring.name = "Кольцо";
-                    Console.WriteLine("Введите координаты центра кольца, координата Х:");
-                    string usersringcenterX = Console.ReadLine();
-                    float ringcenterX;
-                    float.TryParse(usersringcenterX, out ringcenterX);
-                    ring.centerX = ringcenterX;
-                    Console.WriteLine("Введите координаты центра кольца, координата Y:");
-                    string usersringcenterY = Console.ReadLine();
-                    float ringcenterY;
-                    float.TryParse(usersringcenterY, out ringcenterY);
-                    ring.centerY = ringcenterY;
+                    Console.WriteLine("Введите координаты центра кольца:");
+                    InputCoordinats(ref ring.centerX, ref ring.centerY);
                     Console.WriteLine("Введите внешний радиус (дробный радиус вводится через запятую)");
                     string userringradius = Console.ReadLine();
                     float outerringradius;
@@ -174,8 +172,49 @@ namespace Task_2._1._2
                     figures.Add(ring);
                     CustomPaint(figures);
                     break;
-                default: break;
+                case "3":
+                    Console.WriteLine("Введите координаты Точки:");
+                    Point point = new Point();
+                    InputCoordinats(ref point.pointX, ref point.pointY);
+                    Console.WriteLine("Точка создана");
+                    figures.Add(point);
+                    CustomPaint(figures);
+                    break;
+                case "4":
+                    Line line = new Line();
+                    line.name = "Линия";
+                    Console.WriteLine("Введите начальные координаты Линии:");
+                    InputCoordinats(ref line.pointX, ref line.pointY);
+                    Console.WriteLine("Введите конечные координаты Линии:");
+                    InputCoordinats(ref line.endlinepointX, ref line.endlinepointY);
+                    Console.WriteLine("Линия создана");
+                    figures.Add(line);
+                    CustomPaint(figures);
+                    break;
+                default:
+                    Console.WriteLine("Такой команды не существует! Введите другую команду.");
+                    CustomPaint(figures);
+                    break;
             }
+        }
+
+        /// <summary>
+        /// Метод, принимающий любую фигуру и назначающий координаты какой-либо точки фигуры. Например, центр курга, конечную точку линии или вершину треугольника.
+        /// </summary>
+        /// <param name="coordinatX"></param>
+        /// <param name="coordinatY"></param>
+        static void InputCoordinats (ref float coordinatX, ref float coordinatY)
+        {
+            Console.WriteLine("Введите координату Х:");
+            string userspointcenterX = Console.ReadLine();
+            float pointcenterX;
+            float.TryParse(userspointcenterX, out pointcenterX);
+            coordinatX = pointcenterX;
+            Console.WriteLine("Введите координату Y:");
+            string userspointcenterY = Console.ReadLine();
+            float pointcenterY;
+            float.TryParse(userspointcenterY, out pointcenterY);
+            coordinatY = pointcenterY;
         }
     }
 
@@ -243,6 +282,53 @@ namespace Task_2._1._2
             {
                 return 2 * Math.PI * (radius + innerRadius);
             }
+        }
+    }
+
+    class Point
+    {
+        public string name = "Точка";
+        public float pointX;
+        public float pointY;
+    }
+
+    class Line : Point
+    {
+        public float endlinepointX;
+        public float endlinepointY;
+
+        /// <summary>
+        /// Метод получающий начальные и конечные координаты линии. В последствии должен использоваться при подсчете других величин, где необходимо знать длину стороны.
+        /// </summary>
+        /// <param name="startpointX"></param>
+        /// <param name="startpointY"></param>
+        /// <param name="endpointX"></param>
+        /// <param name="endpointY"></param>
+        /// <returns>Возвращает длину линии</returns>
+        public double Length (float startpointX, float startpointY, float endpointX, float endpointY)
+        {
+            float width;
+            float heigth;
+
+            if (endpointX > startpointX)
+            {
+                width = endpointX - startpointX;
+            }
+            else
+            {
+                width = startpointX - endpointX;
+            }
+
+            if (endlinepointY > pointY)
+            {
+                heigth = endpointY - startpointY;
+            }
+            else
+            {
+                heigth = startpointY - endpointY;
+            }
+
+            return Math.Sqrt(width * width + heigth * heigth);
         }
     }
 }
