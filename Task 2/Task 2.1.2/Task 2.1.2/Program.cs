@@ -89,6 +89,7 @@ namespace Task_2._1._2
                 "3. Прямая линия",
                 "4. Квадрат",
                 "5. Прямоугольник",
+                "6. Треугольник",
             };
 
             foreach (string item in menu)
@@ -110,29 +111,18 @@ namespace Task_2._1._2
                     Console.WriteLine("Введите параметры фигуры Круг:");
                     Circle circle = new Circle();
                     Console.WriteLine("Введите координаты центра круга:");
-                    InputCoordinats(ref circle.pointX, ref circle.pointY);
+                    InputCoordinats(ref circle.startpointX, ref circle.startpointY);
                     Console.WriteLine("Введите радиус (дробный радиус вводится через запятую)");
-                    string userradius = Console.ReadLine();
-                    float radius;
-                    float.TryParse(userradius, out radius);
-                    if (radius <= 0)
-                    {
-                        Console.WriteLine("Вы ввели некорректные параметры фигуры, перевведите значения.");
-                        goto case "1";
-                    }
-                    else
-                    {
-                        circle._radius = radius;
-                        Console.WriteLine("Фигура Круг создана");
-                        figures.Add(circle);
-                        CustomPaint(figures);
-                        break;
-                    }
+                    CheckingValues(ref circle.radius, 0);
+                    Console.WriteLine("Круг создан");
+                    figures.Add(circle);
+                    CustomPaint(figures);
+                    break;
                 case "2":
                     Console.WriteLine("Введите параметры фигуры Кольцо:");
                     Ring ring = new Ring();
                     Console.WriteLine("Введите координаты центра кольца:");
-                    InputCoordinats(ref ring.pointX, ref ring.pointY);
+                    InputCoordinats(ref ring.startpointX, ref ring.startpointY);
                     Console.WriteLine("Введите внешний радиус (дробный радиус вводится через запятую)");
                     string userringradius = Console.ReadLine();
                     float outerringradius;
@@ -158,14 +148,14 @@ namespace Task_2._1._2
                     {
                         ring._innerRadius = innerringradius;
                     }
-                    Console.WriteLine("Фигура Кольцо создана");
+                    Console.WriteLine("Кольцо создано");
                     figures.Add(ring);
                     CustomPaint(figures);
                     break;
                 case "3":
                     Line line = new Line();
                     Console.WriteLine("Введите начальные координаты Линии:");
-                    InputCoordinats(ref line.pointX, ref line.pointY);
+                    InputCoordinats(ref line.startpointX, ref line.startpointY);
                     Console.WriteLine("Введите конечные координаты Линии:");
                     InputCoordinats(ref line.endlinepointX, ref line.endlinepointY);
                     Console.WriteLine("Линия создана");
@@ -175,7 +165,7 @@ namespace Task_2._1._2
                 case "4":
                     Quadrate square = new Quadrate();
                     Console.WriteLine("Введите координаты вершины квадрата:");
-                    InputCoordinats(ref square.pointX, ref square.pointY);
+                    InputCoordinats(ref square.startpointX, ref square.startpointY);
                     Console.WriteLine("Введите длину стороны квадрата:");
                     string userwidth = Console.ReadLine();
                     float width;
@@ -194,7 +184,7 @@ namespace Task_2._1._2
                 case "5":
                     Rectangle rectangle = new Rectangle();
                     Console.WriteLine("Введите координаты вершины прямоугольника:");
-                    InputCoordinats(ref rectangle.pointX, ref rectangle.pointY);
+                    InputCoordinats(ref rectangle.startpointX, ref rectangle.startpointY);
                     Console.WriteLine("Введите ширину прямоугольника:");
                     string userrectanglewidth = Console.ReadLine();
                     float rectanglewidth;
@@ -214,7 +204,7 @@ namespace Task_2._1._2
                     float.TryParse(userrectangleheigth, out rectangleheigth);
                     if (rectangleheigth <= 0)
                     {
-                        Console.WriteLine("Ширина прямоугольника не может быть меньше нуля, перевведите значения.");
+                        Console.WriteLine("Высота прямоугольника не может быть меньше нуля, перевведите значения.");
                         goto case "5";
                     }
                     else
@@ -223,6 +213,18 @@ namespace Task_2._1._2
                     };
                     figures.Add(rectangle);
                     CustomPaint(figures);
+                    break;
+                case "6":
+                    Triangle triangle = new Triangle();
+                    Console.WriteLine("Введите координаты вершины прямоугольника:");
+                    InputCoordinats(ref triangle.startpointX, ref triangle.startpointY);
+                    Console.WriteLine("Введите длины сторон прямоугольника. Первая сторона");
+                    string firstside = Console.ReadLine();
+                    float trianglefirstside;
+                    float.TryParse(firstside, out trianglefirstside);
+                    CheckingValues(ref triangle.sideA, 0);
+                    Console.WriteLine("Вторая сторона");
+                    Console.WriteLine("Третья сторона");
                     break;
                 default:
                     Console.WriteLine("Такой команды не существует! Введите другую команду.");
@@ -249,15 +251,54 @@ namespace Task_2._1._2
             float.TryParse(userspointcenterY, out pointcenterY);
             coordinatY = pointcenterY;
         }
+
+        static void CheckingValues (ref float parameter, float checkvalue)
+        {
+            Console.WriteLine("Введите значение.");
+            string uservalue = Console.ReadLine();
+            float value;
+            float.TryParse(uservalue, out value);
+            if (value <= checkvalue)
+            {
+                Console.WriteLine("Вы ввели некорректное значение. Попробуйте еще раз");
+                CheckingValues(ref parameter, checkvalue);
+            }
+            else
+            {
+                parameter = value;
+            };
+        }
     }
 
     class Figure
     {
-        public float pointX;
-        public float pointY;
+        public float startpointX;
+        public float startpointY;
     }
 
-    class Circle: Figure
+    class OpenPieces : Figure
+    {
+        public float endlinepointX;
+        public float endlinepointY;
+        public virtual double Length { get; }
+    }
+
+    class ClosedFigures: Figure
+    {
+        public virtual double GetSquare { get; }
+    }
+    
+    class VolumeFigures : ClosedFigures
+    {
+        public virtual double GetVolume { get; }
+    }
+
+    class FlatFigures : ClosedFigures
+    {
+        public virtual double GetPerimeter { get; }
+    }
+
+    class Circle: FlatFigures
     {
         public float radius;
         public float _radius
@@ -272,7 +313,7 @@ namespace Task_2._1._2
             }
         }
 
-        public double CircleSquare
+        public override double GetSquare
         {
             get
             {
@@ -280,7 +321,7 @@ namespace Task_2._1._2
             }
         }
 
-        public double CircleLength
+        public override double GetPerimeter
         {
             get
             {
@@ -291,10 +332,10 @@ namespace Task_2._1._2
         public override string ToString()
         {
             return $"Круг.\n" +
-                   $"Координаты центра круга - {pointX} и {pointY},\n" +
+                   $"Координаты центра круга - {startpointX} и {startpointY},\n" +
                    $"радиус круга - {radius},\n" +
-                   $"площадь круга - {Math.Round(CircleSquare, 2)},\n" +
-                   $"длина окружности - {Math.Round(CircleLength, 2)}";
+                   $"площадь круга - {Math.Round(GetSquare, 2)},\n" +
+                   $"длина окружности - {Math.Round(GetPerimeter, 2)}";
         }
     }
 
@@ -313,7 +354,7 @@ namespace Task_2._1._2
             } 
         }
 
-        public double RingSquare
+        public override double GetSquare
         {
             get
             {
@@ -321,7 +362,7 @@ namespace Task_2._1._2
             }
         }
 
-        public double RingLength
+        public override double GetPerimeter
         {
             get
             {
@@ -332,67 +373,94 @@ namespace Task_2._1._2
         public override string ToString()
         {
             return $"Кольцо.\n" +
-                   $"Координаты центра кольца - {pointX} и {pointY},\n" +
+                   $"Координаты центра кольца - {startpointX} и {startpointY},\n" +
                    $"внешний радиус кольца - {radius},\n" +
                    $"внутренний радиус кольца - {innerRadius},\n" +
-                   $"площадь кольца - {Math.Round(RingSquare, 2)},\n" +
-                   $"суммарная длина внешней и внутренней окружностей - {Math.Round(RingLength, 2)}";
+                   $"площадь кольца - {Math.Round(GetSquare, 2)},\n" +
+                   $"суммарная длина внешней и внутренней окружностей - {Math.Round(GetPerimeter, 2)}";
         }
     }
 
-    class Line : Figure
+    class Line : OpenPieces
     {
-        public float endlinepointX;
-        public float endlinepointY;
-
         /// <summary>
-        /// Метод получающий начальные и конечные координаты линии. В последствии должен использоваться при подсчете других величин, где необходимо знать длину стороны
+        /// Метод получающий начальные и конечные координаты линии.
         /// </summary>
-        /// <param name="startpointX"></param>
-        /// <param name="startpointY"></param>
-        /// <param name="endpointX"></param>
-        /// <param name="endpointY"></param>
         /// <returns>Возвращает длину линии</returns>
-        public double Length (float startpointX, float startpointY, float endpointX, float endpointY)
+        public override double Length 
         {
-            float width;
-            float heigth;
+            get
+            {
+                float width;
+                float heigth;
 
-            if (endpointX > startpointX)
-            {
-                width = endpointX - startpointX;
-            }
-            else
-            {
-                width = startpointX - endpointX;
-            }
+                if (endlinepointX > startpointX)
+                {
+                    width = endlinepointX - startpointX;
+                }
+                else
+                {
+                    width = startpointX - endlinepointX;
+                }
 
-            if (endlinepointY > pointY)
-            {
-                heigth = endpointY - startpointY;
-            }
-            else
-            {
-                heigth = startpointY - endpointY;
-            }
+                if (endlinepointY > startpointY)
+                {
+                    heigth = endlinepointY - startpointY;
+                }
+                else
+                {
+                    heigth = startpointY - endlinepointY;
+                }
 
-            return Math.Sqrt(width * width + heigth * heigth);
+                return Math.Sqrt(width * width + heigth * heigth);
+            }
         }
 
         public override string ToString()
         {
             return $"Прямая линия.\n" +
-                   $"Координаты начала линии - {pointX} и {pointY},\n" +
-                   $"Координаты окончания линии - {endlinepointX} и {endlinepointY},\n" +
-                   $"длина линии - {Math.Round(Length(pointX, pointY, endlinepointX, endlinepointY), 2)}";
+                   $"Координаты начала линии - {startpointX} и {startpointY},\n" +
+                   $"координаты окончания линии - {endlinepointX} и {endlinepointY},\n" +
+                   $"длина линии - {Math.Round(Length, 2)}";
         }
     }
 
-    class Quadrate : Figure
+    class Triangle : FlatFigures
+    {
+        public float sideA;
+        public float sideB;
+        public float sideC;
+
+        //public override double GetSquare
+        //{
+        //    get
+        //    {
+
+        //    }
+        //}
+
+        public override double GetPerimeter
+        {
+            get
+            {
+                return sideA + sideB + sideC;
+            }
+        }
+
+        //public override string ToString()
+        //{
+        //    return $"Треугольник.\n" +
+        //           $"Координаты вершины квадрата - {startpointX} и {startpointX}, {startpointX + width} и {startpointY}, {startpointX + width} и {startpointX + width}, {startpointX} и {startpointX + width}\n" +
+        //           $"площадь треугольника - {Math.Round(GetSquare, 2)}\n" +
+        //           $"периметр треугольника - {Math.Round(GetPerimeter, 2)}";
+        //}
+    }
+
+    class Quadrate : FlatFigures
     {
         public float width;
 
-        public virtual float Square
+        public override double GetSquare
         {
             get
             {
@@ -400,7 +468,7 @@ namespace Task_2._1._2
             }
         }
 
-        public virtual float Perimeter
+        public override double GetPerimeter
         {
             get
             {
@@ -411,9 +479,9 @@ namespace Task_2._1._2
         public override string ToString()
         {
             return $"Квадрат.\n" +
-                   $"Координаты вершины квадрата - {pointX} и {pointY}, {pointX + width} и {pointY}, {pointX + width} и {pointY + width}, {pointX} и {pointY + width}\n" +
-                   $"площадь квадрата - {Math.Round(Square, 2)}\n" +
-                   $"периметр квадрата - {Math.Round(Perimeter, 2)}";
+                   $"Координаты вершины квадрата - {startpointX} и {startpointY}, {startpointX + width} и {startpointY}, {startpointX + width} и {startpointY + width}, {startpointX} и {startpointY + width}\n" +
+                   $"площадь квадрата - {Math.Round(GetSquare, 2)}\n" +
+                   $"периметр квадрата - {Math.Round(GetPerimeter, 2)}";
         }
     }
 
@@ -421,7 +489,7 @@ namespace Task_2._1._2
     {
         public float heigth;
 
-        public override float Square
+        public override double GetSquare
         {
             get
             {
@@ -429,7 +497,7 @@ namespace Task_2._1._2
             }
         }
 
-        public override float Perimeter
+        public override double GetPerimeter
         {
             get
             {
@@ -440,9 +508,9 @@ namespace Task_2._1._2
         public override string ToString()
         {
             return $"Прямоугольник.\n" +
-                   $"Координаты вершины прямоугольника - {pointX} и {pointY}, {pointX + width} и {pointY}, {pointX + width} и {pointY + heigth}, {pointX} и {pointY + heigth}\n" +
-                   $"площадь прямоугольника - {Math.Round(Square, 2)}\n" +
-                   $"периметр прямоугольника - {Math.Round(Perimeter, 2)}";
+                   $"Координаты вершины прямоугольника - {startpointX} и {startpointY}, {startpointX + width} и {startpointY}, {startpointX + width} и {startpointY + heigth}, {startpointX} и {startpointY + heigth}\n" +
+                   $"площадь прямоугольника - {Math.Round(GetSquare, 2)}\n" +
+                   $"периметр прямоугольника - {Math.Round(GetPerimeter, 2)}";
         }
     } 
 }
