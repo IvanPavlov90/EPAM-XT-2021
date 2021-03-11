@@ -90,6 +90,8 @@ namespace Task_2._1._2
                 "4. Квадрат",
                 "5. Прямоугольник",
                 "6. Треугольник",
+                "7. Сфера",
+                "8. Цилиндр",
             };
 
             foreach (string item in menu)
@@ -133,16 +135,18 @@ namespace Task_2._1._2
                     figures.Add(ring);
                     CustomPaint(figures);
                     break;
-                //case "3":
-                //    Line line = new Line();
-                //    Console.WriteLine("Введите начальные координаты Линии:");
-                //    InputCoordinats(ref line.startpointX, ref line.startpointY);
-                //    Console.WriteLine("Введите конечные координаты Линии:");
-                //    InputCoordinats(ref line.endlinepointX, ref line.endlinepointY);
-                //    Console.WriteLine("Линия создана");
-                //    figures.Add(line);
-                //    CustomPaint(figures);
-                //    break;
+                case "3":
+                    Line line = new Line();
+                    Console.WriteLine("Введите начальные координаты Линии:");
+                    line.StartpointX = InputCoordinats();
+                    line.StartpointY = InputCoordinats();
+                    Console.WriteLine("Введите конечные координаты Линии:");
+                    line.EndlinepointX = InputCoordinats();
+                    line.EndlinepointY = InputCoordinats();
+                    Console.WriteLine("Линия создана");
+                    figures.Add(line);
+                    CustomPaint(figures);
+                    break;
                 case "4":
                     Quadrate square = new Quadrate();
                     Console.WriteLine("Введите координаты вершины квадрата:");
@@ -179,6 +183,29 @@ namespace Task_2._1._2
                     triangle.SideC = CheckingValues(0);
                     Console.WriteLine("Треугольник создан.");
                     figures.Add(triangle);
+                    CustomPaint(figures);
+                    break;
+                case "7":
+                    Console.WriteLine("Введите параметры фигуры Круг:");
+                    Sphere sphere = new Sphere();
+                    Console.WriteLine("Введите координаты центра сферы:");
+                    sphere.StartpointX = InputCoordinats();
+                    sphere.StartpointY = InputCoordinats();
+                    Console.WriteLine("Введите радиус (дробный радиус вводится через запятую)");
+                    sphere.Radius = CheckingValues(0);
+                    Console.WriteLine("Сфера создана.");
+                    figures.Add(sphere);
+                    CustomPaint(figures);
+                    break;
+                case "8":
+                    Console.WriteLine("Введите параметры фигуры Круг:");
+                    Cylinder cylinder = new Cylinder();
+                    Console.WriteLine("Введите радиус (дробный радиус вводится через запятую)");
+                    cylinder.Radius = CheckingValues(0);
+                    Console.WriteLine("Введите высоту (дробный радиус вводится через запятую)");
+                    cylinder.Height = CheckingValues(0);
+                    Console.WriteLine("Цилиндр создан.");
+                    figures.Add(cylinder);
                     CustomPaint(figures);
                     break;
                 default:
@@ -241,10 +268,23 @@ namespace Task_2._1._2
         }
     }
 
-    class OpenPieces : Figure
+    abstract class OpenFigures : Figure
     {
-        public float endlinepointX;
-        public float endlinepointY;
+        private float _endlinepointX;
+
+        public float EndlinepointX
+        {
+            get => _endlinepointX;
+            set => _endlinepointX = value;
+        }
+
+        private float _endlinepointY;
+
+        public float EndlinepointY
+        {
+            get => _endlinepointY;
+            set => _endlinepointY = value;
+        }
         public virtual double Length { get; }
     }
 
@@ -334,7 +374,7 @@ namespace Task_2._1._2
         }
     }
 
-    class Line : OpenPieces
+    class Line : OpenFigures
     {
         public override double Length 
         {
@@ -343,22 +383,22 @@ namespace Task_2._1._2
                 float width;
                 float heigth;
 
-                if (endlinepointX > StartpointX)
+                if (EndlinepointX > StartpointX)
                 {
-                    width = endlinepointX - StartpointX;
+                    width = EndlinepointX - StartpointX;
                 }
                 else
                 {
-                    width = StartpointX - endlinepointX;
+                    width = StartpointX - EndlinepointX;
                 }
 
-                if (endlinepointY > StartpointY)
+                if (EndlinepointY > StartpointY)
                 {
-                    heigth = endlinepointY - StartpointY;
+                    heigth = EndlinepointY - StartpointY;
                 }
                 else
                 {
-                    heigth = StartpointY - endlinepointY;
+                    heigth = StartpointY - EndlinepointY;
                 }
 
                 return Math.Sqrt(width * width + heigth * heigth);
@@ -368,8 +408,8 @@ namespace Task_2._1._2
         public override string ToString()
         {
             return $"Прямая линия.\n" +
-                   $"Координаты начала линии - {StartpointX} и {StartpointY},\n" +
-                   $"координаты окончания линии - {endlinepointX} и {endlinepointY},\n" +
+                   $"Координаты начала линии - (x:, y:) {StartpointX} {StartpointY},\n" +
+                   $"координаты окончания линии - (x:, y:) {EndlinepointX} {EndlinepointY},\n" +
                    $"длина линии - {Math.Round(Length, 2)}";
         }
     }
@@ -495,4 +535,107 @@ namespace Task_2._1._2
                    $"периметр прямоугольника - {Math.Round(GetPerimeter, 2)}";
         }
     } 
+
+    class Sphere : VolumeFigures
+    {
+        private float _radius;
+        public float Radius
+        {
+            get => _radius;
+            set => _radius = value;
+        }
+
+        public override double GetSquare
+        {
+            get
+            {
+                return 4 * Math.PI * Radius * Radius;
+            }
+        }
+
+        public override double GetVolume
+        {
+            get
+            {
+                return (4 * Math.PI * Radius * Radius * Radius) / 3;
+            }
+        }
+
+        public override string ToString()
+        {
+            return $"Сфера.\n" +
+                   $"Координаты центра сферы - (x:, y:) {StartpointX} {StartpointY}" +
+                   $"площадь сферы - {Math.Round(GetSquare, 2)}\n" +
+                   $"объем сферы - {Math.Round(GetVolume, 2)}";
+        }
+    }
+
+    class Cylinder : Sphere
+    {
+        private float _height;
+
+        public float Height
+        {
+            get => _height;
+            set => _height = value;
+        }
+
+        public override double GetSquare
+        {
+            get
+            {
+                return 2 * Math.PI * Radius *(Height + Radius);
+            }
+        }
+
+        public override double GetVolume
+        {
+            get
+            {
+                return Math.PI * Radius * Radius * Height;
+            }
+        }
+
+        public override string ToString()
+        {
+            return $"Цилиндр.\n" +
+                   $"Площадь цилиндра - {Math.Round(GetSquare, 2)}\n" +
+                   $"Объем цилиндра - {Math.Round(GetVolume, 2)}";
+        }
+    }
+
+    class User
+    {
+        public User (string name)
+        {
+            Name = name;
+        }
+
+        private string _name;
+
+        public string Name
+        {
+            get => _name;
+            set => _name = value;
+        }
+
+        private int _id;
+
+        public int ID
+        {
+            get => _id;
+        }
+
+        private List<object> _figures = new List<object>();
+
+        public List<object> ShowFigures
+        {
+            get => return _figures;
+        }
+
+        public List<object> AddFigure
+        {
+            set => _figures.Add(value);
+        }
+    }
 }
