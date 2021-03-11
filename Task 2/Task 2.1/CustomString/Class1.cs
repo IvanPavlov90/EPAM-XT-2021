@@ -4,46 +4,58 @@ namespace MyString
 {
     public class CustomString
     {
-        public string myString = String.Empty;
+        private string _myString = String.Empty;
+
+        public string MyString
+        {
+            get
+            {
+                return _myString;
+            }
+            set
+            {
+                _myString = value;
+            }
+        }
 
         public void Print()
         {
-            Console.WriteLine(myString);
+            Console.WriteLine(MyString);
         }
 
         public char[] ConvertToCharArray()
         {
-            char[] Symbols = myString.ToCharArray();
+            char[] Symbols = MyString.ToCharArray();
             return Symbols;
         }
 
         public string CreateStringFromChar(params char[] items)
         {
-            myString = String.Empty;
+            MyString = String.Empty;
 
             foreach (char item in items)
             {
-                myString += item.ToString();
+                MyString += item.ToString();
             }
 
-            return myString;
+            return MyString;
         }
 
         public string Concat(params string[] items)
         {
-            myString = String.Empty;
+            MyString = String.Empty;
 
             foreach (string item in items)
             {
-                myString += item;
+                MyString += item;
             }
 
-            return myString;
+            return MyString;
         }
 
         public bool ContainsSymbols(char Symbol)
         {
-            int index = myString.IndexOf(Symbol);
+            int index = MyString.IndexOf(Symbol);
             if (index == -1)
                 return false;
             else
@@ -58,7 +70,7 @@ namespace MyString
 
             do
             {
-                index = myString.IndexOf(Symbol, startIndex + 1);
+                index = MyString.IndexOf(Symbol, startIndex + 1);
                 count++;
                 startIndex = index;
             }
@@ -69,13 +81,13 @@ namespace MyString
 
         public int SearchSymbol(char Symbol)
         {
-            int index = myString.IndexOf(Symbol);
+            int index = MyString.IndexOf(Symbol);
             return index;
         }
 
         public int SearchSubstring(string text)
         {
-            int index = myString.IndexOf(text);
+            int index = MyString.IndexOf(text);
             return index;
         }
 
@@ -83,9 +95,9 @@ namespace MyString
         {
             string reverse = string.Empty;
 
-            for (int i = myString.Length - 1; i > 0; i--)
+            for (int i = MyString.Length - 1; i > 0; i--)
             {
-                reverse += myString[i];
+                reverse += MyString[i];
             }
 
             return reverse;
@@ -93,31 +105,31 @@ namespace MyString
 
         public bool CheckEquality(CustomString obj1, CustomString obj2)
         {
-            return obj1.myString.Equals(obj2.myString);
+            return obj1.MyString.Equals(obj2.MyString);
         }
 
         public int Comparison(CustomString obj1, CustomString obj2)
         {
-            return obj1.myString.CompareTo(obj2.myString);
+            return obj1.MyString.CompareTo(obj2.MyString);
         }
 
         public char this[int index]
         {
             get
             {
-                if (index > myString.Length - 1 || index < 0)
+                if (index > MyString.Length - 1 || index < 0)
                 {
                     return ' ';
                 }
                 else
                 {
-                    return myString[index];
+                    return MyString[index];
                 }
             }
             set
             {
                 char[] data = ConvertToCharArray();
-                if (index > myString.Length - 1 || index < 0)
+                if (index > MyString.Length - 1 || index < 0)
                 {
                     Console.WriteLine("Такого индекса не существует! Сначала инициализируйте строку необходимой длины для того, чтобы что-то менять.");
                 }
