@@ -7,15 +7,24 @@ namespace Task_2._1._2
     {
         static void Main(string[] args)
         {
+            StartApp();
+        }
+
+        static void StartApp ()
+        {
+            List<User> users = new List<User>();
             List<object> figures = new List<object>();
-            CustomPaint(figures);
+            string name;
+            SetUser(users, out figures, out name);
+            Console.WriteLine($"Добро пожаловать, {name}");
+            CustomPaint(name, figures);
         }
 
         /// <summary>
         /// Основное меню приложения, в котором происходит выбор действия.
         /// </summary>
         /// <param name="figures"></param>
-        static void CustomPaint(List<object> figures)
+        static void CustomPaint(string name, List<object> figures)
         {
             showMainMenu();
             string usersChoise = Console.ReadLine();
@@ -24,12 +33,12 @@ namespace Task_2._1._2
                 case "1":
                     ShowFiguresMenu();
                     string figuresChoise = Console.ReadLine();
-                    ShowFigures(figures, figuresChoise);
+                    ShowFigures(name, figures, figuresChoise);
                     break;
                 case "2":
                     if (figures.Count == 0)
                     {
-                        Console.WriteLine("Вы ничего еще не нарисовали");
+                        Console.WriteLine($"{name}, Вы ничего еще не нарисовали");
                     }
                     else
                     {
@@ -38,22 +47,26 @@ namespace Task_2._1._2
                             Console.WriteLine(item.ToString());
                         }
                     }
-                    Console.WriteLine("Нажмите клавишу для продолжения");
+                    Console.WriteLine($"{name}, нажмите клавишу для продолжения");
                     Console.ReadKey();
-                    CustomPaint(figures);
+                    CustomPaint(name, figures);
                     break;
                 case "3":
                     figures.Clear();
                     Console.Clear();
-                    Console.WriteLine("Перед Вами чистый холст, то, что Вы здесь изобразите зависит только от Вас!");
-                    CustomPaint(figures);
+                    Console.WriteLine($"{name}, перед Вами чистый холст, то, что Вы здесь изобразите зависит только от Вас!");
+                    CustomPaint(name, figures);
                     break;
                 case "4":
+                    Console.Clear();
+                    StartApp();
+                    break;
+                case "5":
                     Environment.Exit(0);
                     break;
                 default:
-                    Console.WriteLine("Такой команды не существует! Введите другую команду.");
-                    CustomPaint(figures);
+                    Console.WriteLine($"{name}, такой команды не существует! Введите другую команду.");
+                    CustomPaint(name, figures);
                     break;
             }
             Console.ReadKey();
@@ -67,7 +80,8 @@ namespace Task_2._1._2
                 "1. Добавить фигуру",
                 "2. Вывести фигуры",
                 "3. Очистить холст",
-                "4. Выход"
+                "4. Сменить пользователя",
+                "5. Выход"
             };
 
             foreach (string item in menu)
@@ -105,7 +119,7 @@ namespace Task_2._1._2
         /// </summary>
         /// <param name="figures"></param>
         /// <param name="figuresChoise"></param>
-        static void ShowFigures (List<object> figures, string figuresChoise)
+        static void ShowFigures (string name, List<object> figures, string figuresChoise)
         {
             switch (figuresChoise)
             {
@@ -119,7 +133,7 @@ namespace Task_2._1._2
                     circle.Radius = CheckingValues(0);
                     Console.WriteLine("Круг создан");
                     figures.Add(circle);
-                    CustomPaint(figures);
+                    CustomPaint(name, figures);
                     break;
                 case "2":
                     Console.WriteLine("Введите параметры фигуры Кольцо:");
@@ -133,7 +147,7 @@ namespace Task_2._1._2
                     ring.Radius = CheckingValues(ring.InnerRadius);
                     Console.WriteLine("Кольцо создано");
                     figures.Add(ring);
-                    CustomPaint(figures);
+                    CustomPaint(name, figures);
                     break;
                 case "3":
                     Line line = new Line();
@@ -145,7 +159,7 @@ namespace Task_2._1._2
                     line.EndlinepointY = InputCoordinats();
                     Console.WriteLine("Линия создана");
                     figures.Add(line);
-                    CustomPaint(figures);
+                    CustomPaint(name, figures);
                     break;
                 case "4":
                     Quadrate square = new Quadrate();
@@ -155,7 +169,7 @@ namespace Task_2._1._2
                     Console.WriteLine("Введите длину стороны квадрата:");
                     square.Side = CheckingValues(0);
                     figures.Add(square);
-                    CustomPaint(figures);
+                    CustomPaint(name, figures);
                     break;
                 case "5":
                     Rectangle rectangle = new Rectangle();
@@ -168,7 +182,7 @@ namespace Task_2._1._2
                     rectangle.Height = CheckingValues(0);
                     Console.WriteLine("Прямоугольник создан.");
                     figures.Add(rectangle);
-                    CustomPaint(figures);
+                    CustomPaint(name, figures);
                     break;
                 case "6":
                     Triangle triangle = new Triangle();
@@ -183,7 +197,7 @@ namespace Task_2._1._2
                     triangle.SideC = CheckingValues(0);
                     Console.WriteLine("Треугольник создан.");
                     figures.Add(triangle);
-                    CustomPaint(figures);
+                    CustomPaint(name, figures);
                     break;
                 case "7":
                     Console.WriteLine("Введите параметры фигуры Круг:");
@@ -195,7 +209,7 @@ namespace Task_2._1._2
                     sphere.Radius = CheckingValues(0);
                     Console.WriteLine("Сфера создана.");
                     figures.Add(sphere);
-                    CustomPaint(figures);
+                    CustomPaint(name, figures);
                     break;
                 case "8":
                     Console.WriteLine("Введите параметры фигуры Круг:");
@@ -206,11 +220,11 @@ namespace Task_2._1._2
                     cylinder.Height = CheckingValues(0);
                     Console.WriteLine("Цилиндр создан.");
                     figures.Add(cylinder);
-                    CustomPaint(figures);
+                    CustomPaint(name, figures);
                     break;
                 default:
                     Console.WriteLine("Такой команды не существует! Введите другую команду.");
-                    CustomPaint(figures);
+                    CustomPaint(name, figures);
                     break;
             }
         }
@@ -246,6 +260,40 @@ namespace Task_2._1._2
                 float.TryParse(uservalue, out value);
             }
             return value;
+        }
+
+        static void SetUser (List <User> users, out List <object> figures, out string name)
+        {
+            Console.WriteLine("Введите имя пользователя:");
+            string username = Console.ReadLine();
+            User user = SearchUser(username, users);
+            users.Add(user);
+            figures = user.ShowFigures();
+            name = user.Name;
+        }
+
+        static User SearchUser (string username, List <User> users)
+        {
+            bool flag = false;
+            User existingUser = new User (username);
+            foreach (User item in users)
+            {
+                if (username == item.Name)
+                {
+                    flag = true;
+                    existingUser = item;
+                }
+            }
+
+            if (flag)
+            {
+                Console.WriteLine($"Пользователь с именем {username} уже существует.");
+                return existingUser;
+            } else
+            {
+                User user = new User(username);
+                return user;
+            }
         }
     }
 
@@ -619,18 +667,11 @@ namespace Task_2._1._2
             set => _name = value;
         }
 
-        private int _id;
-
-        public int ID
-        {
-            get => _id;
-        }
-
         private List<object> _figures = new List<object>();
 
-        public List<object> ShowFigures
+        public List<object> ShowFigures()
         {
-            get => return _figures;
+            return _figures;
         }
 
         public List<object> AddFigure
