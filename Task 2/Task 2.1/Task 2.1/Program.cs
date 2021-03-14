@@ -8,16 +8,19 @@ namespace Task_2._1
         static void Main(string[] args)
         {
             CustomString first = new CustomString("Modern");
-            CustomString second = new CustomString("Modern");
+            CustomString second = new CustomString(" Talking");
+            bool f = (first != second);
+            bool g = (second == first);
+            Console.WriteLine($"{f}, {g}");
+            string reverse = second.Reverse();
+            Console.WriteLine(reverse);
+            first[4] = 'R';
+            Console.WriteLine(first[4]);
+            second[0] = 'V';
             CustomString third = first + second;
-            bool f = (first == second);
-            Console.WriteLine(f);
 
-            //Console.WriteLine(third.SearchSymbol('i'));
-            //foreach (char item in second.MyString)
-            //{
-            //    Console.WriteLine(item);
-            //}
+            Console.WriteLine(third.CountSymbol('i'));
+            third.Print();
 
         }
     }
