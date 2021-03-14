@@ -25,11 +25,9 @@ namespace Task_2._1._2
         static void StartApp ()
         {
             List<User> users = new List<User>();
-            List<object> figures = new List<object>();
-            string name;
-            SetUser(users, out figures, out name);
-            Console.WriteLine($"Добро пожаловать, {name}");
-            CustomPaint(name, figures);
+            User currentuser = SetUser(users);
+            Console.WriteLine($"Добро пожаловать, {currentuser.Name}");
+            CustomPaint(currentuser.Name, currentuser.ShowFigures());
         }
 
         /// <summary>
@@ -83,6 +81,9 @@ namespace Task_2._1._2
             Console.ReadKey();
         }
 
+        /// <summary>
+        /// Метод для вывода основного меню.
+        /// </summary>
         static void showMainMenu ()
         {
             List<string> menu = new List<string>()
@@ -289,45 +290,72 @@ namespace Task_2._1._2
                 Console.WriteLine("И теперь еще раз пройти проверку на валидность.");
                 IsTriangleValid(triangle);
             }
-        }   
-    
+        }
 
 
-        public static void SetUser (List <User> users, out List <object> figures, out string name)
+        /// <summary>
+        /// Метод, принимающий список текущих юзеров. Внутри этого метода есть применение еще одного метода,
+        /// который осуществляет поиск юзеров в списке по введенному имени.
+        /// </summary>
+        /// <param name="users"></param>
+        /// <returns>В зависимости от того, нашелся ли пользовтаель по имени или нет, создается новый юзер или возвращается ранее созданный.</returns>
+        public static User SetUser(List<User> users)
         {
             Console.WriteLine("Введите имя пользователя:");
             string username = Console.ReadLine();
-            User user = SearchUser(username, users);
-            users.Add(user);
-            figures = user.ShowFigures();
-            name = user.Name;
+            if (users.Count == 0)
+            {
+                User user = new User(username);
+                users.Add(user);
+                return user;
+            }
+            else 
+            {
+                int index;
+                bool result = SearchUser(username, users, out index);
+                if (result)
+                {
+                    return users[index];
+                }
+                else
+                {
+                    User user = new User(username);
+                    users.Add(user);
+                    return user;
+                }
+            } 
         }
 
-        public static User SearchUser (string username, List <User> users)
+        /// <summary>
+        /// Метод, который ищет пользователя по имени в списке юзеров. 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="users"></param>
+        /// <param name="index"></param>
+        /// <returns>Если юзер найдет возвращает true и индекс этого пользователя, если нет, то возвращает false  и индекс - 1,
+        /// в случае. если позователь не найдет индекс -1 нигде не применяется и используется в качестве заглушки.</returns>
+        public static bool SearchUser (string username, List <User> users, out int index)
         {
             bool flag = false;
-            User existingUser = new User (username);
-            foreach (User item in users)
+            index = -1;
+            for (int i = 0; i <= users.Count; i++)
             {
-                if (username == item.Name)
+                if (users[i].Name == username)
                 {
                     flag = true;
-                    existingUser = item;
+                    index = i;
                 }
             }
 
-            if (flag)
-            {
-                Console.WriteLine($"Пользователь с именем {username} уже существует.");
-                return existingUser;
-            } else
-            {
-                User user = new User(username);
-                return user;
-            }
+            return flag;
         }
     }
 
+    /// <summary>
+    /// Ниже расположена иерархия наследования фигур. В качестве самого первого и основного параметра, который потом
+    /// наследуют все классы, я взял координаты точки, в которой мы начинаем рисование. В целом, я идею с проверкой 
+    /// по точкам развивать не стал и в большинстве случаев, стал просто оперировать значениями сторон.
+    /// </summary>
     abstract class Figure
     {
         private float _startpointX;
