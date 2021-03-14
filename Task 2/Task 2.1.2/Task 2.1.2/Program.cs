@@ -5,6 +5,18 @@ namespace Task_2._1._2
 {
     class Program
     {
+        public enum Figures
+        {
+            Круг = 1,
+            Кольцо = 2,
+            Линия = 3,
+            Квадрат = 4,
+            Прямоугольник = 5,
+            Треугольник = 6,
+            Сфера = 7,
+            Цилиндр = 8
+        }
+
         static void Main(string[] args)
         {
             StartApp();
@@ -31,8 +43,8 @@ namespace Task_2._1._2
             {
                 case "1":
                     ShowFiguresMenu();
-                    string figuresChoise = Console.ReadLine();
-                    ShowFigures(name, figures, figuresChoise);
+                    int value = CheckUsersChoise();
+                    ShowFigures(name, figures, CheckFigure(value));
                     break;
                 case "2":
                     if (figures.Count == 0)
@@ -94,35 +106,59 @@ namespace Task_2._1._2
         /// </summary>
         static void ShowFiguresMenu ()
         {
-            List<string> menu = new List<string>()
+            foreach (Figures item in Enum.GetValues(typeof(Figures)))
             {
-                "Выберите тип фигуры:",
-                "1. Круг",
-                "2. Кольцо",
-                "3. Прямая линия",
-                "4. Квадрат",
-                "5. Прямоугольник",
-                "6. Треугольник",
-                "7. Сфера",
-                "8. Цилиндр",
-            };
-
-            foreach (string item in menu)
-            {
-                Console.WriteLine(item);
+                Console.WriteLine($"{(int)item}. {item}");
             }
+        }
+
+        /// <summary>
+        /// Метод, использощуйся для проверки, введенного пользователем значения при выборе фигуры.
+        /// Если пользователь ввел значение не соответствующее интовому значению из перечисления Figures, 
+        /// метод будет просить переввести это значение.
+        /// </summary>
+        /// <returns>Корректное значение</returns>
+        public static int CheckUsersChoise ()
+        {
+            string uservalue = Console.ReadLine();
+            Int32.TryParse(uservalue, out int value);
+            while (value <= 0 || value > 8)
+            {
+                Console.WriteLine("Вы ввели некорректное значение. Попробуйте еще раз");
+                uservalue = Console.ReadLine();
+                Int32.TryParse(uservalue, out value);
+            }
+            return value;
+        }
+
+        /// <summary>
+        /// Метод, отвечающий за выбор фигуры.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>Возвращает выбранную из перечисления фигуру. Тк значение которое попадает в этом метод уже прошло проверку на корректность,
+        /// то строчка "return Figures.Кольцо;" никогда не должна выполниться.
+        /// </returns>
+        public static Figures CheckFigure (int value)
+        {
+            foreach (Figures item in Enum.GetValues(typeof(Figures)))
+            {
+                if ((int)item == value)
+                {
+                    return item;
+                }
+            }
+
+            return Figures.Кольцо;
         }
 
         /// <summary>
         /// Метод, который создает фигуры, в зависимости от выбора пользователя.
         /// </summary>
-        /// <param name="figures"></param>
-        /// <param name="figuresChoise"></param>
-        static void ShowFigures (string name, List<object> figures, string figuresChoise)
+        static void ShowFigures (string name, List<object> figures, Figures figure)
         {
-            switch (figuresChoise)
+            switch (figure)
             {
-                case "1":
+                case Figures.Круг:
                     Console.WriteLine("Введите параметры фигуры Круг.");
                     Console.WriteLine("Введите координаты центра круга и значение радиуса (дробный радиус вводится через запятую).");
                     Circle circle = new Circle(InputCoordinats(), InputCoordinats(), CheckingValues(0));
@@ -130,7 +166,7 @@ namespace Task_2._1._2
                     figures.Add(circle);
                     CustomPaint(name, figures);
                     break;
-                case "2":
+                case Figures.Кольцо:
                     Console.WriteLine("Введите параметры фигуры Кольцо.");
                     Console.WriteLine("Введите координаты центра кольца, а также значения внешнего и внутреннего радиусов (дробный радиус вводится через запятую).");
                     Ring ring = new Ring(InputCoordinats(), InputCoordinats(), CheckingValues(0), CheckingValues(0));
@@ -140,28 +176,28 @@ namespace Task_2._1._2
                     figures.Add(ring);
                     CustomPaint(name, figures);
                     break;
-                case "3":
+                case Figures.Линия:
                     Console.WriteLine("Введите начальные  и конечные координаты Линии:");
                     Line line = new Line(InputCoordinats(), InputCoordinats(), InputCoordinats(), InputCoordinats());
                     Console.WriteLine("Линия создана");
                     figures.Add(line);
                     CustomPaint(name, figures);
                     break;
-                case "4":
+                case Figures.Квадрат:
                     Console.WriteLine("Введите координаты вершины квадрата и длину стороны квадрата.");
                     Quadrate square = new Quadrate(InputCoordinats(), InputCoordinats(), CheckingValues(0));
                     Console.WriteLine("Квадрат создан");
                     figures.Add(square);
                     CustomPaint(name, figures);
                     break;
-                case "5":
+                case Figures.Прямоугольник:
                     Console.WriteLine("Введите координаты вершины прямоугольника и длины его сторон.");
                     Rectangle rectangle = new Rectangle(InputCoordinats(), InputCoordinats(), CheckingValues(0), CheckingValues(0));
                     Console.WriteLine("Прямоугольник создан.");
                     figures.Add(rectangle);
                     CustomPaint(name, figures);
                     break;
-                case "6":
+                case Figures.Треугольник:
                     Console.WriteLine("Введите координаты вершины треугольника и длины его сторон.");
                     Triangle triangle = new Triangle(InputCoordinats(), InputCoordinats(), CheckingValues(0), CheckingValues(0), CheckingValues(0));
                     Console.WriteLine("Проверка треугольника на валидность.");
@@ -170,14 +206,14 @@ namespace Task_2._1._2
                     figures.Add(triangle);
                     CustomPaint(name, figures);
                     break;
-                case "7":
+                case Figures.Сфера:
                     Console.WriteLine("Введите координаты центра сферы и её радиус:");
                     Sphere sphere = new Sphere(InputCoordinats(), InputCoordinats(), CheckingValues(0));
                     Console.WriteLine("Сфера создана.");
                     figures.Add(sphere);
                     CustomPaint(name, figures);
                     break;
-                case "8":
+                case Figures.Цилиндр:
                     Console.WriteLine("Введите радиус и высоту цилиндра");
                     Cylinder cylinder = new Cylinder(0, 0, CheckingValues(0), CheckingValues(0));
                     Console.WriteLine("Цилиндр создан.");
@@ -257,7 +293,7 @@ namespace Task_2._1._2
     
 
 
-        static void SetUser (List <User> users, out List <object> figures, out string name)
+        public static void SetUser (List <User> users, out List <object> figures, out string name)
         {
             Console.WriteLine("Введите имя пользователя:");
             string username = Console.ReadLine();
@@ -267,7 +303,7 @@ namespace Task_2._1._2
             name = user.Name;
         }
 
-        static User SearchUser (string username, List <User> users)
+        public static User SearchUser (string username, List <User> users)
         {
             bool flag = false;
             User existingUser = new User (username);
@@ -703,6 +739,8 @@ namespace Task_2._1._2
         public override string ToString()
         {
             return $"Цилиндр.\n" +
+                   $"Радиус цилиндра - {Radius}\n" +
+                   $"Высота цилиндра - {Height}\n" +
                    $"Площадь цилиндра - {Math.Round(GetSquare, 2, MidpointRounding.AwayFromZero)}\n" +
                    $"Объем цилиндра - {Math.Round(GetVolume, 2, MidpointRounding.AwayFromZero)}";
         }
