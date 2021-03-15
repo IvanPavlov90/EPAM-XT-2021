@@ -1,137 +1,173 @@
 ﻿using System;
+using GameClasses;
 
 namespace GameApp
 {
     class Program
     {
+        public enum MenuElements
+        {
+            MoveForward = 1,
+            MoveBackward = 2,
+            MoveLeft = 3,
+            MoveRight = 4
+        }
+
         static void Main(string[] args)
         {
-
-        }
-    }
-
-    abstract class GameObject
-    {
-        private string _name;
-
-        public string Name
-        {
-            get => _name;
-            set => _name = value;
+            Player player = new Player("Geralt", 1, 0, 0);
+            Field field = new Field();
+            Horse horse1 = new Horse("Plotva", 2, 2);
+            StartApp(player, field);
         }
 
-        private bool _canBeAttacked;
-
-        public bool CanBeAttacked
+        public static void StartApp (Player player, Field field)
         {
-            get => _canBeAttacked;
-            set => _canBeAttacked = value;
+            ShowMenu();
+            Console.WriteLine("Выберите действие");
+            MenuElements userChoise = UserChoise();
+            Action(userChoise, player, field);
         }
 
-        private int _positionX;
-
-        public int PositionX
+        /// <summary>
+        /// Метод, выводящий пользовательское меню.
+        /// </summary>
+        public static void ShowMenu()
         {
-            get => _positionX;
-            set => _positionX = value;
+            foreach (MenuElements element in Enum.GetValues(typeof(MenuElements)))
+            {
+                Console.WriteLine($"{(int)element} {element}");
+            }
         }
 
-        private int _positionY;
-
-        public int PositionY
+        /// <summary>
+        /// Метод, осуществляющий проверку введенных пользователем значений.
+        /// </summary>
+        /// <returns>Булево значение, в зависмости от правильности выбора.</returns>
+        public static bool CountMenuElements(string choise)
         {
-            get => _positionY;
-            set => _positionY = value;
-        }
-    }
+            int count = 0;
+            Int32.TryParse(choise, out int userChoise);
 
-    abstract class Character : GameObject
-    {
-        private float _health;
+            foreach (MenuElements element in Enum.GetValues(typeof(MenuElements)))
+            {
+                count++;
+            }
 
-        public float Health
-        {
-            get => _health;
-            set => _health = value;
-        }
+            if (userChoise < 1 || userChoise > count)
+            {
+                return false;
+            }
 
-        private int _attackrange;
-
-        public int AttackRange
-        {
-            get => _attackrange;
-            set => _attackrange = value;
+            return true;
         }
 
-        private int _defenserange;
-
-        public int DefenseRange
+        /// <summary>
+        /// Метод, с помощью которого пользователь выбирает действие.
+        /// </summary>
+        /// <returns></returns>
+        public static MenuElements UserChoise()
         {
-            get => _defenserange;
-            set => _defenserange = value;
+            string choise = Console.ReadLine();
+            while (!CountMenuElements(choise))
+            {
+                Console.WriteLine("Нет такой команды, перевыберите действие.");
+                choise = Console.ReadLine();
+                CountMenuElements(choise);
+
+            }
+            Enum.TryParse(choise, out MenuElements result);
+            return result;
         }
 
-        private int _speed;
 
-        public int Speed
+        /// <summary>
+        /// Метод, проверяющий не вышел ли грок за игровое поле.
+        /// </summary>
+        /// <param name="coordintaXplayer"></param>
+        /// <param name="coordintaYplayer"></param>
+        /// <param name="fieldXborder"></param>
+        /// <param name="fieldYborder"></param>
+        /// <returns>Булево значение, в зависимости от результатов проверки.</returns>
+        public static bool CheckingPositionOfThePlayerAndBordersOfTheField (int coordintaXplayer, int coordintaYplayer, int fieldXborder, int fieldYborder)
         {
-            get => _speed;
-            set => _speed = value;
-        }
+            if (coordintaXplayer <= 0 || coordintaXplayer > fieldXborder)
+            {
+                return false;
+            } else if (coordintaYplayer <= 0 || coordintaYplayer > fieldYborder)
+            {
+                return false;
+            }
+            return true;
+        } 
 
-        public void Attack()
+        /// <summary>
+        /// Метод, производящий игровые действия.
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="player"></param>
+        public static void Action(MenuElements action, Player player, Field field)
         {
-
-        }
-    }
-
-    class Player : Character
-    {
-        public Player(string name, float health, int attackrange, int defenserange, int speed, int positionX, int positionY, bool beAttacked)
-        {
-            Name = name;
-            Health = health;
-            AttackRange = attackrange;
-            DefenseRange = defenserange;
-            Speed = speed;
-            PositionX = positionX;
-            PositionY = positionY;
-            CanBeAttacked = beAttacked;
-        }
-
-        public void MoveForward()
-        {
-            PositionY += Speed;
-        }
-
-        public void MoveBackward()
-        {
-            PositionY -= Speed;
-        }
-
-        public void MoveLeft()
-        {
-            PositionX -= Speed;
-        }
-
-        public void MoveRight()
-        {
-            PositionX += Speed;
-        }
-    }
-
-    class Enemy : Character
-    {
-        public Enemy(string name, float health, int attackrange, int defenserange, int speed, int positionX, int positionY, bool beAttacked)
-        {
-            Name = name;
-            Health = health;
-            AttackRange = attackrange;
-            DefenseRange = defenserange;
-            Speed = speed;
-            PositionX = positionX;
-            PositionY = positionY;
-            CanBeAttacked = beAttacked;
+            switch (action)
+            {
+                case MenuElements.MoveForward:
+                    if (CheckingPositionOfThePlayerAndBordersOfTheField(player.CoordinatX, player.CoordinatY, field.GetWidth, field.GetHeight))
+                    {
+                        player.MoveBackward();
+                        player.Print();
+                        StartApp(player, field);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Данное действие совершить невозможно, Вы находитесь у верхней границы поля.");
+                        player.Print();
+                        StartApp(player, field);
+                    }
+                    break;
+                case MenuElements.MoveBackward:
+                    if (CheckingPositionOfThePlayerAndBordersOfTheField(player.CoordinatX, player.CoordinatY, field.GetWidth, field.GetHeight))
+                    {
+                        player.MoveBackward();
+                        player.Print();
+                        StartApp(player, field);
+                    } else
+                    {
+                        Console.WriteLine("Данное действие совершить невозможно, Вы находитесь у нижней границы поля.");
+                        player.Print();
+                        StartApp(player, field);
+                    }
+                    break;
+                case MenuElements.MoveLeft:
+                    if (CheckingPositionOfThePlayerAndBordersOfTheField(player.CoordinatX, player.CoordinatY, field.GetWidth, field.GetHeight))
+                    {
+                        player.MoveBackward();
+                        player.Print();
+                        StartApp(player, field);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Данное действие совершить невозможно, Вы находитесь у нижней левой поля.");
+                        player.Print();
+                        StartApp(player, field);
+                    }
+                    break;
+                case MenuElements.MoveRight:
+                    if (CheckingPositionOfThePlayerAndBordersOfTheField(player.CoordinatX, player.CoordinatY, field.GetWidth, field.GetHeight))
+                    {
+                        player.MoveBackward();
+                        player.Print();
+                        StartApp(player, field);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Данное действие совершить невозможно, Вы находитесь у правой границы поля.");
+                        player.Print();
+                        StartApp(player, field);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
