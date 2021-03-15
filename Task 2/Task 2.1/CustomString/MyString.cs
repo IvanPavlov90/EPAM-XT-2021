@@ -4,39 +4,38 @@ using System.Text;
 
 namespace MyString
 {
-    public class CustomString : IEquatable<CustomString>
+    public class CustomString
     {
         public CustomString(string text)
         {
-            MyString = text.ToCharArray();
+            myString = text.ToCharArray();
         }
 
-        private char[] _myString;
-
-        public char[] MyString
+        public CustomString(char[] text)
         {
-            get
-            {
-                return _myString;
-            }
-            set
-            {
-                _myString = value;
-            }
+            myString = text;
         }
+
+        public char[] myString { get; set; }
 
         public static CustomString operator + (CustomString str1, CustomString str2)
         {
-            string result = String.Empty;
+            char[] result = new char[str1.myString.Length + str2.myString.Length];
 
-            foreach (char item in str1.MyString)
+            int i = 0;
+            int j = 0;
+
+            while (i < str1.myString.Length)
             {
-                result += item;
+                result[i] = str1.myString[i];
+                i++;
             }
 
-            foreach (char item in str2.MyString)
+            while (j < str2.myString.Length)
             {
-                result += item;
+                result[i] = str2.myString[j];
+                i++;
+                j++;
             }
 
             return new CustomString(result);
@@ -45,16 +44,16 @@ namespace MyString
         public static bool operator == (CustomString str1, CustomString str2)
         {
             bool flag = true;
-            if (str1.MyString.Length != str2.MyString.Length)
+            if (str1.myString.Length != str2.myString.Length)
             {
                 flag = false;
                 return flag;
             }
             else
             {
-                for (int i = 0; i < str1.MyString.Length; i++)
+                for (int i = 0; i < str1.myString.Length; i++)
                 {
-                    if (!Equals(str1.MyString[i], str2.MyString[i])) flag = false;
+                    if (!Equals(str1.myString[i], str2.myString[i])) flag = false;
                 }
 
                 return flag;
@@ -64,16 +63,16 @@ namespace MyString
         public static bool operator != (CustomString str1, CustomString str2)
         {
             bool flag = false;
-            if (str1.MyString.Length != str2.MyString.Length)
+            if (str1.myString.Length != str2.myString.Length)
             {
                 flag = true;
                 return flag;
             }
             else
             {
-                for (int i = 0; i < str1.MyString.Length; i++)
+                for (int i = 0; i < str1.myString.Length; i++)
                 {
-                    if (!Equals(str1.MyString[i], str2.MyString[i])) 
+                    if (!Equals(str1.myString[i], str2.myString[i])) 
                     {
                         flag = true;
                     }
@@ -91,7 +90,7 @@ namespace MyString
         public bool SearchSymbol(char Symbol)
         {
             bool flag = false;
-            foreach (char item in MyString)
+            foreach (char item in myString)
             {
                 if (item == Symbol)
                     flag = true;
@@ -108,7 +107,7 @@ namespace MyString
         {
             int count = 0;
 
-            foreach (char item in MyString)
+            foreach (char item in myString)
             {
                 if (item == Symbol) count++;
             }
@@ -118,7 +117,7 @@ namespace MyString
 
         public void Print()
         {
-            foreach (char item in MyString)
+            foreach (char item in myString)
             {
                 Console.Write(item);
             }
@@ -133,9 +132,9 @@ namespace MyString
         {
             string reverse = string.Empty;
 
-            for (int i = MyString.Length - 1; i >= 0; i--)
+            for (int i = myString.Length - 1; i >= 0; i--)
             {
-                reverse += MyString[i];
+                reverse += myString[i];
             }
 
             return reverse;
@@ -146,40 +145,40 @@ namespace MyString
             return Equals(obj as CustomString);
         }
 
-        public bool Equals(CustomString other)
-        {
-            return other != null &&
-                   EqualityComparer<char[]>.Default.Equals(_myString, other._myString) &&
-                   EqualityComparer<char[]>.Default.Equals(MyString, other.MyString);
-        }
+        //public bool Equals(CustomString other)
+        //{
+        //    return other != null &&
+        //           EqualityComparer<char[]>.Default.Equals(_myString, other._myString) &&
+        //           EqualityComparer<char[]>.Default.Equals(MyString, other.MyString);
+        //}
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(_myString, MyString);
-        }
+        //public override int GetHashCode()
+        //{
+        //    return HashCode.Combine(_myString, MyString);
+        //}
 
         public char this[int index]
         {
             get
             {
-                if (index > MyString.Length - 1 || index < 0)
+                if (index > myString.Length - 1 || index < 0)
                 {
-                    return ' ';
+                    throw new IndexOutOfRangeException("Такого индекса не существует! Сначала инициализируйте строку необходимой длины для того, чтобы что-то менять.");
                 }
                 else
                 {
-                    return MyString[index];
+                    return myString[index];
                 }
             }
             set
             {
-                if (index > MyString.Length - 1 || index < 0)
+                if (index > myString.Length - 1 || index < 0)
                 {
-                    Console.WriteLine("Такого индекса не существует! Сначала инициализируйте строку необходимой длины для того, чтобы что-то менять.");
+                    throw new IndexOutOfRangeException ("Такого индекса не существует! Сначала инициализируйте строку необходимой длины для того, чтобы что-то менять.");
                 }
                 else
                 {
-                    MyString[index] = value;
+                    myString[index] = value;
                 }
             }
         }
