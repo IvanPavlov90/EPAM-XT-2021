@@ -18,7 +18,7 @@ namespace MyString
 
         public char[] myString { get; set; }
 
-        public static CustomString operator + (CustomString str1, CustomString str2)
+        public static CustomString operator +(CustomString str1, CustomString str2)
         {
             char[] result = new char[str1.myString.Length + str2.myString.Length];
 
@@ -41,52 +41,21 @@ namespace MyString
             return new CustomString(result);
         }
 
-        public static bool operator == (CustomString str1, CustomString str2)
+        public static bool operator ==(CustomString str1, CustomString str2)
         {
-            bool flag = true;
-            if (str1.myString.Length != str2.myString.Length)
-            {
-                flag = false;
-                return flag;
-            }
-            else
-            {
-                for (int i = 0; i < str1.myString.Length; i++)
-                {
-                    if (!Equals(str1.myString[i], str2.myString[i])) flag = false;
-                }
-
-                return flag;
-            }
+            return str1.Equals(str2);
         }
 
-        public static bool operator != (CustomString str1, CustomString str2)
+        public static bool operator !=(CustomString str1, CustomString str2)
         {
-            bool flag = false;
-            if (str1.myString.Length != str2.myString.Length)
-            {
-                flag = true;
-                return flag;
-            }
-            else
-            {
-                for (int i = 0; i < str1.myString.Length; i++)
-                {
-                    if (!Equals(str1.myString[i], str2.myString[i])) 
-                    {
-                        flag = true;
-                    }
-                }
-
-                return flag;
-            }
+            return !str1.Equals(str2);
         }
 
         /// <summary>
-        /// Метод, определяющий, есть ли искомый символ в кастомной строке.
+        /// Method that defines presence of symbol into custom string.
         /// </summary>
         /// <param name="Symbol"></param>
-        /// <returns>Возвращает true или false, в зависимости от наличия символа в строке.</returns>
+        /// <returns>Returns true or false depending on availability of symbol into custom string.</returns>
         public bool SearchSymbol(char Symbol)
         {
             bool flag = false;
@@ -99,10 +68,10 @@ namespace MyString
         }
 
         /// <summary>
-        /// Метод, подсчитывающий количество искомых символов в кастомной строке.
+        /// Method that counts symbols in custom string.
         /// </summary>
         /// <param name="Symbol"></param>
-        /// <returns>Возвращает количество символов.</returns>
+        /// <returns>Returns number of symdols.</returns>
         public int CountSymbol(char Symbol)
         {
             int count = 0;
@@ -117,6 +86,7 @@ namespace MyString
 
         public void Print()
         {
+            Console.WriteLine();
             foreach (char item in myString)
             {
                 Console.Write(item);
@@ -124,10 +94,9 @@ namespace MyString
         }
 
         /// <summary>
-        /// Метод, возвращающий строку, состоящую из символов, хранящихся в кастомной строке,
-        /// собранных в порядке справа-налево.
+        /// Method that turns custom string backwards.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns backward string</returns>
         public string Reverse()
         {
             string reverse = string.Empty;
@@ -142,20 +111,38 @@ namespace MyString
 
         public override bool Equals(object obj)
         {
+            if (obj is null)
+                return false;
+
             return Equals(obj as CustomString);
         }
 
-        //public bool Equals(CustomString other)
-        //{
-        //    return other != null &&
-        //           EqualityComparer<char[]>.Default.Equals(_myString, other._myString) &&
-        //           EqualityComparer<char[]>.Default.Equals(MyString, other.MyString);
-        //}
+        public bool Equals(CustomString other)
+        {
+            int i = 0;
+            if (myString.Length != other.myString.Length)
+            {
+                return false;
+            }
+            else
+            {
+                while (i < myString.Length)
+                {
+                    if (myString[i] != other.myString[i])
+                    {
+                        return false;
+                    }
+                    i++;
+                }
 
-        //public override int GetHashCode()
-        //{
-        //    return HashCode.Combine(_myString, MyString);
-        //}
+                return true;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(myString);
+        }
 
         public char this[int index]
         {
@@ -163,7 +150,7 @@ namespace MyString
             {
                 if (index > myString.Length - 1 || index < 0)
                 {
-                    throw new IndexOutOfRangeException("Такого индекса не существует! Сначала инициализируйте строку необходимой длины для того, чтобы что-то менять.");
+                    throw new IndexOutOfRangeException("There is no such index.");
                 }
                 else
                 {
@@ -174,7 +161,7 @@ namespace MyString
             {
                 if (index > myString.Length - 1 || index < 0)
                 {
-                    throw new IndexOutOfRangeException ("Такого индекса не существует! Сначала инициализируйте строку необходимой длины для того, чтобы что-то менять.");
+                    throw new IndexOutOfRangeException("There is no such index.");
                 }
                 else
                 {
@@ -184,3 +171,4 @@ namespace MyString
         }
     }
 }
+

@@ -7,21 +7,20 @@ namespace Task_2._1
     {
         static void Main(string[] args)
         {
-            CustomString first = new CustomString("Do You");
-            CustomString second = new CustomString(" Wanna");
-            //bool f = (first != second);
-            //bool g = (second == first);
-            //Console.WriteLine($"{f}, {g}");
-            //string reverse = second.Reverse();
-            //Console.WriteLine(reverse);
-            //first[4] = 'R';
-            //Console.WriteLine(first[4]);
-            //second[0] = 'V';
-            CustomString third = first + second;
-
-            //Console.WriteLine(third.CountSymbol('i'));
-            third.Print();
-            first[4] = first[14];
+            CustomString firstString = new CustomString("abc");
+            char[] array = new char[] { 'a', 'b', 'c' };
+            CustomString secondString = new CustomString(array);
+            CustomString thirdString = firstString + secondString;
+            Console.WriteLine(firstString == secondString);
+            Console.WriteLine(firstString.Equals(secondString));
+            Console.WriteLine(firstString == thirdString);
+            Console.WriteLine($"Count symbol b in first string {firstString.CountSymbol('b')}");
+            Console.WriteLine($"Count symbol b in third string {thirdString.CountSymbol('b')}");
+            Console.WriteLine($"Find symbol d in third string {thirdString.SearchSymbol('d')}");
+            thirdString[2] = 'd';
+            Console.WriteLine($"Find symbol d in changed third string {thirdString.SearchSymbol('d')}");
+            string reverse = thirdString.Reverse();
+            Console.WriteLine(reverse);
         }
     }
 }
