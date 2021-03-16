@@ -5,10 +5,10 @@ namespace GameClasses
 {
     public class Field
     {
-        private int _width = 100;
-        private int _height = 100;
+        private int _width = 10;
+        private int _height = 10;
 
-        List <object> gameObjects = new List<object> { };
+        private List <GameObject> _gameObjects = new List<GameObject> { };
 
         public int GetWidth
         {
@@ -23,6 +23,19 @@ namespace GameClasses
             get
             {
                 return _height;
+            }
+        }
+
+        public void AddObject (GameObject obj)
+        {
+            _gameObjects.Add(obj);
+        }
+
+        public List <GameObject> GetObjects
+        {
+            get
+            {
+                return _gameObjects;
             }
         }
 
@@ -97,7 +110,7 @@ namespace GameClasses
         }
     }
 
-    public abstract class Bonus
+    public abstract class GameObject
     {
         private string _name;
         public string Name
@@ -107,7 +120,6 @@ namespace GameClasses
         }
 
         private int _coordinatX;
-
         public int CoordinatX
         {
             get => _coordinatX;
@@ -121,9 +133,14 @@ namespace GameClasses
             get => _coordinatY;
             set => _coordinatY = value;
         }
+
+        public virtual int IncreaseSpeed
+        {
+            get;
+        }
     }
 
-    public class Horse : Bonus
+    public class Horse : GameObject
     {
         public Horse(string name, int coordinatX, int coordinatY)
         {
@@ -133,7 +150,7 @@ namespace GameClasses
         }
 
         private int _increaseSpeed = 1;
-        public int IncreaseSpeed
+        public override int IncreaseSpeed
         {
             get => _increaseSpeed;
         }

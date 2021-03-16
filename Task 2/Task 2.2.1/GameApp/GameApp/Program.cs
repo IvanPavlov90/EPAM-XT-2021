@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GameClasses;
 
 namespace GameApp
@@ -17,16 +18,17 @@ namespace GameApp
         {
             Player player = new Player("Geralt", 1, 0, 0);
             Field field = new Field();
-            Horse horse1 = new Horse("Plotva", 2, 2);
+            Horse horse1 = new Horse("Лошадь Плотва", 2, 2);
+            field.AddObject(horse1);
             StartApp(player, field);
         }
 
-        public static void StartApp (Player player, Field field)
+        public static void StartApp(Player player, Field field)
         {
             ShowMenu();
             Console.WriteLine("Выберите действие");
             MenuElements userChoise = UserChoise();
-            Action(userChoise, player, field);
+            Game(userChoise, player, field);
         }
 
         /// <summary>
@@ -89,85 +91,144 @@ namespace GameApp
         /// <param name="fieldXborder"></param>
         /// <param name="fieldYborder"></param>
         /// <returns>Булево значение, в зависимости от результатов проверки.</returns>
-        public static bool CheckingPositionOfThePlayerAndBordersOfTheField (int coordintaXplayer, int coordintaYplayer, int fieldXborder, int fieldYborder)
-        {
-            if (coordintaXplayer <= 0 || coordintaXplayer > fieldXborder)
-            {
-                return false;
-            } else if (coordintaYplayer <= 0 || coordintaYplayer > fieldYborder)
-            {
-                return false;
-            }
-            return true;
-        } 
-
-        /// <summary>
-        /// Метод, производящий игровые действия.
-        /// </summary>
-        /// <param name="action"></param>
-        /// <param name="player"></param>
-        public static void Action(MenuElements action, Player player, Field field)
+        public static bool CheckingPositionOfThePlayerAndBordersOfTheField(int coordinatplayer, int speed, int fieldborder, MenuElements action)
         {
             switch (action)
             {
                 case MenuElements.MoveForward:
-                    if (CheckingPositionOfThePlayerAndBordersOfTheField(player.CoordinatX, player.CoordinatY, field.GetWidth, field.GetHeight))
+                    if (coordinatplayer + speed > fieldborder)
                     {
-                        player.MoveBackward();
-                        player.Print();
-                        StartApp(player, field);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Данное действие совершить невозможно, Вы находитесь у верхней границы поля.");
-                        player.Print();
-                        StartApp(player, field);
-                    }
-                    break;
-                case MenuElements.MoveBackward:
-                    if (CheckingPositionOfThePlayerAndBordersOfTheField(player.CoordinatX, player.CoordinatY, field.GetWidth, field.GetHeight))
-                    {
-                        player.MoveBackward();
-                        player.Print();
-                        StartApp(player, field);
+                        return false;
                     } else
                     {
-                        Console.WriteLine("Данное действие совершить невозможно, Вы находитесь у нижней границы поля.");
-                        player.Print();
-                        StartApp(player, field);
+                        return true;
                     }
-                    break;
+                case MenuElements.MoveBackward:
+                    if (coordinatplayer - speed < fieldborder)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
                 case MenuElements.MoveLeft:
-                    if (CheckingPositionOfThePlayerAndBordersOfTheField(player.CoordinatX, player.CoordinatY, field.GetWidth, field.GetHeight))
+                    if (coordinatplayer - speed < fieldborder)
                     {
-                        player.MoveBackward();
-                        player.Print();
-                        StartApp(player, field);
+                        return false;
                     }
                     else
                     {
-                        Console.WriteLine("Данное действие совершить невозможно, Вы находитесь у нижней левой поля.");
-                        player.Print();
-                        StartApp(player, field);
+                        return true;
                     }
-                    break;
                 case MenuElements.MoveRight:
-                    if (CheckingPositionOfThePlayerAndBordersOfTheField(player.CoordinatX, player.CoordinatY, field.GetWidth, field.GetHeight))
+                    if (coordinatplayer + speed > fieldborder)
                     {
-                        player.MoveBackward();
-                        player.Print();
-                        StartApp(player, field);
+                        return false;
                     }
                     else
                     {
-                        Console.WriteLine("Данное действие совершить невозможно, Вы находитесь у правой границы поля.");
-                        player.Print();
-                        StartApp(player, field);
+                        return true;
                     }
-                    break;
                 default:
-                    break;
+                    return false;
             }
         }
+
+        /// <summary>
+        /// Метод проверяет, не подобрал ли пользователь после своего хода на какой-либо объект.
+        /// Если подобрал, то в зависимости от того, что это был за объект, выводится сообщение и 
+        /// происходит действие.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="gameobjects"></param>
+        public static void IsPlayerStandingOnTheGameObject(Player player, List <GameObject> gameobjects)
+        {
+            foreach (GameObject item in gameobjects)
+            {
+                if (item.CoordinatX == player.CoordinatX && item.CoordinatY == player.CoordinatY)
+                {
+                    Console.WriteLine($"Вы нашли {item.Name}");
+                    if (item is Horse)
+                    {
+                        Console.WriteLine($"Ваша скорость увеличилась на {item.IncreaseSpeed}");
+                        player.Speed += item.IncreaseSpeed;
+                    }
+                }
+            }
+        }
+
+            /// <summary>
+            /// Метод, производящий игровые действия.
+            /// </summary>
+            /// <param name="action"></param>
+            /// <param name="player"></param>
+            public static void Game(MenuElements action, Player player, Field field)
+            {
+                switch (action)
+                {
+                    case MenuElements.MoveForward:
+                        if (CheckingPositionOfThePlayerAndBordersOfTheField(player.CoordinatY, player.Speed, field.GetHeight, MenuElements.MoveForward))
+                        {
+                            player.MoveForward();
+                            IsPlayerStandingOnTheGameObject(player, field.GetObjects);
+                            player.Print();
+                            StartApp(player, field);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Данное действие совершить невозможно, Вы находитесь у верхней границы поля.");
+                            player.Print();
+                            StartApp(player, field);
+                        }
+                        break;
+                    case MenuElements.MoveBackward:
+                        if (CheckingPositionOfThePlayerAndBordersOfTheField(player.CoordinatY, player.Speed, 0, MenuElements.MoveBackward))
+                        {
+                            player.MoveBackward();
+                            IsPlayerStandingOnTheGameObject(player, field.GetObjects);
+                            player.Print();
+                            StartApp(player, field);
+                        } else
+                        {
+                            Console.WriteLine("Данное действие совершить невозможно, Вы находитесь у нижней границы поля.");
+                            player.Print();
+                            StartApp(player, field);
+                        }
+                        break;
+                    case MenuElements.MoveLeft:
+                        if (CheckingPositionOfThePlayerAndBordersOfTheField(player.CoordinatX, player.Speed, 0, MenuElements.MoveLeft))
+                        {
+                            player.MoveLeft();
+                            IsPlayerStandingOnTheGameObject(player, field.GetObjects);
+                            player.Print();
+                            StartApp(player, field);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Данное действие совершить невозможно, Вы находитесь у левой границы поля.");
+                            player.Print();
+                            StartApp(player, field);
+                        }
+                        break;
+                    case MenuElements.MoveRight:
+                        if (CheckingPositionOfThePlayerAndBordersOfTheField(player.CoordinatX, player.Speed, field.GetWidth, MenuElements.MoveRight))
+                        {
+                            player.MoveRight();
+                            IsPlayerStandingOnTheGameObject(player, field.GetObjects);
+                            player.Print();
+                            StartApp(player, field);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Данное действие совершить невозможно, Вы находитесь у правой границы поля.");
+                            player.Print();
+                            StartApp(player, field);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
     }
 }

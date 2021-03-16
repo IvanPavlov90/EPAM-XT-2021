@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameApp", "GameApp\GameApp.csproj", "{5618D1D6-16C8-45A4-83B1-A1C268908A21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameClasses", "GameClasses\GameClasses.csproj", "{F5426BB7-7074-4EDA-84BA-5E53FD1DB942}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameClasses", "GameClasses\GameClasses.csproj", "{F5426BB7-7074-4EDA-84BA-5E53FD1DB942}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
