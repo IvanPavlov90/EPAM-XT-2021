@@ -23,6 +23,19 @@ namespace Task_2._1._2
             return value;
         }
 
+        public static float CheckInnerRadius(float checkvalue)
+        {
+            string uservalue = Console.ReadLine();
+            float.TryParse(uservalue, out float value);
+            while (value >= checkvalue)
+            {
+                Console.WriteLine($"Your value is uncorrect. It should be less then {checkvalue}. Please, try once again.");
+                uservalue = Console.ReadLine();
+                float.TryParse(uservalue, out value);
+            }
+            return value;
+        }
+
         /// <summary>
         /// Method that was created to input user values. Also it checks if they are not sring
         /// </summary>

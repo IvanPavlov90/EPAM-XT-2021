@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Task_2._1._2
 {
-    class Triangle : FlatFigures
+    public class Triangle : FlatFigures
     {
         public Triangle(float pointX, float pointY, float sideA, float sideB, float sideC)
         {
@@ -20,7 +20,19 @@ namespace Task_2._1._2
         public float SideA
         {
             get => _sideA;
-            set => _sideA = value;
+            set
+            {
+                if (value <= 0)
+                {
+                    Console.WriteLine("Your value is uncorrect, side should be greater then 0.");
+                    value = Validator.CheckIfValueMoreThanVerificationValue(0);
+                    _sideA = value;
+                }
+                else
+                {
+                    _sideA = value;
+                }
+            }
         }
 
         private float _sideB;
@@ -28,7 +40,19 @@ namespace Task_2._1._2
         public float SideB
         {
             get => _sideB;
-            set => _sideB = value;
+            set
+            {
+                if (value <= 0)
+                {
+                    Console.WriteLine("Your value is uncorrect, side should be greater then 0.");
+                    value = Validator.CheckIfValueMoreThanVerificationValue(0);
+                    _sideB = value;
+                }
+                else
+                {
+                    _sideB = value;
+                }
+            }
         }
 
         private float _sideC;
@@ -36,72 +60,136 @@ namespace Task_2._1._2
         public float SideC
         {
             get => _sideC;
-            set 
+            set
             {
-                if (value > SideA + SideB)
+                if (value <= 0)
                 {
-                    value = SideA + SideB + 1;
-                    Console.WriteLine("Your value is greater than sum of lines A and B. It can't be. " +
-                                      "That's why SideC = SideA + SideB + 1");
-                    _sideC = value;
+                    Console.WriteLine("Your value is uncorrect, side should be greater then 0.");
+                    value = Validator.CheckIfValueMoreThanVerificationValue(0);
+                    if (value > SideA + SideB)
+                    {
+                        value = Math.Abs(SideA + SideB - 1);
+                        Console.WriteLine("Your value is greater than sum of lines A and B. It can't be. " +
+                                          "That's why SideC = SideA + SideB - 1");
+                        _sideC = value;
+                    }
+                    else if (value > SideA && value < SideB)
+                    {
+                        if (SideB > SideA + value)
+                        {
+                            value = Math.Abs(SideB - SideA + 1);
+                            Console.WriteLine("Sum of the line B of triangle is greater than sum of line A and your value. " +
+                                              "That's why your value will be set on SideC = SideB -  SideA + 1");
+                            _sideC = value;
+                        }
+                        else
+                        {
+                            _sideC = value;
+                        }
+                    }
+                    else if (value > SideB && value < SideA)
+                    {
+                        if (SideA > SideB + value)
+                        {
+                            value = Math.Abs(SideA - SideB + 1);
+                            Console.WriteLine("Sum of the line A of triangle is greater than sum of line B and your value. " +
+                                              "That's why your value will be set on SideC = SideA -  SideB + 1");
+                            _sideC = value;
+                        }
+                        else
+                        {
+                            _sideC = value;
+                        }
+                    }
+                    else if (value < SideB && value < SideA)
+                    {
+                        if (SideA + value < SideB)
+                        {
+                            value = Math.Abs(SideB - SideA + 1);
+                            Console.WriteLine("Sum of the line B of triangle is greater than sum of line A and your value. " +
+                                              "That's why your value will be set on SideC = SideB -  SideA + 1");
+                            _sideC = value;
+                        }
+                        else if (SideB + value < SideA)
+                        {
+                            value = Math.Abs(SideA - SideB + 1);
+                            Console.WriteLine("Sum of the line A of triangle is greater than sum of line B and your value. " +
+                                              "That's why your value will be set on SideC = SideA -  SideB + 1");
+                            _sideC = value;
+                        }
+                        else
+                        {
+                            _sideC = value;
+                        }
+                    }
                 }
-                else if (value > SideA && value < SideB)
+                else
                 {
-                    if (SideB > SideA + value)
+                    if (value > SideA + SideB)
                     {
-                        value = SideB - SideA + 1;
-                        Console.WriteLine("Sum of the line B of triangle is greater than sum of line A and your value. " +
-                                          "That's why your value will be set on SideC = SideB -  SideA + 1");
+                        value = Math.Abs(SideA + SideB - 1);
+                        Console.WriteLine("Your value is greater than sum of lines A and B. It can't be. " +
+                                          "That's why SideC = SideA + SideB - 1");
                         _sideC = value;
-                    } 
-                    else
+                    }
+                    else if (value > SideA && value < SideB)
                     {
-                        _sideC = value;
+                        if (SideB > SideA + value)
+                        {
+                            value = Math.Abs(SideB - SideA + 1);
+                            Console.WriteLine("Sum of the line B of triangle is greater than sum of line A and your value. " +
+                                              "That's why your value will be set on SideC = SideB -  SideA + 1");
+                            _sideC = value;
+                        }
+                        else
+                        {
+                            _sideC = value;
+                        }
+                    }
+                    else if (value > SideB && value < SideA)
+                    {
+                        if (SideA > SideB + value)
+                        {
+                            value = Math.Abs(SideA - SideB + 1);
+                            Console.WriteLine("Sum of the line A of triangle is greater than sum of line B and your value. " +
+                                              "That's why your value will be set on SideC = SideA -  SideB + 1");
+                            _sideC = value;
+                        }
+                        else
+                        {
+                            _sideC = value;
+                        }
+                    }
+                    else if (value < SideB && value < SideA)
+                    {
+                        if (SideA + value < SideB)
+                        {
+                            value = Math.Abs(SideB - SideA + 1);
+                            Console.WriteLine("Sum of the line B of triangle is greater than sum of line A and your value. " +
+                                              "That's why your value will be set on SideC = SideB -  SideA + 1");
+                            _sideC = value;
+                        }
+                        else if (SideB + value < SideA)
+                        {
+                            value = Math.Abs(SideA - SideB + 1);
+                            Console.WriteLine("Sum of the line A of triangle is greater than sum of line B and your value. " +
+                                              "That's why your value will be set on SideC = SideA -  SideB + 1");
+                            _sideC = value;
+                        }
+                        else
+                        {
+                            _sideC = value;
+                        }
                     }
                 }
-                else if (value > SideB && value < SideA)
-                {
-                    if (SideA > SideB + value)
-                    {
-                        value = SideA - SideB + 1;
-                        Console.WriteLine("Sum of the line A of triangle is greater than sum of line B and your value. " +
-                                          "That's why your value will be set on SideC = SideA -  SideB + 1");
-                        _sideC = value;
-                    }
-                    else
-                    {
-                        _sideC = value;
-                    }
-                }
-                else if (value < SideB && value < SideA)
-                {
-                    if (SideA + value < SideB)
-                    {
-                        value = SideB - SideA + 1;
-                        Console.WriteLine("Sum of the line B of triangle is greater than sum of line A and your value. " +
-                                          "That's why your value will be set on SideC = SideB -  SideA + 1");
-                        _sideC = value;
-                    }
-                    else if (SideB + value < SideA)
-                    {
-                        value = SideA - SideB + 1;
-                        Console.WriteLine("Sum of the line A of triangle is greater than sum of line B and your value. " +
-                                          "That's why your value will be set on SideC = SideA -  SideB + 1");
-                        _sideC = value;
-                    } 
-                    else
-                    {
-                        _sideC = value;
-                    }
-                }
-            }
+            }   
         }
 
         public override double Area
         {
             get
             {
-                float p = (SideA + SideA + SideC) / 2;
+                float p = (SideA + SideB + SideC) / 2;
                 return Math.Sqrt(p * (p - SideA) * (p - SideB) * (p - SideC));
             }
         }
@@ -116,11 +204,10 @@ namespace Task_2._1._2
 
         public override string ToString()
         {
-            return $"Треугольник.\n" +
-                   $"Координаты вершины теругольника - (x:, y:) {StartpointX} {StartpointY},\n" +
-                   $"Стороны треугольника - (А:, В:, С:) {SideA}, {SideB}, {SideC},\n" +
-                   $"площадь треугольника - {Math.Round(Area, 2, MidpointRounding.AwayFromZero)}\n" +
-                   $"периметр треугольника - {Math.Round(Perimeter, 2, MidpointRounding.AwayFromZero)}";
+            return $"Triangle.\n" +
+                   $"Triangle's sides - (А:, В:, С:) {SideA}, {SideB}, {SideC},\n" +
+                   $"area - {Math.Round(Area, 2, MidpointRounding.AwayFromZero)}\n" +
+                   $"perimeter - {Math.Round(Perimeter, 2, MidpointRounding.AwayFromZero)}\n";
         }
     }
 }

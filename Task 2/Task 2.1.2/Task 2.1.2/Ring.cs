@@ -22,28 +22,22 @@ namespace Task_2._1._2
             {
                 if (value <= 0)
                 {
-                    Console.WriteLine("Your value is uncorrect, inner radius should be greater then 0.");
+                    Console.WriteLine("Your value is uncorrect, ring's inner radius should be greater then 0.");
                     value = Validator.CheckIfValueMoreThanVerificationValue(0);
-                    if (value > Radius)
+                    _innerRadius = value;
+                }
+                else
+                {
+                    if (value >= Radius)
                     {
-                        Console.WriteLine("This is uncorrect. Inner radius shoudn't be greater then outer. It will be set as default Radius/2");
-                        value = Radius/2;
+                        Console.WriteLine("Your value is uncorrect, ring's inner radius should be less then outer radius.");
+                        value = Validator.CheckInnerRadius(Radius);
                         _innerRadius = value;
                     }
                     else
                     {
                         _innerRadius = value;
                     }
-                }
-                else if (value > Radius)
-                {
-                    Console.WriteLine("This is uncorrect. Inner radius shoudn't be greater then outer. It will be set as default Radius/2");
-                    value = Radius/2;
-                    _innerRadius = value;
-                }
-                else
-                {
-                    _innerRadius = value;
                 }
             }
         }
@@ -71,7 +65,7 @@ namespace Task_2._1._2
                    $"внешний радиус кольца - {Radius},\n" +
                    $"внутренний радиус кольца - {InnerRadius},\n" +
                    $"площадь кольца - {Math.Round(Area, 2, MidpointRounding.AwayFromZero)},\n" +
-                   $"суммарная длина внешней и внутренней окружностей - {Math.Round(Perimeter, 2, MidpointRounding.AwayFromZero)}";
+                   $"суммарная длина внешней и внутренней окружностей - {Math.Round(Perimeter, 2, MidpointRounding.AwayFromZero)}\n";
         }
     }
 }

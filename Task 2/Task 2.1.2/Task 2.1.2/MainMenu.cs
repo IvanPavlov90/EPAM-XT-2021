@@ -56,8 +56,8 @@ namespace Task_2._1._2
             switch (value)
             {
                 case Action.Add_Figure:
-                    Painter.ShowMenu();
-                    Painter.DoAction(Painter.ReadAction(), name, figures);
+                    PaintMenu.ShowMenu();
+                    PaintMenu.DoAction(PaintMenu.ReadAction(), name, figures);
                     break;
                 case Action.Print_Figures:
                     PrintFigures(name, figures);
