@@ -26,6 +26,14 @@ namespace Task_2._1._2
             return _figures;
         }
 
+        public static User SetUser()
+        {
+            Console.WriteLine("Please enter your name:");
+            string username = Console.ReadLine();
+            User currentuser = new User(username);
+            return currentuser;
+        }
+
         public List<object> AddFigure
         {
             set => _figures.Add(value);

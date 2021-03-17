@@ -21,27 +21,5 @@ namespace Task_2._1._2
             }
             while (true);
         }
-
-        public static string SetUser()
-        {
-            Console.WriteLine("Please enter your name:");
-            string username = Console.ReadLine();
-            return username;
-        }
-
-        public static bool SearchUser(string username, List<User> users, out int index)
-        {
-            index = -1;
-            for (int i = 0; i <= users.Count; i++)
-            {
-                if (users[i].Name == username)
-                {
-                    index = i;
-                    return true;
-                }
-            }
-
-            return false;
-        }
     }
 }

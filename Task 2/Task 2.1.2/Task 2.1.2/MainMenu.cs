@@ -71,9 +71,8 @@ namespace Task_2._1._2
                     break;
                 case Action.Change_User:
                     Console.Clear();
-                    //string username = Validator.SetUser();
-                    //Validator.SearchUser(username, out int index);
-                    Program.StartApp();
+                    User newuser = User.SetUser();
+                    Program.StartApp(newuser);
                     break;
                 case Action.Exit:
                     Environment.Exit(0);
