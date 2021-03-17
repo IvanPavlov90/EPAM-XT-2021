@@ -18,28 +18,7 @@ namespace Task_2._1._2
         public float InnerRadius
         {
             get => _innerRadius;
-            set
-            {
-                if (value <= 0)
-                {
-                    Console.WriteLine("Your value is uncorrect, ring's inner radius should be greater then 0.");
-                    value = Validator.CheckIfValueMoreThanVerificationValue(0);
-                    _innerRadius = value;
-                }
-                else
-                {
-                    if (value >= Radius)
-                    {
-                        Console.WriteLine("Your value is uncorrect, ring's inner radius should be less then outer radius.");
-                        value = Validator.CheckInnerRadius(Radius);
-                        _innerRadius = value;
-                    }
-                    else
-                    {
-                        _innerRadius = value;
-                    }
-                }
-            }
+            set => _innerRadius = value;
         }
 
         public override double Area
@@ -58,14 +37,28 @@ namespace Task_2._1._2
             }
         }
 
+        public static float CheckInnerRadius(float checkvalue)
+        {
+            Console.WriteLine("Please enter innerradius value.");
+            string uservalue = Console.ReadLine();
+            float.TryParse(uservalue, out float value);
+            while (value >= checkvalue)
+            {
+                Console.WriteLine($"Your value is uncorrect. It should be less then {checkvalue}. Please, try once again.");
+                uservalue = Console.ReadLine();
+                float.TryParse(uservalue, out value);
+            }
+            return value;
+        }
+
         public override string ToString()
         {
-            return $"Кольцо.\n" +
-                   $"Координаты центра кольца - {StartpointX} и {StartpointY},\n" +
-                   $"внешний радиус кольца - {Radius},\n" +
-                   $"внутренний радиус кольца - {InnerRadius},\n" +
-                   $"площадь кольца - {Math.Round(Area, 2, MidpointRounding.AwayFromZero)},\n" +
-                   $"суммарная длина внешней и внутренней окружностей - {Math.Round(Perimeter, 2, MidpointRounding.AwayFromZero)}\n";
+            return $"Ring.\n" +
+                   $"Coordinats of the center of the ring- {StartpointX} и {StartpointY},\n" +
+                   $"outer radius - {Radius},\n" +
+                   $"inner radius - {InnerRadius},\n" +
+                   $"area - {Math.Round(Area, 2, MidpointRounding.AwayFromZero)},\n" +
+                   $"sum of outer and inner lengths - {Math.Round(Perimeter, 2, MidpointRounding.AwayFromZero)}\n";
         }
     }
 }

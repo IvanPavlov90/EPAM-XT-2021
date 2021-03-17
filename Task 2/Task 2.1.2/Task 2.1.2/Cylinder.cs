@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Task_2._1._2
 {
-    public class Cylinder : VolumeFigures
+    public class Cylinder : VolumeFigures, IVolume
     {
         public Cylinder(float pointX, float pointY, float radius, float height)
         {
@@ -18,19 +18,7 @@ namespace Task_2._1._2
         public float Radius
         {
             get => _radius;
-            set
-            {
-                if (value <= 0)
-                {
-                    Console.WriteLine("Your value is uncorrect, cylinder radius should be greater then 0.");
-                    value = Validator.CheckIfValueMoreThanVerificationValue(0);
-                    _radius = value;
-                }
-                else
-                {
-                    _radius = value;
-                }
-            }
+            set => _radius = value;
         }
 
         private float _height;
@@ -38,19 +26,7 @@ namespace Task_2._1._2
         public float Height
         {
             get => _height;
-            set
-            {
-                if (value <= 0)
-                {
-                    Console.WriteLine("Your value is uncorrect, cylinder height should be greater then 0.");
-                    value = Validator.CheckIfValueMoreThanVerificationValue(0);
-                    _height = value;
-                }
-                else
-                {
-                    _height = value;
-                }
-            }
+            set => _height = value;
         }
 
         public override double Area
@@ -67,6 +43,20 @@ namespace Task_2._1._2
             {
                 return Math.PI * Radius * Radius * Height;
             }
+        }
+
+        public static float CheckValues ()
+        {
+            Console.WriteLine("Please enter value.");
+            string uservalue = Console.ReadLine();
+            float.TryParse(uservalue, out float value);
+            while (value <= 0)
+            {
+                Console.WriteLine($"Your value is uncorrect. It should be greater then 0. Please, try once again.");
+                uservalue = Console.ReadLine();
+                float.TryParse(uservalue, out value);
+            }
+            return value;
         }
 
         public override string ToString()

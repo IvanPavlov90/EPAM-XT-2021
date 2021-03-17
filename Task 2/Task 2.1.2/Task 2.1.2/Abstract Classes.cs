@@ -47,7 +47,7 @@ namespace Task_2._1._2
         public abstract double Area { get; }
     }
 
-    public abstract class VolumeFigures : ClosedFigures
+    public abstract class VolumeFigures : ClosedFigures, IVolume
     {
         public abstract double Volume { get; }
     }

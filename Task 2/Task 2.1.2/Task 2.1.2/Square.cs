@@ -4,37 +4,28 @@ using System.Text;
 
 namespace Task_2._1._2
 {
-    public class Rectangle : FlatFigures
+    public class Square : FlatFigures
     {
-        public Rectangle(float pointX, float pointY, float width, float height)
+        public Square(float pointX, float pointY, float side)
         {
             StartpointX = pointX;
             StartpointY = pointY;
-            Width = width;
-            Height = height;
+            Side = side;
         }
 
-        private float _width;
+        private float _side;
 
-        public float Width
+        public float Side
         {
-            get => _width;
-            set => _width = value;
-        }
-
-        private float _height;
-
-        public float Height
-        {
-            get => _height;
-            set => _height = value;
+            get => _side;
+            set => _side = value;
         }
 
         public override double Area
         {
             get
             {
-                return Width * Height;
+                return Side * Side;
             }
         }
 
@@ -42,7 +33,7 @@ namespace Task_2._1._2
         {
             get
             {
-                return (Width + Height) * 2;
+                return Side * 4;
             }
         }
 
@@ -62,10 +53,8 @@ namespace Task_2._1._2
 
         public override string ToString()
         {
-            return $"Rectangle.\n" +
-                   $"Coordinats of the rectangle's tops - (x:, y:) {StartpointX} {StartpointY}, {StartpointX + Width} {StartpointY}, {StartpointX + Width} {StartpointY + Height}, {StartpointX} {StartpointY + Height}\n" +
-                   $"width - {Width}\n" +
-                   $"height - {Height}\n" +
+            return $"Square.\n" +
+                   $"Coordinats of the square's tops - (x:, y:) {StartpointX} {StartpointY}, {StartpointX + Side} {StartpointY}, {StartpointX + Side} {StartpointY + Side}, {StartpointX} {StartpointY + Side}\n" +
                    $"area - {Math.Round(Area, 2, MidpointRounding.AwayFromZero)}\n" +
                    $"perimeter - {Math.Round(Perimeter, 2, MidpointRounding.AwayFromZero)}";
         }

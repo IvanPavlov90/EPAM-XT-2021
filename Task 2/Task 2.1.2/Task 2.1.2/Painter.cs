@@ -13,15 +13,17 @@ namespace Task_2._1._2
             return circle;
         }
 
-        public static Ring CreateRing(float pointX, float pointY, float radius, float innerRadius)
+        public static Ring CreateRing(float pointX, float pointY, float radius)
         {
+            float innerRadius = Ring.CheckInnerRadius(radius);
             Ring ring = new Ring(pointX, pointY, radius, innerRadius);
             Console.WriteLine("Ring has been created.");
             return ring;
         }
 
-        public static Triangle CreateTriangle(float pointX, float pointY, float sideA, float sideB, float sideC)
+        public static Triangle CreateTriangle(float pointX, float pointY, float sideA, float sideB)
         {
+            float sideC = Triangle.IsTriangleValid(sideA, sideB);
             Triangle triangle = new Triangle(pointX, pointY, sideA, sideB, sideC);
             Console.WriteLine("Trinagle has been created.");
             return triangle;
@@ -53,6 +55,13 @@ namespace Task_2._1._2
             Rectangle rectangle = new Rectangle(pointX, pointY, width, height);
             Console.WriteLine("Rectangle has been created.");
             return rectangle;
+        }
+
+        public static Square CreateSquare(float pointX, float pointY, float width)
+        {
+            Square square = new Square (pointX, pointY, width);
+            Console.WriteLine("Square has been created.");
+            return square;
         }
     }
 }

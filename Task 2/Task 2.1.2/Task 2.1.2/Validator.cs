@@ -7,42 +7,12 @@ namespace Task_2._1._2
     public static class Validator
     {
         /// <summary>
-        /// Method that was created to validate values
-        /// </summary>
-        /// <returns>Returns valid float value.</returns>
-        public static float CheckIfValueMoreThanVerificationValue (float checkvalue)
-        {
-            string uservalue = Console.ReadLine();
-            float.TryParse(uservalue, out float value);
-            while (value <= checkvalue)
-            {
-                Console.WriteLine($"Your value is uncorrect. It should be greater then {checkvalue}. Please, try once again.");
-                uservalue = Console.ReadLine();
-                float.TryParse(uservalue, out value);
-            }
-            return value;
-        }
-
-        public static float CheckInnerRadius(float checkvalue)
-        {
-            string uservalue = Console.ReadLine();
-            float.TryParse(uservalue, out float value);
-            while (value >= checkvalue)
-            {
-                Console.WriteLine($"Your value is uncorrect. It should be less then {checkvalue}. Please, try once again.");
-                uservalue = Console.ReadLine();
-                float.TryParse(uservalue, out value);
-            }
-            return value;
-        }
-
-        /// <summary>
-        /// Method that was created to input user values. Also it checks if they are not sring
+        /// Method that was created to input user values for figure's coordinats. Also it checks if they are not sring
         /// </summary>
         /// <returns>Returns float value.</returns>
-        public static float InputValues ()
+        public static float InputCoordinats ()
         {
-            Console.WriteLine("Enter your value (only digit):");
+            Console.WriteLine("Enter coordinat value (only digit):");
             do
             {
                 string usercoordinate = Console.ReadLine();
@@ -50,6 +20,28 @@ namespace Task_2._1._2
                     return coordinate;
             }
             while (true);
+        }
+
+        public static string SetUser()
+        {
+            Console.WriteLine("Please enter your name:");
+            string username = Console.ReadLine();
+            return username;
+        }
+
+        public static bool SearchUser(string username, List<User> users, out int index)
+        {
+            index = -1;
+            for (int i = 0; i <= users.Count; i++)
+            {
+                if (users[i].Name == username)
+                {
+                    index = i;
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

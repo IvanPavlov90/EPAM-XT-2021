@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Task_2._1._2
 {
-    public class Sphere : VolumeFigures
+    public class Sphere : VolumeFigures, IVolume
     {
         public Sphere(float pointX, float pointY, float radius)
         {
@@ -17,19 +17,7 @@ namespace Task_2._1._2
         public float Radius
         {
             get => _radius;
-            set
-            {
-                if (value <= 0)
-                {
-                    Console.WriteLine("Your value is uncorrect, sphere's radius should be greater then 0.");
-                    value = Validator.CheckIfValueMoreThanVerificationValue(0);
-                    _radius = value;
-                }
-                else
-                {
-                    _radius = value;
-                }
-            }
+            set => _radius = value;
         }
 
         public override double Area
@@ -46,6 +34,20 @@ namespace Task_2._1._2
             {
                 return (4 * Math.PI * Radius * Radius * Radius) / 3;
             }
+        }
+
+        public static float CheckRadius()
+        {
+            Console.WriteLine("Please enter radius value.");
+            string uservalue = Console.ReadLine();
+            float.TryParse(uservalue, out float value);
+            while (value <= 0)
+            {
+                Console.WriteLine($"Your value is uncorrect. It should be greater then 0. Please, try once again.");
+                uservalue = Console.ReadLine();
+                float.TryParse(uservalue, out value);
+            }
+            return value;
         }
 
         public override string ToString()
