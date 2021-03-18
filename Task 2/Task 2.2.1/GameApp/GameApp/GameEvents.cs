@@ -20,9 +20,17 @@ namespace GameApp
                     Console.WriteLine($"You find {item.Name}");
                     if (item is Sword)
                     {
-                        item.HaveBeenVisited = true;
-                        Console.WriteLine($"You attack rang has been increased on {item.Increase}");
-                        player.AttackRange += item.Increase;
+                        if (!player.HasSword)
+                        {
+                            item.HaveBeenVisited = true;
+                            Console.WriteLine($"You attack rang has been increased on {item.Increase}");
+                            player.AttackRange += item.Increase;
+                        } 
+                        else
+                        {
+                            item.HaveBeenVisited = true;
+                            Console.WriteLine($"You already have a sword");
+                        }
                     }
                     if (item is Potion)
                     {
@@ -68,12 +76,21 @@ namespace GameApp
 
             if (player.Health <= 0)
             {
-                Console.WriteLine($"Unfourtanetly, your journey end here. Fight againnst {enemy.Name} costed you your life.");
+                Console.WriteLine($"Unfourtanetly, your journey end here. Fight against {enemy.Name} costed you your life.");
                 Environment.Exit(0);
             } 
             else
             {
                 Console.WriteLine($"You win this fight. But journey continues...");
+            }
+        }
+
+        public static void Victory(Player player, Field field)
+        {
+            if (player.CoordinatX == field.GetWidth && player.CoordinatY == field.GetHeight)
+            {
+                Console.WriteLine("You journey through this rough and dangerous lands was succesfull. Greetings, my friend, you win....");
+                Environment.Exit(0);
             }
         }
     }

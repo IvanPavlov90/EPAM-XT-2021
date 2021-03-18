@@ -55,6 +55,7 @@ namespace GameApp
                     player.MoveForward(field.GetHeight, field.Obstacles);
                     GameEvents.IsPlayerMeetEnemy(player, field.Enemy);
                     GameEvents.IsPlayerStandingOnTheGameObject(player, field.Bonus);
+                    GameEvents.Victory(player, field);
                     Program.StartApp(player, field);
                     break;
                 case MenuElements.MoveBackward:
@@ -73,6 +74,7 @@ namespace GameApp
                     player.MoveRight(field.GetWidth, field.Obstacles);
                     GameEvents.IsPlayerMeetEnemy(player, field.Enemy);
                     GameEvents.IsPlayerStandingOnTheGameObject(player, field.Bonus);
+                    GameEvents.Victory(player, field);
                     Program.StartApp(player, field);
                     break;
                 case MenuElements.PrintCurrentState:

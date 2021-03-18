@@ -31,6 +31,14 @@ namespace GameApp
             set => _attackrange = value;
         }
 
+        private bool _hasSword = false;
+
+        public bool HasSword
+        {
+            get => _hasSword;
+            set => _hasSword = value;
+        }
+
         /// <summary>
         /// Method for moving
         /// </summary>

@@ -8,16 +8,27 @@ namespace GameApp
 
         static void Main(string[] args)
         {
-            Player player = new Player("Geralt", 0, 0);
+            Player player = ObjectCreator.CreatePlayer();
             Field field = new Field();
-            Sword horse1 = new Sword("King's Arthur Sword", 2, 2);
-            Potion potion1 = new Potion("Potion of Youth", 4, 2);
-            Obstacle obcstacle1 = new Obstacle("River Volga", 1, 0);
-            Enemy enemy1 = new Enemy("Ktulhu", 3, 2);
-            field.AddBonus(horse1);
-            field.AddBonus(potion1);
-            field.AddObject(obcstacle1);
-            field.AddEnemy(enemy1);
+            ObjectCreator.PlaceObjects(field);
+            Console.WriteLine($"Greetings, {player.Name}. You start this game and I want to tell you the rules. They are very simple. " +
+                $"You must reach the end point of the field ({field.GetWidth}, {field.GetHeight}) - that is your main aim. Your start point " +
+                $"is (0, 0). On each step you can move only by one piece in X, or y directions. You can see your current coordinats " +
+                $"by using game menu. On your way " +
+                $"you cam meet enemies, that of course will fight with you, or pick potions that will increase your health. Also " +
+                $"you can find a sword that increse your attack level!!! It will be very useful. Good luck!");
+            //foreach (Obstacle item in field.Obstacles)
+            //{
+            //    Console.WriteLine($"{item.Name} {item.CoordinatX} {item.CoordinatY}");
+            //}
+            //foreach (Enemy item in field.Enemy)
+            //{
+            //    Console.WriteLine($"{item.Name} {item.CoordinatX} {item.CoordinatY}");
+            //}
+            //foreach (Bonus item in field.Bonus)
+            //{
+            //    Console.WriteLine($"{item.Name} {item.CoordinatX} {item.CoordinatY}");
+            //}
             StartApp(player, field);
         }
 
