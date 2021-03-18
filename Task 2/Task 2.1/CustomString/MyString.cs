@@ -150,7 +150,7 @@ namespace MyString
             {
                 if (index > myString.Length - 1 || index < 0)
                 {
-                    throw new IndexOutOfRangeException("There is no such index.");
+                    throw new IndexOutOfRangeException("Index should be more then 0 and less then string.Length - 1.");
                 }
                 else
                 {
@@ -161,7 +161,7 @@ namespace MyString
             {
                 if (index > myString.Length - 1 || index < 0)
                 {
-                    throw new IndexOutOfRangeException("There is no such index.");
+                    throw new IndexOutOfRangeException("Index should be more then 0 and less then string.Length - 1.");
                 }
                 else
                 {
