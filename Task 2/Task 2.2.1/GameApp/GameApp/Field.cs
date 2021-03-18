@@ -11,6 +11,7 @@ namespace GameApp
 
         private List<GameObject> _obstacles = new List<GameObject> { };
         private List<Bonus> _bonuses = new List<Bonus> { };
+        private List<Enemy> _enemies = new List<Enemy> { };
 
         public int GetWidth
         {
@@ -54,5 +55,17 @@ namespace GameApp
             }
         }
 
+        public void AddEnemy(Enemy obj)
+        {
+            _enemies.Add(obj);
+        }
+
+        public List<Enemy> Enemy
+        {
+            get
+            {
+                return _enemies;
+            }
+        }
     }
 }

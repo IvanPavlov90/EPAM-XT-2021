@@ -4,19 +4,21 @@ using System.Text;
 
 namespace GameApp
 {
-    public class Horse : Bonus
+    public class Sword : Bonus
     {
-        public Horse(string name, int coordinatX, int coordinatY)
+        public Sword(string name, int coordinatX, int coordinatY)
         {
             Name = name;
             CoordinatX = coordinatX;
             CoordinatY = coordinatY;
         }
 
-        private int _increaseSpeed = 1;
+        private int _increaseAttackrange = 5;
         public override int Increase
         {
-            get => _increaseSpeed;
+            get => _increaseAttackrange;
         }
+
+        private bool _havebeenvisited = false;
     }
 }

@@ -18,5 +18,7 @@ namespace GameApp
         {
             get => _increaseHealth;
         }
+
+        private bool _havebeenvisited = false;
     }
 }

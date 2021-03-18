@@ -4,51 +4,18 @@ using System.Text;
 
 namespace GameApp
 {
-    public class Player
+    public class Player : Character
     {
-        public Player(string name, int speed, int coordinatX, int coordinatY)
-        {
-            Name = name;
-            Speed = speed;
-            CoordinatX = coordinatX;
-            CoordinatY = coordinatY;
-            Health = 100;
-        }
+        public Player(string name, int coordinatX, int coordinatY) : base(name, coordinatX, coordinatY) { }
 
+        private int _speed = 1;
 
-        private string _name;
-
-        public string Name
-        {
-            get => _name;
-            set => _name = value;
-        }
-
-        private int _speed;
-
-        public int Speed
-        {
+        public int Speed 
+        { 
             get => _speed;
-            set => _speed = value;
         }
 
-        private int _coordinatX;
-
-        public int CoordinatX
-        {
-            get => _coordinatX;
-            set => _coordinatX = value;
-        }
-
-        private int _coordinatY;
-
-        public int CoordinatY
-        {
-            get => _coordinatY;
-            set => _coordinatY = value;
-        }
-
-        private int _health;
+        private int _health = 100;
 
         public int Health
         {
@@ -56,29 +23,110 @@ namespace GameApp
             set => _health = value;
         }
 
-        public void MoveForward()
+        private int _attackrange = 5;
+
+        public int AttackRange
         {
-            CoordinatY += Speed;
+            get => _attackrange;
+            set => _attackrange = value;
         }
 
-        public void MoveBackward()
+        /// <summary>
+        /// Method for moving
+        /// </summary>
+        /// <param name="border"></param>
+        /// <param name="obstacles"></param>
+        public void MoveForward(int border, List<GameObject> obstacles)
         {
-            CoordinatY -= Speed;
+            if (CoordinatY + Speed > border)
+            {
+                CoordinatY = CoordinatY;
+                Console.WriteLine("You have riched border of the field, you cannot go through");
+            } else
+            {
+                CoordinatY += Speed;
+                if (CheckingPlayerAndObstacles(obstacles))
+                {
+                    CoordinatY -= Speed;
+                }
+            }
         }
 
-        public void MoveLeft()
+        public void MoveBackward(int border, List<GameObject> obstacles)
         {
-            CoordinatX -= Speed;
+            if (CoordinatY - Speed < border)
+            {
+                CoordinatY = CoordinatY;
+                Console.WriteLine("You have riched border of the field, you cannot go through");
+            }
+            else
+            {
+                CoordinatY -= Speed;
+                if (CheckingPlayerAndObstacles(obstacles))
+                {
+                    CoordinatY += Speed;
+                }
+            }
         }
 
-        public void MoveRight()
+        public void MoveLeft(int border, List<GameObject> obstacles)
         {
-            CoordinatX += Speed;
+            if (CoordinatX - Speed < border)
+            {
+                CoordinatX = CoordinatX;
+                Console.WriteLine("You have riched border of the field, you cannot go through");
+            }
+            else
+            {
+                CoordinatX -= Speed;
+                if (CheckingPlayerAndObstacles(obstacles))
+                {
+                    CoordinatX += Speed;
+                }
+            }
         }
 
+        public void MoveRight(int border, List<GameObject> obstacles)
+        {
+            if (CoordinatX + Speed > border)
+            {
+                CoordinatX = CoordinatX;
+                Console.WriteLine("You have riched border of the field, you cannot go through");
+            }
+            else
+            {
+                CoordinatX += Speed;
+                if (CheckingPlayerAndObstacles(obstacles))
+                {
+                    CoordinatX -= Speed;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method for printing current player's stage.
+        /// </summary>
         public void Print()
         {
-            Console.WriteLine($"{Name} X - {CoordinatX} Y - {CoordinatY} Скорость - {Speed} Здоровье - {Health}");
+            Console.WriteLine($"{Name} X - {CoordinatX} Y - {CoordinatY} Attack - {AttackRange} Health - {Health}");
+        }
+
+        /// <summary>
+        /// Method for checking player's position and irresistible objects.
+        /// </summary>
+        /// <param name="gameobjects"></param>
+        /// <returns>If true, player can't go to this coordinat.</returns>
+        public bool CheckingPlayerAndObstacles(List<GameObject> gameobjects)
+        {
+            foreach (GameObject item in gameobjects)
+            {
+                if (item.CoordinatX == CoordinatX && item.CoordinatY == CoordinatY)
+                {
+                    Console.WriteLine($"There is {item.Name} ahead. You can't go through.");
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

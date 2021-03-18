@@ -10,5 +10,13 @@ namespace GameApp
         {
             get;
         }
+
+        private bool _havebeenvisited;
+
+        public bool HaveBeenVisited
+        {
+            get => _havebeenvisited;
+            set => _havebeenvisited = value;
+        }
     }
 }

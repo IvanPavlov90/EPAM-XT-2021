@@ -42,7 +42,7 @@ namespace GameApp
         }
 
         /// <summary>
-        /// Method that contains main logic.
+        /// Method that contains main game logic.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="name"></param>
@@ -52,80 +52,28 @@ namespace GameApp
             switch (value)
             {
                 case MenuElements.MoveForward:
-                    if (Validator.CheckingPlayerAndBorders(player.CoordinatY, player.Speed, field.GetHeight, (int)MenuElements.MoveForward)) 
-                    {
-                        if (Validator.CheckingPlayerAndObstacles(player, (int)MenuElements.MoveForward, field.Obstacles))
-                        {
-                            Program.StartApp(player, field);
-                        } 
-                        else
-                        {
-                            player.MoveForward();
-                            Validator.IsPlayerStandingOnTheGameObject(player, field.Bonus);
-                            Program.StartApp(player, field);
-                        }
-                    }
-                    else
-                    {
-                        Validator.TellUserHeIsNearBordersOfTheField(player, field);
-                    }
+                    player.MoveForward(field.GetHeight, field.Obstacles);
+                    GameEvents.IsPlayerMeetEnemy(player, field.Enemy);
+                    GameEvents.IsPlayerStandingOnTheGameObject(player, field.Bonus);
+                    Program.StartApp(player, field);
                     break;
                 case MenuElements.MoveBackward:
-                    if (Validator.CheckingPlayerAndBorders(player.CoordinatY, player.Speed, 0, (int)MenuElements.MoveBackward))
-                    {
-                        if (Validator.CheckingPlayerAndObstacles(player, (int)MenuElements.MoveBackward, field.Obstacles))
-                        {
-                            Program.StartApp(player, field);
-                        }
-                        else
-                        {
-                            player.MoveBackward();
-                            Validator.IsPlayerStandingOnTheGameObject(player, field.Bonus);
-                            Program.StartApp(player, field);
-                        }
-                    }
-                    else
-                    {
-                        Validator.TellUserHeIsNearBordersOfTheField(player, field);
-                    }
+                    player.MoveBackward(0, field.Obstacles);
+                    GameEvents.IsPlayerMeetEnemy(player, field.Enemy);
+                    GameEvents.IsPlayerStandingOnTheGameObject(player, field.Bonus);
+                    Program.StartApp(player, field);
                     break;
                 case MenuElements.MoveLeft:
-                    if (Validator.CheckingPlayerAndBorders(player.CoordinatX, player.Speed, 0, (int)MenuElements.MoveLeft))
-                    {
-                        if (Validator.CheckingPlayerAndObstacles(player, (int)MenuElements.MoveLeft, field.Obstacles))
-                        {
-                            Program.StartApp(player, field);
-                        }
-                        else
-                        {
-                            player.MoveLeft();
-                            Validator.IsPlayerStandingOnTheGameObject(player, field.Bonus);
-                            Program.StartApp(player, field);
-                        }
-                    } 
-                    else
-                    {
-                        Validator.TellUserHeIsNearBordersOfTheField(player, field);
-                    }
+                    player.MoveLeft(0, field.Obstacles);
+                    GameEvents.IsPlayerMeetEnemy(player, field.Enemy);
+                    GameEvents.IsPlayerStandingOnTheGameObject(player, field.Bonus);
+                    Program.StartApp(player, field);
                     break;
                 case MenuElements.MoveRight:
-                    if (Validator.CheckingPlayerAndBorders(player.CoordinatX, player.Speed, field.GetWidth, (int)MenuElements.MoveRight))
-                    {
-                        if (Validator.CheckingPlayerAndObstacles(player, (int)MenuElements.MoveRight, field.Obstacles))
-                        {
-                            Program.StartApp(player, field);
-                        }
-                        else
-                        {
-                            player.MoveRight();
-                            Validator.IsPlayerStandingOnTheGameObject(player, field.Bonus);
-                            Program.StartApp(player, field);
-                        }
-                    } 
-                    else
-                    {
-                        Validator.TellUserHeIsNearBordersOfTheField(player, field);
-                    }
+                    player.MoveRight(field.GetWidth, field.Obstacles);
+                    GameEvents.IsPlayerMeetEnemy(player, field.Enemy);
+                    GameEvents.IsPlayerStandingOnTheGameObject(player, field.Bonus);
+                    Program.StartApp(player, field);
                     break;
                 case MenuElements.PrintCurrentState:
                     player.Print();
