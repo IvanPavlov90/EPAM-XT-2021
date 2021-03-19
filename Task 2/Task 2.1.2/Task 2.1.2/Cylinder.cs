@@ -14,20 +14,9 @@ namespace Task_2._1._2
             Height = CheckValues(height);
         }
 
-        private float _radius;
-        public float Radius
-        {
-            get => _radius;
-            set => _radius = value;
-        }
+        public float Radius { get; set; }
 
-        private float _height;
-
-        public float Height
-        {
-            get => _height;
-            set => _height = value;
-        }
+        public float Height { get; set; }
 
         public override double Area
         {

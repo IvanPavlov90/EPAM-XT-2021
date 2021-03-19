@@ -14,21 +14,9 @@ namespace Task_2._1._2
             Height = CheckSide(height);
         }
 
-        private float _width;
+        public float Width { get; set; }
 
-        public float Width
-        {
-            get => _width;
-            set => _width = value;
-        }
-
-        private float _height;
-
-        public float Height
-        {
-            get => _height;
-            set => _height = value;
-        }
+        public float Height { get; set; }
 
         public override double Area
         {

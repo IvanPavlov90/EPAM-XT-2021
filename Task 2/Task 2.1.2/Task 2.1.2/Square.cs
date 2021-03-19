@@ -13,13 +13,7 @@ namespace Task_2._1._2
             Side = CheckSide(side);
         }
 
-        private float _side;
-
-        public float Side
-        {
-            get => _side;
-            set => _side = value;
-        }
+        public float Side { get; set; }
 
         public override double Area
         {

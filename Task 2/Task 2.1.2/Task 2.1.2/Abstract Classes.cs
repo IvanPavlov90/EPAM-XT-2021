@@ -6,39 +6,17 @@ namespace Task_2._1._2
 {
     public abstract class Figure
     {
-        private float _startpointX;
+        public float StartpointX { get; set; }
 
-        public float StartpointX
-        {
-            get => _startpointX;
-            set => _startpointX = value;
-        }
-
-        private float _startpointY;
-
-        public float StartpointY
-        {
-            get => _startpointY;
-            set => _startpointY = value;
-        }
+        public float StartpointY { get; set; }
     }
+
     public abstract class OpenFigures : Figure
     {
-        private float _endlinepointX;
+        public float EndlinepointX { get; set; }
 
-        public float EndlinepointX
-        {
-            get => _endlinepointX;
-            set => _endlinepointX = value;
-        }
+        public float EndlinepointY { get; set; }
 
-        private float _endlinepointY;
-
-        public float EndlinepointY
-        {
-            get => _endlinepointY;
-            set => _endlinepointY = value;
-        }
         public abstract double Length { get; }
     }
 

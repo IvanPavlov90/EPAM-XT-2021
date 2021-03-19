@@ -15,29 +15,11 @@ namespace Task_2._1._2
             SideC = IsTriangleValid(SideA, SideB, sideC);
         }
 
-        private float _sideA;
+        public float SideA { get; set; }
 
-        public float SideA
-        {
-            get => _sideA;
-            set => _sideA = value;
-        }
+        public float SideB { get; set; }
 
-        private float _sideB;
-
-        public float SideB
-        {
-            get => _sideB;
-            set => _sideB = value;
-        }
-
-        private float _sideC;
-
-        public float SideC
-        {
-            get => _sideC;
-            set => _sideC = value;
-        }
+        public float SideC { get; set; }
 
         public override double Area
         {

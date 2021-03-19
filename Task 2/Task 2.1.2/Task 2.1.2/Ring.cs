@@ -11,12 +11,7 @@ namespace Task_2._1._2
             InnerRadius = CheckInnerRadius(innerRadius, Radius);
         }
 
-        private float _innerRadius;
-        public float InnerRadius
-        {
-            get => _innerRadius;
-            set => _innerRadius = value;
-        }
+        public float InnerRadius { get; set; }
 
         public override double Area
         {
@@ -36,9 +31,9 @@ namespace Task_2._1._2
 
         public static float CheckInnerRadius(float value, float checkvalue)
         {
-            while (value >= checkvalue)
+            while (value >= checkvalue || value <= 0)
             {
-                Console.WriteLine($"Your value is uncorrect. It should be less then {checkvalue}. Please, try once again.");
+                Console.WriteLine($"Your innerradius value is uncorrect. It should be less then {checkvalue} and greater then 0. Please, try once again.");
                 string uservalue = Console.ReadLine();
                 float.TryParse(uservalue, out value);
             }

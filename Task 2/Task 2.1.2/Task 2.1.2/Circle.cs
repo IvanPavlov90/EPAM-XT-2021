@@ -13,12 +13,7 @@ namespace Task_2._1._2
             Radius = CheckRadius(radius);
         }
 
-        private float _radius;
-        public float Radius
-        {
-            get => _radius;
-            set => _radius = value;
-        }
+        public float Radius { get; set; }
 
         public override double Area
         {
@@ -49,7 +44,7 @@ namespace Task_2._1._2
         {
             while (value <= 0)
             {
-                Console.WriteLine($"Your value is uncorrect. It should be greater then 0. Please, try once again.");
+                Console.WriteLine($"Your radius value is uncorrect. It should be greater then 0. Please, try once again.");
                 string uservalue = Console.ReadLine();
                 float.TryParse(uservalue, out value);
             }
