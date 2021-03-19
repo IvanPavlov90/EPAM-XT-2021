@@ -13,17 +13,15 @@ namespace Task_2._1._2
             return circle;
         }
 
-        public static Ring CreateRing(float pointX, float pointY, float radius)
+        public static Ring CreateRing(float pointX, float pointY, float radius, float innerRadius)
         {
-            float innerRadius = Ring.CheckInnerRadius(radius);
             Ring ring = new Ring(pointX, pointY, radius, innerRadius);
             Console.WriteLine("Ring has been created.");
             return ring;
         }
 
-        public static Triangle CreateTriangle(float pointX, float pointY, float sideA, float sideB)
+        public static Triangle CreateTriangle(float pointX, float pointY, float sideA, float sideB, float sideC)
         {
-            float sideC = Triangle.IsTriangleValid(sideA, sideB);
             Triangle triangle = new Triangle(pointX, pointY, sideA, sideB, sideC);
             Console.WriteLine("Trinagle has been created.");
             return triangle;

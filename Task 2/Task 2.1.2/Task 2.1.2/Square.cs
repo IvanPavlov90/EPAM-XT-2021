@@ -10,7 +10,7 @@ namespace Task_2._1._2
         {
             StartpointX = pointX;
             StartpointY = pointY;
-            Side = side;
+            Side = CheckSide(side);
         }
 
         private float _side;
@@ -37,18 +37,15 @@ namespace Task_2._1._2
             }
         }
 
-        public static float CheckSide()
+        public static float CheckSide(float side)
         {
-            Console.WriteLine("Please enter side value.");
-            string uservalue = Console.ReadLine();
-            float.TryParse(uservalue, out float value);
-            while (value <= 0)
+            while (side <= 0)
             {
                 Console.WriteLine($"Your value is uncorrect. It should be greater then 0. Please, try once again.");
-                uservalue = Console.ReadLine();
-                float.TryParse(uservalue, out value);
+                string uservalue = Console.ReadLine();
+                float.TryParse(uservalue, out side);
             }
-            return value;
+            return side;
         }
 
         public override string ToString()

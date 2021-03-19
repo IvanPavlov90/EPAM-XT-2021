@@ -10,9 +10,9 @@ namespace Task_2._1._2
         /// Method that was created to input user values for figure's coordinats. Also it checks if they are not sring
         /// </summary>
         /// <returns>Returns float value.</returns>
-        public static float InputCoordinats ()
+        public static float InputValues ()
         {
-            Console.WriteLine("Enter coordinat value (only digit):");
+            Console.WriteLine("Enter your value (only digit):");
             do
             {
                 string usercoordinate = Console.ReadLine();

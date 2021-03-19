@@ -10,7 +10,7 @@ namespace Task_2._1._2
         {
             StartpointX = pointX;
             StartpointY = pointY;
-            Radius = radius;
+            Radius = CheckRadius(radius);
         }
 
         private float _radius;
@@ -36,15 +36,12 @@ namespace Task_2._1._2
             }
         }
 
-        public static float CheckRadius()
+        public static float CheckRadius(float value)
         {
-            Console.WriteLine("Please enter radius value.");
-            string uservalue = Console.ReadLine();
-            float.TryParse(uservalue, out float value);
             while (value <= 0)
             {
                 Console.WriteLine($"Your value is uncorrect. It should be greater then 0. Please, try once again.");
-                uservalue = Console.ReadLine();
+                string uservalue = Console.ReadLine();
                 float.TryParse(uservalue, out value);
             }
             return value;

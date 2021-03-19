@@ -57,42 +57,42 @@ namespace Task_2._1._2
             {
                 case Figures.Circle:
                     Console.WriteLine("Please enter coordinats of the circle's center and it's radius.");
-                    figures.Add(Painter.CreateCircle(Validator.InputCoordinats(), Validator.InputCoordinats(), Circle.CheckRadius()));
+                    figures.Add(Painter.CreateCircle(Validator.InputValues(), Validator.InputValues(), Validator.InputValues()));
                     Program.CustomPaint(name, figures);
                     break;
                 case Figures.Ring:
                     Console.WriteLine("Please enter coordinats of the ring's center and it's inner and outer radiuses.");
-                    figures.Add(Painter.CreateRing(Validator.InputCoordinats(), Validator.InputCoordinats(), Ring.CheckRadius()));
+                    figures.Add(Painter.CreateRing(Validator.InputValues(), Validator.InputValues(), Validator.InputValues(), Validator.InputValues()));
                     Program.CustomPaint(name, figures);
                     break;
                 case Figures.Line:
                     Console.WriteLine("Please enter coordinats of start and of the end of line.");
-                    figures.Add(Painter.CreateLine(Validator.InputCoordinats(), Validator.InputCoordinats(), Validator.InputCoordinats(), Validator.InputCoordinats()));
+                    figures.Add(Painter.CreateLine(Validator.InputValues(), Validator.InputValues(), Validator.InputValues(), Validator.InputValues()));
                     Program.CustomPaint(name, figures);
                     break;
                 case Figures.Square:
                     Console.WriteLine("Please enter coordinats of the square's start top and value of it's side.");
-                    figures.Add(Painter.CreateSquare(Validator.InputCoordinats(), Validator.InputCoordinats(), Square.CheckSide()));
+                    figures.Add(Painter.CreateSquare(Validator.InputValues(), Validator.InputValues(), Validator.InputValues()));
                     Program.CustomPaint(name, figures);
                     break;
                 case Figures.Rectangle:
                     Console.WriteLine("Please enter coordinats of the rectangle's start top and value of it's sides.");
-                    figures.Add(Painter.CreateRectangle(Validator.InputCoordinats(), Validator.InputCoordinats(), Rectangle.CheckSide(), Rectangle.CheckSide()));
+                    figures.Add(Painter.CreateRectangle(Validator.InputValues(), Validator.InputValues(), Validator.InputValues(), Validator.InputValues()));
                     Program.CustomPaint(name, figures);
                     break;
                 case Figures.Triangle:
                     Console.WriteLine("Please enter values for the triangle's sides.");
-                    figures.Add(Painter.CreateTriangle(0, 0, Triangle.CheckSide(), Triangle.CheckSide()));
+                    figures.Add(Painter.CreateTriangle(0, 0, Validator.InputValues(), Validator.InputValues(), Validator.InputValues()));
                     Program.CustomPaint(name, figures);
                     break;
                 case Figures.Sphere:
                     Console.WriteLine("Please enter coordinats of the sphere's center and it's radius.");
-                    figures.Add(Painter.CreateSphere(Validator.InputCoordinats(), Validator.InputCoordinats(), Sphere.CheckRadius()));
+                    figures.Add(Painter.CreateSphere(Validator.InputValues(), Validator.InputValues(), Validator.InputValues()));
                     Program.CustomPaint(name, figures);
                     break;
                 case Figures.Cylinder:
                     Console.WriteLine("Please enter values for the cylinder's radius and height.");
-                    figures.Add(Painter.CreateCylinder(0, 0, Cylinder.CheckValues(), Cylinder.CheckValues()));
+                    figures.Add(Painter.CreateCylinder(0, 0, Validator.InputValues(), Validator.InputValues()));
                     Program.CustomPaint(name, figures);
                     break;
                 default:

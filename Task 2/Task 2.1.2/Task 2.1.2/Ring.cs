@@ -8,10 +8,7 @@ namespace Task_2._1._2
     {
         public Ring(float pointX, float pointY, float radius, float innerRadius) : base(pointX, pointY, radius)
         {
-            StartpointX = pointX;
-            StartpointY = pointY;
-            Radius = radius;
-            InnerRadius = innerRadius;
+            InnerRadius = CheckInnerRadius(innerRadius, Radius);
         }
 
         private float _innerRadius;
@@ -37,15 +34,12 @@ namespace Task_2._1._2
             }
         }
 
-        public static float CheckInnerRadius(float checkvalue)
+        public static float CheckInnerRadius(float value, float checkvalue)
         {
-            Console.WriteLine("Please enter innerradius value.");
-            string uservalue = Console.ReadLine();
-            float.TryParse(uservalue, out float value);
             while (value >= checkvalue)
             {
                 Console.WriteLine($"Your value is uncorrect. It should be less then {checkvalue}. Please, try once again.");
-                uservalue = Console.ReadLine();
+                string uservalue = Console.ReadLine();
                 float.TryParse(uservalue, out value);
             }
             return value;
