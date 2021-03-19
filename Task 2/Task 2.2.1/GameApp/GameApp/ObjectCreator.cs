@@ -104,7 +104,6 @@ namespace GameApp
             {
                 if (item == (coordinatX, coordinatY))
                 {
-                    //Console.WriteLine($"Совпадение! {item}");
                     return true;
                 }
             }
@@ -131,7 +130,7 @@ namespace GameApp
                 }
             }
 
-            int count1 = 15;
+            int count1 = 10;
             while (count1 > 0)
             {
                 Enemy enemy = CreateEnemy(field.GetWidth, field.GetHeight);
@@ -142,7 +141,7 @@ namespace GameApp
                 }
             }
 
-            int count2 = 10;
+            int count2 = 7;
             while (count2 > 0)
             {
                 Bonus sword = CreateSword(field.GetWidth, field.GetHeight);

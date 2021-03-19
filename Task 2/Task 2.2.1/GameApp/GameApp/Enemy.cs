@@ -8,7 +8,7 @@ namespace GameApp
     {
         public Enemy(string name, int coordinatX, int coordinatY) : base (name, coordinatX, coordinatY) { }
 
-        private int _health = 80;
+        private int _health = 75;
 
         public int Health
         {
@@ -16,7 +16,7 @@ namespace GameApp
             set => _health = value;
         }
 
-        private int _attackrange = 8;
+        private int _attackrange = 7;
 
         public int AttackRange
         {
