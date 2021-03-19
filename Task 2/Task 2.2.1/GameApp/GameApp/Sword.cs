@@ -13,12 +13,6 @@ namespace GameApp
             CoordinatY = coordinatY;
         }
 
-        private int _increaseAttackrange = 5;
-        public override int Increase
-        {
-            get => _increaseAttackrange;
-        }
-
-        private bool _havebeenvisited = false;
+        public override int Increase { get; } = 5;
     }
 }

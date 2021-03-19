@@ -22,20 +22,20 @@ namespace GameApp
                     {
                         if (!player.HasSword)
                         {
-                            item.HaveBeenVisited = true;
-                            player.HasSword = true;
+                            item.BonusWasTaken();
+                            player.TakingSword();
                             Console.WriteLine($"You attack rang has been increased on {item.Increase}");
-                            player.AttackRange += item.Increase;
+                            player.IncreaseAttackrange(item.Increase);
                         } 
                         else
                             Console.WriteLine($"You already have a sword");
                     }
                     if (item is Potion)
                     {
-                        item.HaveBeenVisited = true;
-                        player.CountBonus += 1;
+                        item.BonusWasTaken();
+                        player.IncreaseCountBonus();
                         Console.WriteLine($"You collect Potion. You health has been increased on {item.Increase}");
-                        player.Health += item.Increase;
+                        player.IncreaseHealth(item.Increase);
                     }
                 }
             }
@@ -47,7 +47,7 @@ namespace GameApp
             {
                 if (item.CoordinatX == player.CoordinatX && item.CoordinatY == player.CoordinatY && item.HaveBeenVisited == false)
                 {
-                    item.HaveBeenVisited = true;
+                    item.EnemyWasVisited();
                     Console.WriteLine($"You meet {item.Name}. He attacks you!!!");
                     Battle(player, item);
                 }
@@ -66,11 +66,11 @@ namespace GameApp
             System.Threading.Thread.Sleep(2000);
             while (player.Health > 0 && enemy.Health > 0)
             {
-                enemy.Health -= player.AttackRange;
+                enemy.DecreaseHealth(player.AttackRange);
                 Console.WriteLine($"You striked {enemy.Name}, his health is now {enemy.Health}");
                 if (enemy.Health <= 0) break;
                 System.Threading.Thread.Sleep(850);
-                player.Health -= enemy.AttackRange;
+                player.DecreaseHealth(enemy.AttackRange);
                 Console.WriteLine($"Enemy striked you, your health is now {player.Health}");
                 if (player.Health <= 0) break;
                 System.Threading.Thread.Sleep(850);

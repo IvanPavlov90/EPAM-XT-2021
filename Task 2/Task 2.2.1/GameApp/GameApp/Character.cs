@@ -6,37 +6,24 @@ namespace GameApp
 {
     public abstract class Character
     {
-        protected Character (string name, int coordinatX, int coordinatY)
+        protected Character (string name, int coordinatX, int coordinatY, int health)
         {
             Name = name;
             CoordinatX = coordinatX;
             CoordinatY = coordinatY;
+            Health = health;
         }
 
-        private string _name;
+        public string Name { get; set; }
 
-        public string Name
-        {
-            get => _name;
-            set => _name = value;
-        }
+        public int CoordinatX { get; set; }
 
-        private int _coordinatX;
+        public int CoordinatY { get; set; }
 
-        public int CoordinatX
-        {
-            get => _coordinatX;
-            set => _coordinatX = value;
-        }
+        public int Health { get; private set; }
 
-        private int _coordinatY;
+        public void IncreaseHealth(int value) => Health += value;
 
-        public int CoordinatY
-        {
-            get => _coordinatY;
-            set => _coordinatY = value;
-        }
-
-        private int _health;
+        public void DecreaseHealth(int value) => Health -= value;
     }
 }

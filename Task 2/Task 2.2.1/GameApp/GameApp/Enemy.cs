@@ -6,29 +6,12 @@ namespace GameApp
 {
     public class Enemy : Character
     {
-        public Enemy(string name, int coordinatX, int coordinatY) : base (name, coordinatX, coordinatY) { }
+        public Enemy(string name, int coordinatX, int coordinatY, int health) : base (name, coordinatX, coordinatY, health) { }
 
-        private int _health = 75;
+        public int AttackRange { get; } = 8;
 
-        public int Health
-        {
-            get => _health;
-            set => _health = value;
-        }
+        public bool HaveBeenVisited { get; private set; } = false;
 
-        private int _attackrange = 7;
-
-        public int AttackRange
-        {
-            get => _attackrange;
-        }
-
-        private bool _havebeenvisited = false;
-
-        public bool HaveBeenVisited
-        {
-            get => _havebeenvisited;
-            set => _havebeenvisited = value;
-        }
+        public void EnemyWasVisited() => HaveBeenVisited = true;
     }
 }

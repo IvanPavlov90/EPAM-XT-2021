@@ -6,46 +6,15 @@ namespace GameApp
 {
     public class Player : Character
     {
-        public Player(string name, int coordinatX, int coordinatY) : base(name, coordinatX, coordinatY) { }
+        public Player(string name, int coordinatX, int coordinatY, int health) : base(name, coordinatX, coordinatY, health) { }
 
-        private int _speed = 1;
+        public int AttackRange { get; private set; } = 6;
 
-        public int Speed 
-        { 
-            get => _speed;
-        }
+        public int Speed { get; } = 1;
 
-        private int _health = 100;
+        public bool HasSword { get; private set; } = false;
 
-        public int Health
-        {
-            get => _health;
-            set => _health = value;
-        }
-
-        private int _attackrange = 6;
-
-        public int AttackRange
-        {
-            get => _attackrange;
-            set => _attackrange = value;
-        }
-
-        private bool _hasSword = false;
-
-        public bool HasSword
-        {
-            get => _hasSword;
-            set => _hasSword = value;
-        }
-
-        private int _countBonus = 0;
-
-        public int CountBonus
-        {
-            get => _countBonus;
-            set => _countBonus = value;
-        }
+        public int CountBonus { get; private set; } = 0;
 
         /// <summary>
         /// Method for moving
@@ -144,5 +113,11 @@ namespace GameApp
             }
             return false;
         }
+
+        public void IncreaseAttackrange(int value) => AttackRange += value;
+
+        public void IncreaseCountBonus() => CountBonus ++;
+
+        public void TakingSword() => HasSword = true;
     }
 }

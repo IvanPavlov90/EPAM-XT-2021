@@ -17,6 +17,14 @@ namespace GameApp
                 $"by using game menu. On your way " +
                 $"you cam meet enemies, that of course will fight with you, or pick potions that will increase your health. Also " +
                 $"you can find a sword that increse your attack level!!! It will be very useful. Good luck!");
+            foreach (Bonus item in field.Bonus)
+            {
+                Console.WriteLine($"{item.Name} {item.CoordinatX} {item.CoordinatY}");
+            }
+            foreach (Enemy item in field.Enemy)
+            {
+                Console.WriteLine($"{item.Name} {item.CoordinatX} {item.CoordinatY}");
+            }
             StartApp(player, field);
         }
 

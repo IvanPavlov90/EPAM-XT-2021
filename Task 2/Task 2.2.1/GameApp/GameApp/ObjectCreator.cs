@@ -12,7 +12,7 @@ namespace GameApp
         {
             Console.WriteLine("Please your name: ");
             string name = Console.ReadLine();
-            return new Player(name, 0, 0);
+            return new Player(name, 0, 0, 100);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace GameApp
             if (!CheckingCoordinats(coordinatsObjects, coordinatX, coordinatY))
             {
                 coordinatsObjects.Add((coordinatX, coordinatY));
-                return new Enemy(name, coordinatX, coordinatY);
+                return new Enemy(name, coordinatX, coordinatY, 75);
             }
             else
             {

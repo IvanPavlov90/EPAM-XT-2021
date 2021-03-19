@@ -13,12 +13,6 @@ namespace GameApp
             CoordinatY = coordinatY;
         }
 
-        private int _increaseHealth = 10;
-        public override int Increase
-        {
-            get => _increaseHealth;
-        }
-
-        private bool _havebeenvisited = false;
+        public override int Increase { get; } = 10;
     }
 }
