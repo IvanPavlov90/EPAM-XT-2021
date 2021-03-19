@@ -8,11 +8,12 @@ namespace GameApp
     {
         public enum MenuElements
         {
-            MoveForward = 1,
+            MoveForward = 8,
             MoveBackward = 2,
-            MoveLeft = 3,
-            MoveRight = 4,
-            PrintCurrentState = 5
+            MoveLeft = 4,
+            MoveRight = 6,
+            PrintCurrentState = 5,
+            IncorrectAction = 0
         }
 
         /// <summary>
@@ -22,6 +23,7 @@ namespace GameApp
         {
             foreach (MenuElements item in Enum.GetValues(typeof(MenuElements)))
             {
+                if ((int)item != 0)
                 Console.WriteLine($"{(int)item}. {item}");
             }
         }
@@ -32,13 +34,11 @@ namespace GameApp
         /// <returns>Returns enum member</returns>
         public static MenuElements ReadAction()
         {
-            do
-            {
-                string value = Console.ReadLine();
-                if (Enum.TryParse<MenuElements>(value, out MenuElements result))
-                    return result;
-
-            } while (true);
+             string value = Console.ReadLine();
+            if (Enum.TryParse<MenuElements>(value, out MenuElements result))
+                return result;
+            else
+                return MenuElements.IncorrectAction;
         }
 
         /// <summary>
@@ -82,6 +82,7 @@ namespace GameApp
                     Program.StartApp(player, field);
                     break;
                 default:
+                    Program.StartApp(player, field);
                     break;
             };
         }

@@ -29,6 +29,14 @@ namespace GameApp
             }
         }
 
+        private int _quantityOfPotions;
+
+        public int QuantityOfPotions
+        {
+            get => _quantityOfPotions;
+            set => _quantityOfPotions = value;
+        }
+
         public void AddObject(GameObject obj)
         {
             _obstacles.Add(obj);

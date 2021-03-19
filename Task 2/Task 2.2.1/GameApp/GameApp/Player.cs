@@ -23,7 +23,7 @@ namespace GameApp
             set => _health = value;
         }
 
-        private int _attackrange = 5;
+        private int _attackrange = 6;
 
         public int AttackRange
         {
@@ -37,6 +37,14 @@ namespace GameApp
         {
             get => _hasSword;
             set => _hasSword = value;
+        }
+
+        private int _countBonus = 0;
+
+        public int CountBonus
+        {
+            get => _countBonus;
+            set => _countBonus = value;
         }
 
         /// <summary>

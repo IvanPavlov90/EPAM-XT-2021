@@ -6,7 +6,7 @@ namespace GameApp
 {
     public static class ObjectCreator
     {
-        public static List <(int, int)> coordinatsObstacles = new List<(int, int)> { };
+        public static List <(int, int)> coordinatsObjects = new List<(int, int)> { };
 
         public static Player CreatePlayer()
         {
@@ -16,7 +16,10 @@ namespace GameApp
         }
 
         /// <summary>
-        /// Method for creating irresistible objects.
+        /// Method for creating irresistible objects. In this method I've tried to input logic that will be
+        /// prohibit to create two mountains with the same coordinats. If method creates mountain with coordinats
+        /// taht already has another mountain, method will create object with negative coordinats and player
+        /// will never see them.
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
@@ -26,15 +29,15 @@ namespace GameApp
             string name = "Mountain";
             Random rnd = new Random();
             int coordinatX = rnd.Next(0, width);
-            int coordinatY = rnd.Next(1, height - 1);
-            if (!CheckingCoordinats(coordinatsObstacles, coordinatX, coordinatY))
+            int coordinatY = rnd.Next(1, height);
+            if (!CheckingCoordinats(coordinatsObjects, coordinatX, coordinatY))
             {
-                coordinatsObstacles.Add((coordinatX, coordinatY));
+                coordinatsObjects.Add((coordinatX, coordinatY));
                 return new Obstacle(name, coordinatX, coordinatY);
             } 
             else
             {
-                return new Obstacle(name, -coordinatX, -coordinatY);
+                return null;
             }
         }
 
@@ -42,9 +45,17 @@ namespace GameApp
         {
             string name = "Enemy";
             Random rnd = new Random();
-            int coordinatX = rnd.Next(0, width);
-            int coordinatY = rnd.Next(1, height - 1);
-            return new Enemy(name, coordinatX, coordinatY);
+            int coordinatX = rnd.Next(0, width + 1);
+            int coordinatY = rnd.Next(1, height + 1);
+            if (!CheckingCoordinats(coordinatsObjects, coordinatX, coordinatY))
+            {
+                coordinatsObjects.Add((coordinatX, coordinatY));
+                return new Enemy(name, coordinatX, coordinatY);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public static Bonus CreateSword(int width, int height)
@@ -52,8 +63,16 @@ namespace GameApp
             string name = "Sword";
             Random rnd = new Random();
             int coordinatX = rnd.Next(0, width);
-            int coordinatY = rnd.Next(1, height - 1);
-            return new Sword(name, coordinatX, coordinatY);
+            int coordinatY = rnd.Next(1, height);
+            if (!CheckingCoordinats(coordinatsObjects, coordinatX, coordinatY))
+            {
+                coordinatsObjects.Add((coordinatX, coordinatY));
+                return new Sword(name, coordinatX, coordinatY);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public static Bonus CreatePotion(int width, int height)
@@ -61,8 +80,16 @@ namespace GameApp
             string name = "Potion";
             Random rnd = new Random();
             int coordinatX = rnd.Next(0, width);
-            int coordinatY = rnd.Next(1, height - 1);
-            return new Potion(name, coordinatX, coordinatY);
+            int coordinatY = rnd.Next(1, height);
+            if (!CheckingCoordinats(coordinatsObjects, coordinatX, coordinatY))
+            {
+                coordinatsObjects.Add((coordinatX, coordinatY));
+                return new Potion(name, coordinatX, coordinatY);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -73,7 +100,7 @@ namespace GameApp
         /// <returns>true if the yare similar, false if they are not.</returns>
         public static bool CheckingCoordinats (List<(int, int)> coordinatsObjects, int coordinatX, int coordinatY)
         {
-            foreach ((int, int) item in coordinatsObstacles)
+            foreach ((int, int) item in coordinatsObjects)
             {
                 if (item == (coordinatX, coordinatY))
                 {
@@ -93,35 +120,40 @@ namespace GameApp
         /// <param name="height"></param>
         public static void PlaceObjects(Field field)
         {
-            int count = 15;
+            int count = 20;
             while (count > 0)
             {
-                field.AddObject(CreateObstacle(field.GetWidth, field.GetHeight));
-                count--;
+                Obstacle obstacle = CreateObstacle(field.GetWidth, field.GetHeight);
+                if (obstacle != null)
+                {
+                    field.AddObject(obstacle);
+                    count--;
+                }
             }
 
-            int count1 = 10;
+            int count1 = 15;
             while (count1 > 0)
             {
                 Enemy enemy = CreateEnemy(field.GetWidth, field.GetHeight);
-                if (!CheckingCoordinats(coordinatsObstacles, enemy.CoordinatX, enemy.CoordinatY))
+                if (enemy != null)
                 {
                     field.AddEnemy(enemy);
                     count1--;
                 }
             }
 
-            int count2 = 6;
+            int count2 = 10;
             while (count2 > 0)
             {
                 Bonus sword = CreateSword(field.GetWidth, field.GetHeight);
-                if (!CheckingCoordinats(coordinatsObstacles, sword.CoordinatX, sword.CoordinatY))
+                if (sword != null)
                 {
                     field.AddBonus(sword);
                 }
                 Bonus potion = CreatePotion(field.GetWidth, field.GetHeight);
-                if (!CheckingCoordinats(coordinatsObstacles, potion.CoordinatX, potion.CoordinatY))
+                if (potion != null)
                 {
+                    field.QuantityOfPotions++;
                     field.AddBonus(potion);
                     count2--;
                 }

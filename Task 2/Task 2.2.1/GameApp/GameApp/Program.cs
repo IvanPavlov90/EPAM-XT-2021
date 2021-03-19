@@ -12,7 +12,7 @@ namespace GameApp
             Field field = new Field();
             ObjectCreator.PlaceObjects(field);
             Console.WriteLine($"Greetings, {player.Name}. You start this game and I want to tell you the rules. They are very simple. " +
-                $"You must reach the end point of the field ({field.GetWidth}, {field.GetHeight}) - that is your main aim. Your start point " +
+                $"You must collect all potions on the field (there are only {field.QuantityOfPotions} of them) - that is your main aim. Your start point " +
                 $"is (0, 0). On each step you can move only by one piece in X, or y directions. You can see your current coordinats " +
                 $"by using game menu. On your way " +
                 $"you cam meet enemies, that of course will fight with you, or pick potions that will increase your health. Also " +

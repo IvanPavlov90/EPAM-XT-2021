@@ -23,19 +23,18 @@ namespace GameApp
                         if (!player.HasSword)
                         {
                             item.HaveBeenVisited = true;
+                            player.HasSword = true;
                             Console.WriteLine($"You attack rang has been increased on {item.Increase}");
                             player.AttackRange += item.Increase;
                         } 
                         else
-                        {
-                            item.HaveBeenVisited = true;
                             Console.WriteLine($"You already have a sword");
-                        }
                     }
                     if (item is Potion)
                     {
                         item.HaveBeenVisited = true;
-                        Console.WriteLine($"You health has been increased on {item.Increase}");
+                        player.CountBonus += 1;
+                        Console.WriteLine($"You collect Potion. You health has been increased on {item.Increase}");
                         player.Health += item.Increase;
                     }
                 }
@@ -64,14 +63,17 @@ namespace GameApp
         {
             Console.WriteLine($"Before the fight starts, some statistic: " +
                 $"Your enemy {enemy.Name}, health - {enemy.Health}, attackrange - {enemy.AttackRange}");
+            System.Threading.Thread.Sleep(2000);
             while (player.Health > 0 && enemy.Health > 0)
             {
                 enemy.Health -= player.AttackRange;
                 Console.WriteLine($"You striked {enemy.Name}, his health is now {enemy.Health}");
                 if (enemy.Health <= 0) break;
+                System.Threading.Thread.Sleep(850);
                 player.Health -= enemy.AttackRange;
                 Console.WriteLine($"Enemy striked you, your health is now {player.Health}");
                 if (player.Health <= 0) break;
+                System.Threading.Thread.Sleep(850);
             }
 
             if (player.Health <= 0)
@@ -80,16 +82,14 @@ namespace GameApp
                 Environment.Exit(0);
             } 
             else
-            {
                 Console.WriteLine($"You win this fight. But journey continues...");
-            }
         }
 
         public static void Victory(Player player, Field field)
         {
-            if (player.CoordinatX == field.GetWidth && player.CoordinatY == field.GetHeight)
+            if (player.CountBonus == field.QuantityOfPotions)
             {
-                Console.WriteLine("You journey through this rough and dangerous lands was succesfull. Greetings, my friend, you win....");
+                Console.WriteLine($"You journey through this rough and dangerous lands was succesfull. Greetings, {player.Name}, you win....");
                 Environment.Exit(0);
             }
         }
