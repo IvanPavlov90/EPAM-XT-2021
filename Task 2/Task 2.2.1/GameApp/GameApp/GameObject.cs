@@ -6,26 +6,10 @@ namespace GameApp
 {
     public abstract class GameObject
     {
-        private string _name;
-        public string Name
-        {
-            get => _name;
-            set => _name = value;
-        }
+        public string Name { get; set; }
 
-        private int _coordinatX;
-        public int CoordinatX
-        {
-            get => _coordinatX;
-            set => _coordinatX = value;
-        }
+        public int CoordinatX { get; set; }
 
-        private int _coordinatY;
-
-        public int CoordinatY
-        {
-            get => _coordinatY;
-            set => _coordinatY = value;
-        }
+        public int CoordinatY { get; set; }
     }
 }

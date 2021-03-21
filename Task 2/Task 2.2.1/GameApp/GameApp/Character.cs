@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GameApp
 {
-    public abstract class Character
+    public abstract class Character : GameObject
     {
         protected Character (string name, int coordinatX, int coordinatY, int health)
         {
@@ -13,12 +13,6 @@ namespace GameApp
             CoordinatY = coordinatY;
             Health = health;
         }
-
-        public string Name { get; set; }
-
-        public int CoordinatX { get; set; }
-
-        public int CoordinatY { get; set; }
 
         public int Health { get; private set; }
 
