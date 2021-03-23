@@ -27,7 +27,8 @@ namespace Task_3._1.Classes
         public static void CrossOffPeople (int value, int value2)
         {
             if (value < value2) {
-                Console.WriteLine("Игра окончена. Невозможно вычеркнуть больше людей.");
+                Console.WriteLine("Вычеркивание невозможно, т. к. необходимо вычеркнуть человека с большим номером, чем людей в кругу. " +
+                    "Игра окончена.");
             } else
             {
                 int roundCount = 1;
