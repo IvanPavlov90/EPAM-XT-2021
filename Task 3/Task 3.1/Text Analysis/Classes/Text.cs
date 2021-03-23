@@ -35,20 +35,20 @@ namespace Text_Analysis.Classes
             }
         }
 
-        public static List<char> GetListOfSeparators(string text)
-        {
-            List<char> Separators = new List<char> { };
+        //public static List<char> GetListOfSeparators(string text)
+        //{
+        //    List<char> Separators = new List<char> { };
 
-            foreach (char elem in text)
-            {
-                if (!Char.IsLetterOrDigit(elem))
-                {
-                    Separators.Add(elem);
-                }
-            }
+        //    foreach (char elem in text)
+        //    {
+        //        if (!Char.IsLetterOrDigit(elem))
+        //        {
+        //            Separators.Add(elem);
+        //        }
+        //    }
 
-            return Separators;
-        }
+        //    return Separators;
+        //}
 
     }
 }

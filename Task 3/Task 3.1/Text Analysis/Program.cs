@@ -3,14 +3,17 @@ using Text_Analysis.Classes;
 
 namespace Text_Analysis
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Please enter you text");
-            var text = Console.ReadLine();
-            TextAnalysis document = new TextAnalysis(text);
-            Console.WriteLine(document.Text);
+            StartApp();
+        }
+
+        public static void StartApp()
+        {
+            AppMenu.ShowMenu();
+            AppMenu.DoAction(AppMenu.ReadAction());
         }
     }
 }
