@@ -4,14 +4,14 @@ using System.Text;
 
 namespace Text_Analysis.Classes
 {
-    public class TextAnalysis
+    public class Text
     {
-        public TextAnalysis(string text)
+        public Text(string text)
         {
-            Text = IsTextEmptyOrOnlySpaces(text);
+            UserText = IsTextEmptyOrOnlySpaces(text);
         }
 
-        public string Text { get; private set; }
+        public string UserText { get; private set; }
 
         public static string IsTextEmptyOrOnlySpaces(string text)
         {
@@ -34,21 +34,5 @@ namespace Text_Analysis.Classes
                 return outputtext;
             }
         }
-
-        //public static List<char> GetListOfSeparators(string text)
-        //{
-        //    List<char> Separators = new List<char> { };
-
-        //    foreach (char elem in text)
-        //    {
-        //        if (!Char.IsLetterOrDigit(elem))
-        //        {
-        //            Separators.Add(elem);
-        //        }
-        //    }
-
-        //    return Separators;
-        //}
-
     }
 }

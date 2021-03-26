@@ -7,13 +7,14 @@ namespace Text_Analysis
     {
         static void Main(string[] args)
         {
-            StartApp();
+            Text usertext = Creator.CreateText();
+            StartApp(usertext);
         }
 
-        public static void StartApp()
+        public static void StartApp(Text usertext)
         {
             AppMenu.ShowMenu();
-            AppMenu.DoAction(AppMenu.ReadAction());
+            AppMenu.DoAction(AppMenu.ReadAction(), usertext);
         }
     }
 }

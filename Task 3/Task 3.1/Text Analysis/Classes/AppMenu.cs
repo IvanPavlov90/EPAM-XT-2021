@@ -8,8 +8,8 @@ namespace Text_Analysis.Classes
     {
         public enum MenuElements
         {
-            EnterText = 1,
-            GetAnalysis = 2,
+            CountWords = 1,
+            PercentageWord = 2,
             IncorrectAction = 0
         }
 
@@ -38,21 +38,23 @@ namespace Text_Analysis.Classes
                 return MenuElements.IncorrectAction;
         }
 
-        public static void DoAction(MenuElements value)
+        public static void DoAction(MenuElements value, Text usertext)
         {
             switch(value)
             {
-                case MenuElements.EnterText:
-                    Console.WriteLine("Please enter you text");
-                    var text = Console.ReadLine();
-                    TextAnalysis document = new TextAnalysis(text);
-                    Console.WriteLine(document.Text);
+                case MenuElements.CountWords:
+                    string[] words = Analysis.Splittext(usertext.UserText, Analysis.GetSeparators(usertext.UserText));
+                    Analysis.CountWords(words);
+                    Program.StartApp(usertext);
                     break;
-                case MenuElements.GetAnalysis:
+                case MenuElements.PercentageWord:
+                    string[] words2 = Analysis.Splittext(usertext.UserText, Analysis.GetSeparators(usertext.UserText));
+                    Analysis.CountPercent(words2);
+                    Program.StartApp(usertext);
                     break;
                 default:
                     Console.WriteLine("Incorrect action. Try again, please.");
-                    Program.StartApp();
+                    Program.StartApp(usertext);
                     break;
             }
         }
