@@ -27,6 +27,12 @@ namespace Text_Analysis.Classes
             return separators;
         }
 
+        /// <summary>
+        /// Method for splitting text.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="separators"></param>
+        /// <returns></returns>
         public static string[] Splittext (string text, string separators)
         {
             string[] textarray = text.Split(separators.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -39,51 +45,38 @@ namespace Text_Analysis.Classes
                 return textarray;
         }
 
-        public static void CountWords (string[] textarray)
+        /// <summary>
+        /// Method that counts whole statistic and saves it to data class.
+        /// </summary>
+        /// <param name="textarray"></param>
+        /// <returns></returns>
+        public static Data CountWords (string[] textarray)
         {
             Data data = new Data();
 
             for (int i = 0; i < textarray.Length; i++)
             {
-                string word = textarray[i];
-                int count = 1;
-
-                for (int j = i + 1; j < textarray.Length; j++)
+                if (textarray[i].Length > 1) 
                 {
-                    if (word == textarray[j])
-                    {
-                        count++;
-                    }
-                }
+                    string word = textarray[i];
 
-                data.AddData<string, int>(data.QuantityWordsData, word, count);
+                    int count = 1;
+
+                    for (int j = i + 1; j < textarray.Length; j++)
+                    {
+                        if (word == textarray[j])
+                        {
+                            count++;
+                        }
+                    }
+
+                    data.AddData<string, int>(data.QuantityWordsData, word, count);
+                    double percent = (double)count / (double)textarray.Length * 100;
+                    data.AddData<string, double>(data.PercentWordsData, word, Math.Round(percent, 2, MidpointRounding.AwayFromZero));
+                }
             }
 
-            data.ShowQuantityWordsData();
-        }
-
-        public static void CountPercent (string[] textarray)
-        {
-            Data data = new Data();
-
-            for (int i = 0; i < textarray.Length; i++)
-            {
-                string word = textarray[i];
-                int count = 1;
-
-                for (int j = i + 1; j < textarray.Length; j++)
-                {
-                    if (word == textarray[j])
-                    {
-                        count++;
-                    }
-                }
-
-                double percent = (double)count / (double)textarray.Length * 100;
-                data.AddData<string, double>(data.PercentWordsData, word, Math.Round(percent, 2, MidpointRounding.AwayFromZero));
-            }
-
-            data.ShowPercentWordsData();
+            return data;
         }
     }
 }

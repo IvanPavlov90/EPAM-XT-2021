@@ -8,8 +8,10 @@ namespace Text_Analysis.Classes
     {
         public enum MenuElements
         {
-            CountWords = 1,
-            PercentageWord = 2,
+            Five_Most_Frequently_Words = 1,
+            Words_That_Make_Up_More_Then_One_Percent_Of_TheText = 2,
+            Full_Statistic_About_Words = 3,
+            Enter_Anonther_Text = 4,
             IncorrectAction = 0
         }
 
@@ -38,23 +40,29 @@ namespace Text_Analysis.Classes
                 return MenuElements.IncorrectAction;
         }
 
-        public static void DoAction(MenuElements value, Text usertext)
+        public static void DoAction(MenuElements value, Text usertext, Data data)
         {
             switch(value)
             {
-                case MenuElements.CountWords:
-                    string[] words = Analysis.Splittext(usertext.UserText, Analysis.GetSeparators(usertext.UserText));
-                    Analysis.CountWords(words);
-                    Program.StartApp(usertext);
+                case MenuElements.Five_Most_Frequently_Words:
+                    data.ShowQuantityWordsData();
+                    Program.ShowMenu(usertext);
                     break;
-                case MenuElements.PercentageWord:
-                    string[] words2 = Analysis.Splittext(usertext.UserText, Analysis.GetSeparators(usertext.UserText));
-                    Analysis.CountPercent(words2);
-                    Program.StartApp(usertext);
+                case MenuElements.Words_That_Make_Up_More_Then_One_Percent_Of_TheText:
+                    data.ShowPercentWordsData();
+                    Program.ShowMenu(usertext);
+                    break;
+                case MenuElements.Full_Statistic_About_Words:
+                    data.ShowFullstatistic();
+                    Program.ShowMenu(usertext);
+                    break;
+                case MenuElements.Enter_Anonther_Text:
+                    Console.Clear();
+                    Program.StartApp();
                     break;
                 default:
                     Console.WriteLine("Incorrect action. Try again, please.");
-                    Program.StartApp(usertext);
+                    Program.ShowMenu(usertext); ;
                     break;
             }
         }

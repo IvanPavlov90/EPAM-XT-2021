@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Text_Analysis.Classes;
 
 namespace Text_Analysis
@@ -7,14 +8,21 @@ namespace Text_Analysis
     {
         static void Main(string[] args)
         {
-            Text usertext = Creator.CreateText();
-            StartApp(usertext);
+            StartApp();
         }
 
-        public static void StartApp(Text usertext)
+        public static void StartApp()
         {
+            Text usertext = Creator.CreateText();
+            ShowMenu(usertext);
+        }
+
+        public static void ShowMenu(Text usertext)
+        {
+            string[] words = Analysis.Splittext(usertext.UserText, Analysis.GetSeparators(usertext.UserText));
+            Data data = Analysis.CountWords(words);
             AppMenu.ShowMenu();
-            AppMenu.DoAction(AppMenu.ReadAction(), usertext);
+            AppMenu.DoAction(AppMenu.ReadAction(), usertext, data);
         }
     }
 }
