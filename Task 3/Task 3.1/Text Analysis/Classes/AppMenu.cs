@@ -62,7 +62,7 @@ namespace Text_Analysis.Classes
                     break;
                 default:
                     Console.WriteLine("Incorrect action. Try again, please.");
-                    Program.ShowMenu(usertext); ;
+                    Program.ShowMenu(usertext);
                     break;
             }
         }

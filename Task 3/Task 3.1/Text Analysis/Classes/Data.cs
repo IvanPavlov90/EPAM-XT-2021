@@ -7,15 +7,18 @@ namespace Text_Analysis.Classes
 {
     public class Data
     {
-        public Data()
+        public Data(int quantity)
         {
             QuantityWordsData = new Dictionary<string, int> ();
             PercentWordsData = new Dictionary<string, double>();
+            QuantityOfWords = CheckQuantity(quantity);
         }
 
         public Dictionary<string, int> QuantityWordsData { get; private set; }
 
         public Dictionary<string, double> PercentWordsData { get; private set; }
+
+        public int QuantityOfWords { get; private set; }
 
         public void ShowQuantityWordsData()
         {
@@ -38,6 +41,8 @@ namespace Text_Analysis.Classes
 
         public void ShowPercentWordsData()
         {
+            Console.WriteLine($"There are {QuantityOfWords} words in your text");
+
             Console.WriteLine("Here you can see words that consist more then one percent of your text.");
 
             foreach (var item in PercentWordsData.OrderByDescending(item => item.Value))
@@ -53,6 +58,8 @@ namespace Text_Analysis.Classes
 
         public void ShowFullstatistic()
         {
+            Console.WriteLine($"There are {QuantityOfWords} words in your text");
+
             Console.WriteLine("Here is full statistic about your text.");
 
             foreach (var item in QuantityWordsData.OrderBy(item => item.Key))
@@ -67,6 +74,16 @@ namespace Text_Analysis.Classes
         {
             if (!dictionary.ContainsKey(word))
                  dictionary.Add(word, count);
+        }
+
+        public int CheckQuantity (int value)
+        {
+            if (value <= 0)
+            {
+                throw new ArgumentException();
+            }
+            else
+                return value;
         }
     }
 }

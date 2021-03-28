@@ -52,28 +52,26 @@ namespace Text_Analysis.Classes
         /// <returns></returns>
         public static Data CountWords (string[] textarray)
         {
-            Data data = new Data();
+            Data data = new Data(textarray.Length);
 
             for (int i = 0; i < textarray.Length; i++)
             {
-                if (textarray[i].Length > 1) 
+                string word = textarray[i];
+
+                int count = 1;
+
+                for (int j = i + 1; j < textarray.Length; j++)
                 {
-                    string word = textarray[i];
-
-                    int count = 1;
-
-                    for (int j = i + 1; j < textarray.Length; j++)
+                    if (word == textarray[j])
                     {
-                        if (word == textarray[j])
-                        {
-                            count++;
-                        }
+                        count++;
                     }
-
-                    data.AddData<string, int>(data.QuantityWordsData, word, count);
-                    double percent = (double)count / (double)textarray.Length * 100;
-                    data.AddData<string, double>(data.PercentWordsData, word, Math.Round(percent, 2, MidpointRounding.AwayFromZero));
                 }
+
+
+                data.AddData<string, int>(data.QuantityWordsData, word, count);
+                double percent = (double)count / (double)textarray.Length * 100;
+                data.AddData<string, double>(data.PercentWordsData, word, Math.Round(percent, 2, MidpointRounding.AwayFromZero));
             }
 
             return data;

@@ -24,7 +24,7 @@ namespace Task_3._1.Classes
         /// <returns></returns>
         public static int CheckValue(int value)
         {
-            while (value <= 0)
+            while (value <= 1)
             {
                 Console.WriteLine($"Вы ввели неверное значение. Исправьте, пожалуйста.");
                 string uservalue = Console.ReadLine();
