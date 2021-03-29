@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Task_3._2
 {
-    public class DynamicArray<T>
+    public class DynamicArray<T> : IEnumerable<T>
     {
         public T[] MyArray { get; private set; }
 
@@ -92,6 +93,66 @@ namespace Task_3._2
             list.CopyTo(newArray.MyArray, newArray.Length);
             MyArray = newArray.MyArray;
             Capacity = newArray.Capacity;
+        }
+
+        public bool Remove(T item)
+        {
+            int index = Array.IndexOf(MyArray, item);
+            if (index == -1)
+            {
+                return false;
+            }
+            else
+            {
+                MyArray[index] = default(T);
+                return true;
+            }
+        }
+
+        public bool Insert(T item, int index)
+        {
+            if (index < 0 || index > Length)
+            {
+                return false;
+                throw new ArgumentOutOfRangeException();
+            }
+            else
+            {
+                if (Length < Capacity)
+                {
+                    for (int i = Length; i >= index; i--)
+                    {
+                        if (i == index)
+                        {
+                            MyArray[index] = item;
+                            return true;
+                        }
+                        else 
+                        {
+                            MyArray[i] = MyArray[i - 1];
+                        }
+                    }
+                } 
+                DynamicArray<T> newArray = new DynamicArray<T>(Capacity * 2) { };
+                for (int i = 0; i < Length; i++)
+                {
+                    newArray.MyArray[i] = MyArray[i];
+                }
+                newArray.Insert(item, index);
+                MyArray = newArray.MyArray;
+                Capacity = newArray.Capacity;
+                return true;
+            }
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return new DynamicArrayEnumerator<T>(MyArray);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return new DynamicArrayEnumerator<T>(MyArray);
         }
 
         public T this[int index]

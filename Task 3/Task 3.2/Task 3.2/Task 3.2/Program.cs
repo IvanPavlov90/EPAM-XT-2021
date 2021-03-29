@@ -8,25 +8,27 @@ namespace Task_3._2
         static void Main(string[] args)
         {
             DynamicArray<string> newArray = new DynamicArray<string>() { };
-            Console.WriteLine($"{newArray.Length}, {newArray.Capacity}");
-            newArray.Add("c");
-            newArray.Add("c");
-            newArray.Add("c");
-            newArray.Add("c");
-            newArray.Add("c");
-            newArray.Add("c");
-            newArray.Add("c");
-            newArray.Add("c");
             Console.WriteLine($"our length - {newArray.Length}, real length - {newArray.MyArray.Length}, capacity - {newArray.Capacity}");
-            newArray.Add("c");
-            //Console.WriteLine(newArray[8]);
+            newArray.Add("h");
+            newArray.Add("e");
+            newArray.Add("l");
+            newArray.Add("l");
+            newArray.Add("o");
+            newArray.Add("!");
+            newArray.Add("!");
+            newArray.Add("!");
             Console.WriteLine($"our length - {newArray.Length}, real length - {newArray.MyArray.Length}, capacity - {newArray.Capacity}");
-            List<string> stringlist = new List<string>() { "d", "d", "d", "d", "d" , "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d" };
-            newArray.AddRange(stringlist);
+            newArray.Insert("L", 2);
             Console.WriteLine($"our length - {newArray.Length}, real length - {newArray.MyArray.Length}, capacity - {newArray.Capacity}");
-            foreach (var item in newArray.MyArray)
+            foreach (var item in newArray)
             {
-                Console.WriteLine(item);
+                Console.WriteLine($"{item}");
+            }
+            newArray.Remove("l");
+            Console.WriteLine($"our length - {newArray.Length}, real length - {newArray.MyArray.Length}, capacity - {newArray.Capacity}");
+            foreach (var item in newArray)
+            {
+                Console.WriteLine($"{item}");
             }
         }
     }
