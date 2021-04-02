@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Task_3._3
 {
@@ -8,15 +9,20 @@ namespace Task_3._3
         static void Main(string[] args)
         {
 
-            int[] array = new int[] { 2, 4, 5, 7, 8 };
-            SuperArray newSuperArray = new SuperArray(array);
+            //var array = new int[] { 8, 5, 6, 5, 8, 8 };
+            //SuperArray superArr = new SuperArray(array) { };
+            //superArr.MultiplyElem();
+            //foreach (var item in superArr)
+            //{
+            //    Console.WriteLine($"{item}");
+            //}
+            //Console.WriteLine(superArr.SumElements());
+            //Console.WriteLine(superArr.AverageElements());
+            //Console.WriteLine(superArr.MostRepeatedElement());
 
-            newSuperArray.MultiplyElem();
+            string text = "ConsoleWriteLine";
+            SuperString.CheckLanguage(text);
 
-            foreach (var item in newSuperArray)
-            {
-                Console.WriteLine($"{item}");
-            }
         }
     }
 }
