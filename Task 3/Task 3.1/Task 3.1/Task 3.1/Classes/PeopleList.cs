@@ -40,7 +40,17 @@ namespace Task_3._1.Classes
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new MyListEnumerator<T>(People);
+            for (int i = 0; i <= Count; i++)
+            {
+                if (i == Count)
+                {
+                    i = 0;
+                    yield return People[i];
+                }
+                else
+                    yield return People[i];
+            }
+
         }
 
         public bool Remove(T item)
@@ -50,7 +60,7 @@ namespace Task_3._1.Classes
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new MyListEnumerator<T>(People);
+            return GetEnumerator();
         }
     }
 }
