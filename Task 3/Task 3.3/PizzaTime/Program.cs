@@ -7,10 +7,11 @@ namespace PizzaTime
     {
         static void Main(string[] args)
         {
+            User user = new User(InputHelper.InputName());
             Pizzeria tashir = new Pizzeria();
             tashir.ShowInfo += InfoTable.ShowMessage;
             tashir.OrderCreated += InfoTable.OrderInformation;
-            tashir.ChosingPizza();
+            tashir.ChosingPizza(user.name);
         }
     }
 }
