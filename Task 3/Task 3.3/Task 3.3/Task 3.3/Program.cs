@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Task_3._3
@@ -8,21 +7,17 @@ namespace Task_3._3
     {
         static void Main(string[] args)
         {
-
-            //var array = new int[] { 8, 5, 6, 5, 8, 8 };
-            //SuperArray superArr = new SuperArray(array) { };
-            //superArr.MultiplyElem();
-            //foreach (var item in superArr)
+            //string text = "Forza Mиlan";
+            //text.CheckLanguage();
+            byte[] array = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0 };
+            Console.WriteLine(array.MostRepeatedByteElement());
+            Console.WriteLine(array.SumByteElements());
+            //int[] array2 = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0 };
+            //array2.MultiplyIntElem();
+            //foreach (var i in array2)
             //{
-            //    Console.WriteLine($"{item}");
+            //    Console.WriteLine(i);
             //}
-            //Console.WriteLine(superArr.SumElements());
-            //Console.WriteLine(superArr.AverageElements());
-            //Console.WriteLine(superArr.MostRepeatedElement());
-
-            string text = "ConsoleWriteLine";
-            SuperString.CheckLanguage(text);
-
         }
     }
 }
