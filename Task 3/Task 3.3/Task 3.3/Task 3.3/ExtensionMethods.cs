@@ -11,7 +11,7 @@ namespace Task_3._3
         public static void CheckLanguage(this string text)
         {
             Regex english = new Regex(@"^\W*([a-zA-z]+\W*\s*)+$");
-            Regex russian = new Regex(@"^\W*([а-яА-Я]+\W*\s*)+$");
+            Regex russian = new Regex(@"^\W*([а-яёА-ЯЁ]+\W*\s*)+$");
             Regex digits = new Regex(@"^\W*([0-9]+\W*\s*)+$");
             if (english.IsMatch(text))
             {
@@ -147,49 +147,16 @@ namespace Task_3._3
             return mostRepeatedElement;
         }
 
-        private static readonly Func<int, int> func = new Func<int, int>(MultiplyInt);
-
-        public static void MultiplyIntElem(this int[] array)
+        public static void EachElement<T>(this T[] array, Func<T, T> func)
         {
+            if (func == null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
             for (int i = 0; i < array.Length; i++)
             {
-                array[i] = func(array[i]);
+                array[i] = func.Invoke(array[i]);
             }
-        }
-
-        private static int MultiplyInt(int value)
-        {
-            return value * 2;
-        }
-
-        private static readonly Func<float, float> funcfloat = new Func<float, float>(MultiplyFloat);
-
-        public static void MultiplyFloatElem(this float[] array)
-        {
-            for (int i = 0; i < array.Length; i++)
-            {
-                array[i] = funcfloat(array[i]);
-            }
-        }
-
-        private static float MultiplyFloat(float value)
-        {
-            return value * 2;
-        }
-
-        private static readonly Func<double, double> funcdouble = new Func<double, double>(MultiplyDouble);
-
-        public static void MultiplyDoubleElem(this double[] array)
-        {
-            for (int i = 0; i < array.Length; i++)
-            {
-                array[i] = funcdouble(array[i]);
-            }
-        }
-
-        private static double MultiplyDouble(double value)
-        {
-            return value * 2;
         }
     }
 }
