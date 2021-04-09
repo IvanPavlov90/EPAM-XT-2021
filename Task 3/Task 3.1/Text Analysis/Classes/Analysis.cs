@@ -33,7 +33,7 @@ namespace Text_Analysis.Classes
         /// <param name="text"></param>
         /// <param name="separators"></param>
         /// <returns></returns>
-        public static string[] Splittext (string text, string separators)
+        public static string[] SplitText (string text, string separators)
         {
             string[] textarray = text.Split(separators.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
@@ -56,22 +56,7 @@ namespace Text_Analysis.Classes
 
             for (int i = 0; i < textarray.Length; i++)
             {
-                string word = textarray[i];
-
-                int count = 1;
-
-                for (int j = i + 1; j < textarray.Length; j++)
-                {
-                    if (word == textarray[j])
-                    {
-                        count++;
-                    }
-                }
-
-
-                data.AddData<string, int>(data.QuantityWordsData, word, count);
-                double percent = (double)count / (double)textarray.Length * 100;
-                data.AddData<string, double>(data.PercentWordsData, word, Math.Round(percent, 2, MidpointRounding.AwayFromZero));
+                data.AddQuantityWordsData(textarray[i]);
             }
 
             return data;

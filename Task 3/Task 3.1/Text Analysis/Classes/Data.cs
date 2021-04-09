@@ -10,13 +10,10 @@ namespace Text_Analysis.Classes
         public Data(int quantity)
         {
             QuantityWordsData = new Dictionary<string, int> ();
-            PercentWordsData = new Dictionary<string, double>();
             QuantityOfWords = CheckQuantity(quantity);
         }
 
         public Dictionary<string, int> QuantityWordsData { get; private set; }
-
-        public Dictionary<string, double> PercentWordsData { get; private set; }
 
         public int QuantityOfWords { get; private set; }
 
@@ -24,59 +21,65 @@ namespace Text_Analysis.Classes
         {
             int count = 0;
 
-            Console.WriteLine("Here is five words that were most frequently used in your text.");
+            PrintData.PrintMessage("Here is five words that were most frequently used in your text.");
 
             foreach (var item in QuantityWordsData.OrderByDescending(item => item.Value))
             {
-                Console.WriteLine(string.Format("{0} : {1}", item.Key, item.Value));
+                PrintData.PrintInfo<string, int>(item.Key, item.Value);
                 count++;
                 if (count == 5)
                 {
                     break;
                 }
             }
-
-            Console.ReadKey();
         }
 
         public void ShowPercentWordsData()
         {
-            Console.WriteLine($"There are {QuantityOfWords} words in your text");
+            PrintData.PrintMessage("Here you can see words that consist more then one percent of your text.");
 
-            Console.WriteLine("Here you can see words that consist more then one percent of your text.");
-
-            foreach (var item in PercentWordsData.OrderByDescending(item => item.Value))
+            foreach (var item in QuantityWordsData)
             {
-                if (item.Value > 1)
+                double percent = (double)item.Value / (double)QuantityOfWords * 100;
+                if (percent > 1) 
                 {
-                    Console.WriteLine(string.Format("{0} : {1}", item.Key, item.Value));
+                    PrintData.PrintInfo<string, double>(item.Key, Math.Round(percent, 2, MidpointRounding.AwayFromZero));
                 }
             }
 
             Console.ReadKey();
         }
 
-        public void ShowFullstatistic()
+        public void ShowFullStatisticAboutWords()
         {
-            Console.WriteLine($"There are {QuantityOfWords} words in your text");
+            PrintData.PrintQuantityOfWords(QuantityOfWords);
 
-            Console.WriteLine("Here is full statistic about your text.");
+            PrintData.PrintMessage("Here is full statistic about your text.");
 
             foreach (var item in QuantityWordsData.OrderBy(item => item.Key))
             {
-                Console.WriteLine(string.Format("{0} : {1}", item.Key, item.Value));
+                PrintData.PrintInfo<string, int>(item.Key, item.Value);
             }
-
-            Console.ReadKey();
         }
 
-        public void AddData <T1, T2> (Dictionary <T1, T2> dictionary, T1 word, T2 count)
+        public void ShowFullStatisticAboutText()
         {
-            if (!dictionary.ContainsKey(word))
-                 dictionary.Add(word, count);
+            ShowFullStatisticAboutWords();
+            ShowQuantityWordsData();
+            ShowPercentWordsData();
         }
 
-        public int CheckQuantity (int value)
+        public void AddQuantityWordsData(string word)
+        {
+            if (!QuantityWordsData.ContainsKey(word))
+                QuantityWordsData.Add(word, 1);
+            else
+            {
+                QuantityWordsData[word] += 1;
+            }
+        }
+
+        private int CheckQuantity (int value)
         {
             if (value <= 0)
             {

@@ -19,8 +19,10 @@ namespace Text_Analysis
 
         public static void ShowMenu(Text usertext)
         {
-            string[] words = Analysis.Splittext(usertext.UserText, Analysis.GetSeparators(usertext.UserText));
+            string[] words = Analysis.SplitText(usertext.UserText, Analysis.GetSeparators(usertext.UserText));
             Data data = Analysis.CountWords(words);
+            data.ShowFullStatisticAboutText();
+            PrintData.PrintMessage("If you want to see once again each part of the statistic or enter another text, you can use this menu.");
             AppMenu.ShowMenu();
             AppMenu.DoAction(AppMenu.ReadAction(), usertext, data);
         }

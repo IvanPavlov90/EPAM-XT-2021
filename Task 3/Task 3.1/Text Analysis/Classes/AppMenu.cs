@@ -8,10 +8,11 @@ namespace Text_Analysis.Classes
     {
         public enum MenuElements
         {
-            Five_Most_Frequently_Words = 1,
-            Words_That_Make_Up_More_Then_One_Percent_Of_TheText = 2,
-            Full_Statistic_About_Words = 3,
-            Enter_Anonther_Text = 4,
+            FiveMostFrequentlyWords = 1,
+            WordsThatMakeUpMoreThenOnePercentOfTheText = 2,
+            FullStatisticAboutWords = 3,
+            ShowFullStatisticAboutText = 4,
+            EnterAnontherText = 5,
             IncorrectAction = 0
         }
 
@@ -42,27 +43,36 @@ namespace Text_Analysis.Classes
 
         public static void DoAction(MenuElements value, Text usertext, Data data)
         {
-            switch(value)
+            switch (value)
             {
-                case MenuElements.Five_Most_Frequently_Words:
+                case MenuElements.FiveMostFrequentlyWords:
                     data.ShowQuantityWordsData();
-                    Program.ShowMenu(usertext);
+                    AppMenu.ShowMenu();
+                    AppMenu.DoAction(AppMenu.ReadAction(), usertext, data);
                     break;
-                case MenuElements.Words_That_Make_Up_More_Then_One_Percent_Of_TheText:
+                case MenuElements.WordsThatMakeUpMoreThenOnePercentOfTheText:
                     data.ShowPercentWordsData();
-                    Program.ShowMenu(usertext);
+                    AppMenu.ShowMenu();
+                    AppMenu.DoAction(AppMenu.ReadAction(), usertext, data);
                     break;
-                case MenuElements.Full_Statistic_About_Words:
-                    data.ShowFullstatistic();
-                    Program.ShowMenu(usertext);
+                case MenuElements.FullStatisticAboutWords:
+                    data.ShowFullStatisticAboutWords();
+                    AppMenu.ShowMenu();
+                    AppMenu.DoAction(AppMenu.ReadAction(), usertext, data);
                     break;
-                case MenuElements.Enter_Anonther_Text:
+                case MenuElements.EnterAnontherText:
                     Console.Clear();
                     Program.StartApp();
                     break;
+                case MenuElements.ShowFullStatisticAboutText:
+                    data.ShowFullStatisticAboutText();
+                    AppMenu.ShowMenu();
+                    AppMenu.DoAction(AppMenu.ReadAction(), usertext, data);
+                    break;
                 default:
-                    Console.WriteLine("Incorrect action. Try again, please.");
-                    Program.ShowMenu(usertext);
+                    PrintData.PrintMessage("Incorrect action. Try again, please.");
+                    AppMenu.ShowMenu();
+                    AppMenu.DoAction(AppMenu.ReadAction(), usertext, data);
                     break;
             }
         }
