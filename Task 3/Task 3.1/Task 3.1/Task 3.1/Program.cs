@@ -10,10 +10,9 @@ namespace Task_3._1
         {
             Console.WriteLine("Введите N:");
             var value = Validator.CheckValue(Validator.InputValue());
-            List<int> value2 = new List<int> { };
-            PeopleList<int> people = new PeopleList<int> (value2);
-            Validator.FillList(people, value);
-            Validator.CrossPeopleOut(people, 2, false, 1);
+            PeopleList<int> people = new PeopleList<int> (value);
+            Console.WriteLine("Сгенерирован круг людей. Начинаем вычеркивать каждого второго.");
+            TaskAction.CrossPeopleOut(people, true, 1);
         }
     }
 }
