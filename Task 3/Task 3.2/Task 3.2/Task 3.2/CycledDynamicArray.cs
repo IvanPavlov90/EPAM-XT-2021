@@ -14,9 +14,9 @@ namespace Task_3._2
 
         public new IEnumerator<T> GetEnumerator()
         {
-            for (int i = 0; i <= length; i++)
+            for (int i = 0; i <= Length; i++)
             {
-                if (i == length)
+                if (i == Length)
                 {
                     i = 0;
                     yield return _myArray[i];

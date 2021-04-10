@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Task_3._2
@@ -9,79 +10,79 @@ namespace Task_3._2
     {
         private protected T[] _myArray { get; set; }
 
-        public int capacity { get; private set; } = 8;
+        public int Capacity { get; private set; } = 8;
 
-        public int length { get; private set; } = 0;
+        public int Length { get; private set; } = 0;
 
         public DynamicArray()
         {
-            _myArray = new T[capacity];
+            _myArray = new T[Capacity];
         }
 
-        public DynamicArray(int value)
+        public DynamicArray(int capacity)
         {
-            if (value > capacity)
+            if (capacity > Capacity)
             {
-                while (capacity < value)
+                while (Capacity < capacity)
                 {
-                    capacity *= 2;
+                    Capacity *= 2;
                 }
             }
+            else if (capacity < Capacity)
+                Capacity = capacity;
 
-            _myArray = new T[capacity];
+            _myArray = new T[Capacity];
         }
 
-        public DynamicArray(ICollection<T> list)
+        public DynamicArray(IEnumerable<T> list)
         {
-            if (list.Count > capacity)
+            if (list.Count() > Capacity)
             {
-                while (capacity < list.Count)
+                while (Capacity < list.Count())
                 {
-                    capacity *= 2;
+                    Capacity *= 2;
                 }
             }
-            _myArray = new T[capacity];
-            list.CopyTo(_myArray, 0);
-            length = list.Count;
+            _myArray = new T[Capacity];
+            foreach (var item in list)
+            {
+                _myArray[Length] = item;
+                Length++;
+            }
         }
 
         public void Add(T item)
         {
-            if (length + 1 <= capacity)
+            if (Length + 1 > Capacity)
             {
-                _myArray[length] = item;
-                length++;
+                T[] newArray = new T[Capacity * 2];
+                Array.Copy(_myArray, newArray, Length);
+                newArray[Length] = item;
+                _myArray = newArray;
+                Capacity = newArray.Length;
+                Length++;
             }
-            else if (length + 1 > capacity)
+            else
             {
-                T[] array = new T[capacity * 2];
-                for (int i = 0; i <= length; i++)
-                {
-                    if (i == length)
-                        array[i] = item;
-                    else
-                        array[i] = _myArray[i];
-                }
-                _myArray = array;
-                capacity = array.Length;
-                length++;
+                _myArray[Length] = item;
+                Length++;
             }
         }
 
-        public void AddRange(ICollection<T> list)
+        public void AddRange(IEnumerable<T> list)
         {
-            while (capacity < length + list.Count)
+            while (Capacity < Length + list.Count())
             {
-                capacity *= 2;
+                Capacity *= 2;
             }
-            T[] array = new T[capacity];
-            for (int i = 0; i < length; i++)
+            T[] newArray = new T[Capacity];
+            Array.Copy(_myArray, newArray, Length);
+            foreach (var item in list)
             {
-                array[i] = _myArray[i];
+                newArray[Length] = item;
+                Length++;
             }
-            list.CopyTo(array, length);
-            _myArray = array;
-            length += list.Count;
+            _myArray = newArray;
         }
 
         public bool Remove(T item)
@@ -93,75 +94,49 @@ namespace Task_3._2
             }
             else
             {
-                _myArray[index] = default(T);
-                for (int i = index; i <= length; i++)
-                {
-                    _myArray[i] = _myArray[i + 1];
-                    if (i == length)
-                    {
-                        _myArray[i] = default(T);
-                    }
-                }
-                length--;
+                Array.Copy(_myArray, index + 1, _myArray, index, Length - index);
+                Length--;
                 return true;
             }
         }
 
         public bool Insert(T item, int index)
         {
-            if (index < 0 || index >= length)
+            if (index < 0 || index > Length)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException("Index can't be less then 0 or greater then Length.");
+            }
+            if (Length < Capacity)
+            {
+                Array.Copy(_myArray, index, _myArray, index + 1, Length - index);
+                _myArray[index] = item;
+                Length++;
+                return true;
             }
             else
             {
-                if (length < capacity)
-                {
-                    for (int i = length; i >= index; i--)
-                    {
-                        if (i == index)
-                        {
-                            _myArray[index] = item;
-                        }
-                        else
-                        {
-                            _myArray[i] = _myArray[i - 1];
-                        }
-                    }
-                    length++;
-                    return true;
-                }
-                else
-                {
-                    T[] array = new T[capacity * 2];
-                    for (int i = 0; i <= length; i++)
-                    {
-                        if (i < index)
-                            array[i] = _myArray[i];
-                        else if (i == index)
-                            array[i] = item;
-                        else
-                            array[i] = _myArray[i - 1];
-                    }
-                    _myArray = array;
-                    capacity = array.Length;
-                    length++;
-                    return true;
-                }
+                T[] newArray = new T[Capacity * 2];
+                Array.Copy(_myArray, newArray, index);
+                newArray[index] = item;
+                Array.Copy(_myArray, index, newArray, index + 1, Length - index);
+                _myArray = newArray;
+                Capacity = newArray.Length;
+                Length++;
+                return true;
             }
         }
 
         public void SetCapacity(int value)
         {
-            if (value >= length)
+            if (value >= Length)
             {
                 T[] array = new T[value];
-                for (int i = 0; i < length; i++)
+                for (int i = 0; i < Length; i++)
                 {
                     array[i] = _myArray[i];
                 }
                 _myArray = array;
-                capacity = value;
+                Capacity = value;
             }
             else
             {
@@ -171,14 +146,14 @@ namespace Task_3._2
                     array[i] = _myArray[i];
                 }
                 _myArray = array;
-                capacity = value;
-                length = array.Length;
+                Capacity = value;
+                Length = array.Length;
             }
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < Length; i++)
             {
                 yield return _myArray[i];
             }
@@ -191,19 +166,16 @@ namespace Task_3._2
 
         public object Clone()
         {
-            DynamicArray<T> newArray = new DynamicArray<T>(capacity) { };
-            for (int i = 0; i < capacity; i++)
-            {
-                newArray._myArray[i] = _myArray[i];
-            }
+            DynamicArray<T> newArray = new DynamicArray<T>(Capacity) { };
+            Array.Copy(_myArray, newArray._myArray, Length);
             return newArray;
         }
 
         public T[] ToArray()
         {
-            T[] newArray = new T[length];
+            T[] newArray = new T[Length];
 
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < Length; i++)
             {
                 newArray[i] = _myArray[i];
             }
@@ -215,32 +187,32 @@ namespace Task_3._2
         {
             get
             {
-                if (index >= length)
-                    throw new ArgumentOutOfRangeException();
+                if (index >= Length)
+                    throw new ArgumentOutOfRangeException("Index out of borders of the array.");
                 else if (index < 0)
                 {
-                    if (Math.Abs(index) > length)
+                    if (index <= -Length)
                     {
-                        throw new ArgumentOutOfRangeException();
+                        throw new ArgumentOutOfRangeException("Index out of borders of the array.");
                     }
                     else
-                        return _myArray[length - Math.Abs(index)];
+                        return _myArray[Length - Math.Abs(index)];
                 }
                 else
                     return _myArray[index];
             }
             set
             {
-                if (index >= length)
-                    throw new ArgumentOutOfRangeException();
+                if (index >= Length)
+                    throw new ArgumentOutOfRangeException("Index out of borders of the array.");
                 else if (index < 0)
                 {
-                    if (Math.Abs(index) > length)
+                    if (index <= -Length)
                     {
-                        throw new ArgumentOutOfRangeException();
+                        throw new ArgumentOutOfRangeException("Index out of borders of the array.");
                     }
                     else
-                        _myArray[length - Math.Abs(index)] = value;
+                        _myArray[Length - Math.Abs(index)] = value;
                 }
                 else
                     _myArray[index] = value;
