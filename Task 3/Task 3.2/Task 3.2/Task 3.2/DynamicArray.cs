@@ -10,38 +10,27 @@ namespace Task_3._2
     {
         private protected T[] _myArray { get; set; }
 
-        public int Capacity { get; private set; } = 8;
+        public int Capacity { get; private set; }
 
         public int Length { get; private set; } = 0;
 
         public DynamicArray()
         {
-            _myArray = new T[Capacity];
+            _myArray = new T[8];
+            Capacity = 8;
         }
 
         public DynamicArray(int capacity)
         {
-            if (capacity > Capacity)
-            {
-                while (Capacity < capacity)
-                {
-                    Capacity *= 2;
-                }
-            }
-            else if (capacity < Capacity)
-                Capacity = capacity;
-
-            _myArray = new T[Capacity];
+            _myArray = new T[capacity];
+            Capacity = capacity;
         }
 
         public DynamicArray(IEnumerable<T> list)
         {
             if (list.Count() > Capacity)
             {
-                while (Capacity < list.Count())
-                {
-                    Capacity *= 2;
-                }
+                Capacity = list.Count() + 1;
             }
             _myArray = new T[Capacity];
             foreach (var item in list)
@@ -71,9 +60,9 @@ namespace Task_3._2
 
         public void AddRange(IEnumerable<T> list)
         {
-            while (Capacity < Length + list.Count())
+            if (Capacity < Length + list.Count())
             {
-                Capacity *= 2;
+                Capacity = Length + list.Count() + 1;
             }
             T[] newArray = new T[Capacity];
             Array.Copy(_myArray, newArray, Length);
@@ -128,26 +117,24 @@ namespace Task_3._2
 
         public void SetCapacity(int value)
         {
+            if (value <= 0)
+            {
+                throw new ArgumentException("Capacity can't be less or equal zero.");
+            }
             if (value >= Length)
             {
-                T[] array = new T[value];
-                for (int i = 0; i < Length; i++)
-                {
-                    array[i] = _myArray[i];
-                }
-                _myArray = array;
+                T[] newArray = new T[value];
+                Array.Copy(_myArray, newArray, Length);
+                _myArray = newArray;
                 Capacity = value;
             }
             else
             {
-                T[] array = new T[value];
-                for (int i = 0; i < array.Length; i++)
-                {
-                    array[i] = _myArray[i];
-                }
-                _myArray = array;
+                T[] newArray = new T[value];
+                Array.Copy(_myArray, newArray, value);
+                _myArray = newArray;
                 Capacity = value;
-                Length = array.Length;
+                Length = newArray.Length;
             }
         }
 

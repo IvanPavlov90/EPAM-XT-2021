@@ -17,12 +17,9 @@ namespace Task_3._2
             for (int i = 0; i <= Length; i++)
             {
                 if (i == Length)
-                {
                     i = 0;
-                    yield return _myArray[i];
-                }
-                else
-                    yield return _myArray[i];
+
+                yield return _myArray[i];
             }
         }
     }
