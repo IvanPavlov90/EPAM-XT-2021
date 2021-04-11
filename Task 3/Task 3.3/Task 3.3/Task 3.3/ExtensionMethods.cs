@@ -8,142 +8,123 @@ namespace Task_3._3
 {
     public static class ExtensionMethods
     {
-        public static void CheckLanguage(this string text)
+        public enum TextType
         {
-            Regex english = new Regex(@"^\W*([a-zA-z]+\W*\s*)+$");
-            Regex russian = new Regex(@"^\W*([а-яёА-ЯЁ]+\W*\s*)+$");
-            Regex digits = new Regex(@"^\W*([0-9]+\W*\s*)+$");
+            Russian,
+            English,
+            Digits,
+            Mixed,
+            Default
+        }
+
+        public static TextType CheckLanguage(this string text)
+        {
+            Regex english = new Regex(@"^([a-zA-z]+)$");
+            Regex russian = new Regex(@"^([а-яёА-ЯЁ]+)$");
+            Regex digits = new Regex(@"^([0-9]+)$");
             if (english.IsMatch(text))
             {
-                Console.WriteLine("English");
+                return TextType.English;
             }
             else if (russian.IsMatch(text))
             {
-                Console.WriteLine("Russian");
+                return TextType.Russian;
             }
             else if (digits.IsMatch(text))
             {
-                Console.WriteLine("Digits");
+                return TextType.Digits;
             }
             else 
             {
-                Console.WriteLine("Mixed");
+                return TextType.Mixed;
             }
         }
 
-        public static int SumIntElements(this int[] array)
+        public static int Sum(this int[] array)
         {
-            var sum = array.Sum();
+            int sum = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                sum += array[i];
+            }
             return sum;
         }
 
-        public static float SumFloatElements(this float[] array)
+        public static float Sum(this float[] array)
         {
-            var sum = array.Sum();
+            float sum = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                sum += array[i];
+            }
             return sum;
         }
 
-        public static double SumShortElements(this double[] array)
+        public static double Sum(this double[] array)
         {
-            var sum = array.Sum();
+            double sum = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                sum += array[i];
+            }
             return sum;
         }
 
-        public static double AverageIntElements(this int[] array)
+        public static double Average(this int[] array)
         {
-            var result = array.Average();
+            double result = Sum(array) / array.Length;
             return result;
         }
 
-        public static double AverageFloatElements(this float[] array)
+        public static double Average(this float[] array)
         {
-            var result = array.Average();
+            double result = Sum(array) / array.Length;
             return result;
         }
 
-        public static double AverageDoubleElements(this double[] array)
+        public static double Average(this double[] array)
         {
-            var result = array.Average();
+            double result = Sum(array) / array.Length;
             return result;
         }
 
-        public static int MostRepeatedIntElement (this int[] array)
+        public static int MostRepeatedElement (this int[] array)
         {
             var mostRepeatedElement = 0;
-            var maxCount = 1;
-            var dictionary = array.GroupBy(item => item);
-            foreach (var item in dictionary)
-            {
-                if (item.Count() > maxCount)
-                {
-                    maxCount = item.Count();
-                    mostRepeatedElement = item.Key;
-                }
-            }
+            var dictionary = array.GroupBy(item => item).OrderByDescending(item => item.Count());
+            mostRepeatedElement = dictionary.FirstOrDefault().Key;
             return mostRepeatedElement;
         }
 
-        public static float MostRepeatedFloatElement(this float[] array)
+        public static float MostRepeatedElement(this float[] array)
         {
             float mostRepeatedElement = 0;
-            int maxCount = 1;
-            var dictionary = array.GroupBy(item => item);
-            foreach (var item in dictionary)
-            {
-                if (item.Count() > maxCount)
-                {
-                    maxCount = item.Count();
-                    mostRepeatedElement = item.Key;
-                }
-            }
+            var dictionary = array.GroupBy(item => item).OrderByDescending(item => item.Count());
+            mostRepeatedElement = dictionary.FirstOrDefault().Key;
             return mostRepeatedElement;
         }
 
-        public static double MostRepeatedDoubleElement(this double[] array)
+        public static double MostRepeatedElement(this double[] array)
         {
             double mostRepeatedElement = 0;
-            int maxCount = 1;
-            var dictionary = array.GroupBy(item => item);
-            foreach (var item in dictionary)
-            {
-                if (item.Count() > maxCount)
-                {
-                    maxCount = item.Count();
-                    mostRepeatedElement = item.Key;
-                }
-            }
+            var dictionary = array.GroupBy(item => item).OrderByDescending(item => item.Count());
+            mostRepeatedElement = dictionary.FirstOrDefault().Key;
             return mostRepeatedElement;
         }
 
-        public static short MostRepeatedShortElement(this short[] array)
+        public static short MostRepeatedElement(this short[] array)
         {
             short mostRepeatedElement = 0;
-            int maxCount = 1;
-            var dictionary = array.GroupBy(item => item);
-            foreach (var item in dictionary)
-            {
-                if (item.Count() > maxCount)
-                {
-                    maxCount = item.Count();
-                    mostRepeatedElement = item.Key;
-                }
-            }
+            var dictionary = array.GroupBy(item => item).OrderByDescending(item => item.Count());
+            mostRepeatedElement = dictionary.FirstOrDefault().Key;
             return mostRepeatedElement;
         }
 
-        public static byte MostRepeatedByteElement(this byte[] array)
+        public static byte MostRepeatedElement(this byte[] array)
         {
             byte mostRepeatedElement = 0;
-            int maxCount = 1;
-            var dictionary = array.GroupBy(item => item);
-            foreach (var item in dictionary)
-            {
-                if (item.Count() > maxCount)
-                {
-                    maxCount = item.Count();
-                    mostRepeatedElement = item.Key;
-                }
-            }
+            var dictionary = array.GroupBy(item => item).OrderByDescending(item => item.Count());
+            mostRepeatedElement = dictionary.FirstOrDefault().Key;
             return mostRepeatedElement;
         }
 

@@ -11,7 +11,7 @@ namespace PizzaTime.Classes
         public delegate void OrderFinished(List<Pizza> pizzaList);
         public event OrderFinished OrderCreated;
 
-        private List<Pizza> _pizzaList = new List<Pizza>();
+        private List<Pizza> _PizzaList = new List<Pizza>();
 
         /// <summary>
         /// Dictionary, that contains Tuple<string, int> with pizza name and it's price 
@@ -44,38 +44,26 @@ namespace PizzaTime.Classes
                 switch (result)
                 {
                     case 1:
-                        Tuple<string, int, int> pizzaInfo = FindPizzaInDataBase(result);
-                        _pizzaList.Add(new Pizza(pizzaInfo.Item1, pizzaInfo.Item2, pizzaInfo.Item3));
-                        ShowInfo?.Invoke($"{username}, you choose {pizzaInfo.Item1}, cost {pizzaInfo.Item2}");
+                        ChosingPizza(result, username);
                         break;
                     case 2:
-                        Tuple<string, int, int> pizzaInfo2 = FindPizzaInDataBase(result);
-                        _pizzaList.Add(new Pizza(pizzaInfo2.Item1, pizzaInfo2.Item2, pizzaInfo2.Item3));
-                        ShowInfo?.Invoke($"{username}, you choose {pizzaInfo2.Item1}, cost {pizzaInfo2.Item2}");
+                        ChosingPizza(result, username);
                         break;
                     case 3:
-                        Tuple<string, int, int> pizzaInfo3 = FindPizzaInDataBase(result);
-                        _pizzaList.Add(new Pizza(pizzaInfo3.Item1, pizzaInfo3.Item2, pizzaInfo3.Item3));
-                        ShowInfo?.Invoke($"{username}, you choose {pizzaInfo3.Item1}, cost {pizzaInfo3.Item2}");
+                        ChosingPizza(result, username);
                         break;
                     case 4:
-                        Tuple<string, int, int> pizzaInfo4 = FindPizzaInDataBase(result);
-                        _pizzaList.Add(new Pizza(pizzaInfo4.Item1, pizzaInfo4.Item2, pizzaInfo4.Item3));
-                        ShowInfo?.Invoke($"{username}, you choose {pizzaInfo4.Item1}, cost {pizzaInfo4.Item2}");
+                        ChosingPizza(result, username);
                         break;
                     case 5:
-                        Tuple<string, int, int> pizzaInfo5 = FindPizzaInDataBase(result);
-                        _pizzaList.Add(new Pizza(pizzaInfo5.Item1, pizzaInfo5.Item2, pizzaInfo5.Item3));
-                        ShowInfo?.Invoke($"{username}, you choose {pizzaInfo5.Item1}, cost {pizzaInfo5.Item2}");
+                        ChosingPizza(result, username);
                         break;
                     case 6:
-                        Tuple<string, int, int> pizzaInfo6 = FindPizzaInDataBase(result);
-                        _pizzaList.Add(new Pizza(pizzaInfo6.Item1, pizzaInfo6.Item2, pizzaInfo6.Item3));
-                        ShowInfo?.Invoke($"{username}, you choose {pizzaInfo6.Item1}, cost {pizzaInfo6.Item2}");
+                        ChosingPizza(result, username);
                         break;
                     case 7:
-                        OrderCreated?.Invoke(_pizzaList);
-                        Order order = new Order(_pizzaList);
+                        OrderCreated?.Invoke(_PizzaList);
+                        Order order = new Order(_PizzaList);
                         order.TimeToWait += InfoTable.CountTime;
                         order.CookingTime(username);
                         break;
@@ -121,6 +109,18 @@ namespace PizzaTime.Classes
                 count++;
             }
             return Tuple.Create("default", 0, 0);
+        }
+
+        /// <summary>
+        /// Method for chosing pizza
+        /// </summary>
+        /// <param name="value">user's choise</param>
+        /// <param name="username"></param>
+        private void ChosingPizza (int value, string username)
+        {
+            Tuple<string, int, int> pizzaInfo = FindPizzaInDataBase(value);
+            _PizzaList.Add(new Pizza(pizzaInfo.Item1, pizzaInfo.Item2, pizzaInfo.Item3));
+            ShowInfo?.Invoke($"{username}, you choose {pizzaInfo.Item1}, cost {pizzaInfo.Item2}");
         }
     }
 }

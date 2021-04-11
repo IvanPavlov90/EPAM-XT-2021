@@ -27,7 +27,7 @@ namespace PizzaTime.Classes
             int waitingTime = 0;
             foreach (var item in pizzaList)
             {
-                order += item.name + " ";
+                order += item.Name + " ";
                 sumOrder += item.Cost;
                 waitingTime += item.CookingTime;
             }

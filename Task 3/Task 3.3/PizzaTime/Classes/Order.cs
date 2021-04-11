@@ -15,20 +15,20 @@ namespace PizzaTime.Classes
             OrderDetails = pizzalist;
         }
 
-        private List<Pizza> _orderDetails;
+        private List<Pizza> _OrderDetails;
 
         public List<Pizza> OrderDetails
         {
             get
             {
-                return _orderDetails;
+                return _OrderDetails;
             }
             private set
             {
                 if (value == null || value.Count == 0)
                     throw new ArgumentException("Order can't be empty or null");
                 else
-                    _orderDetails = value;
+                    _OrderDetails = value;
             }
         }
 
