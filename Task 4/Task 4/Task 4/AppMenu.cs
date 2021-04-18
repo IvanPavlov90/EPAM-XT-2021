@@ -27,9 +27,18 @@ namespace Task_4
                 switch (result)
                 {
                     case 1:
-                        FileWatcher.WatchFolder(@"C:\Users\pavlo\Desktop\projects\EPAM-XT-2021\Task 4\Files");
+                        FileWatcher fileWatcher = new FileWatcher();
+                        fileWatcher.WatchFolder(@"C:\Users\pavlo\Desktop\projects\EPAM-XT-2021\Task 4\Files");
                         break;
                     case 2:
+                        DateTime date;
+                        DateTime defaultDate = new DateTime(2000, 1, 1);
+                        do
+                        {
+                            date = InputHelper.InputDate();
+                        } while (date == defaultDate);
+                        List<FileEventsInfoLog> fileEvent = Reader.ReadLog(@"C:\Users\pavlo\Desktop\projects\EPAM-XT-2021\Task 4\Log.json");
+                        Builder.BuildFiles(fileEvent, date);
                         break;
                     default:
                         break;

@@ -5,17 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Task_4
 {
     public static class FileLog
     {
-        public static void Record(FileEventsInfo file)
+        public static void Record(List<FileEventsInfo> log)
         {
-            using (StreamWriter writer = new StreamWriter(@"C:\Users\pavlo\Desktop\projects\EPAM-XT-2021\Task 4\Log.json", true, System.Text.Encoding.UTF8))
-            {
-                writer.WriteLine(Serialize(file));
-            }
+             using (StreamWriter writer = new StreamWriter(@"C:\Users\pavlo\Desktop\projects\EPAM-XT-2021\Task 4\Log.json", true, System.Text.Encoding.UTF8))
+             {
+                    writer.WriteLine(Serialize(log));
+             }
         }
 
         //public static void Record(FileEventsInfo file)
@@ -29,14 +30,14 @@ namespace Task_4
         //    }
         //}
 
-        private static string Serialize(FileEventsInfo file)
+        private static string Serialize(List<FileEventsInfo> log)
         {
-            var options = new JsonSerializerOptions
-            {
-                WriteIndented = true
-            };
-            string json = JsonSerializer.Serialize<FileEventsInfo>(file, options);
-            return json;
+             var options = new JsonSerializerOptions
+             {
+                 WriteIndented = true
+             };
+             string json = JsonSerializer.Serialize<List<FileEventsInfo>>(log, options);
+             return json;
         }
     }
 }

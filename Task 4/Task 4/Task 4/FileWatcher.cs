@@ -7,9 +7,11 @@ using System.IO;
 
 namespace Task_4
 {
-    public static class FileWatcher
+    public class FileWatcher
     {
-        public static void WatchFolder (string path)
+        private List<FileEventsInfo> _log = new List<FileEventsInfo> { };
+
+        public void WatchFolder (string path)
         {
             if (path == null || path == "")
             {
@@ -32,34 +34,45 @@ namespace Task_4
             watcher.IncludeSubdirectories = true;
             watcher.EnableRaisingEvents = true;
 
-            Print.PrintMessage("Observation mode has benn started. For return to main menu press any key.");
+            Print.PrintMessage("Observation mode has been started. For return to main menu press any key.");
             Console.ReadKey();
+            FileLog.Record(_log);
         }
 
-        private static void FileCreated(object sender, FileSystemEventArgs fileEvent)
+        private void FileCreated(object sender, FileSystemEventArgs fileEvent)
         {
             DateTime date = DateTime.Now;
-            FileLog.Record(new FileEventsInfo(fileEvent.FullPath, date, "Create", ""));
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, date, "Create", "");
+            AddFileEventInfoToLog(fileEventInfo);
         }
 
-        private static void FileDeleted(object sender, FileSystemEventArgs fileEvent)
+        private void FileDeleted(object sender, FileSystemEventArgs fileEvent)
         {
             DateTime date = DateTime.Now;
-            FileLog.Record(new FileEventsInfo(fileEvent.FullPath, date, "Delete", ""));
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, date, "Create", "");
+            AddFileEventInfoToLog(fileEventInfo);
         }
 
-        private static void FileRenamed(object sender, FileSystemEventArgs fileEvent)
-        {
-            DateTime date = DateTime.Now;
-            var content = Reader.ReadContent(fileEvent.FullPath);
-            FileLog.Record(new FileEventsInfo(fileEvent.FullPath, date, "Rename", content));
-        }
-
-        private static void FileChanged(object sender, FileSystemEventArgs fileEvent)
+        private void FileRenamed(object sender, FileSystemEventArgs fileEvent)
         {
             DateTime date = DateTime.Now;
             var content = Reader.ReadContent(fileEvent.FullPath);
-            FileLog.Record(new FileEventsInfo(fileEvent.FullPath, date, "Change", content));
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, date, "Create", content);
+            AddFileEventInfoToLog(fileEventInfo);
+        }
+
+        private void FileChanged(object sender, FileSystemEventArgs fileEvent)
+        {
+            DateTime date = DateTime.Now;
+            var content = Reader.ReadContent(fileEvent.FullPath);
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, date, "Create", content);
+            AddFileEventInfoToLog(fileEventInfo);
+        }
+
+        private void AddFileEventInfoToLog (FileEventsInfo file)
+        {
+            file.PrintState();
+            _log.Add(file);
         }
     }
 }

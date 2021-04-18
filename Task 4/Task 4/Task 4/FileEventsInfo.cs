@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Task_4
 {
-    public class FileEventsInfo
+    public class FileEventsInfo : FileEventsInfoLog
     {
         public FileEventsInfo(string path, DateTime changes, string typeOfEvent, string content)
         {
@@ -15,13 +18,5 @@ namespace Task_4
             EventType = typeOfEvent;
             Content = content;
         }
-
-        public string FullPath { get; set; }
-
-        public DateTime LastChangesTime { get; set; }
-
-        public string EventType { get; set; }
-
-        public string Content { get; set; }
     }
 }
