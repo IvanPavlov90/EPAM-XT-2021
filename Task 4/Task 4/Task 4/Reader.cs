@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Task_4
 {
@@ -20,14 +21,14 @@ namespace Task_4
             return content;
         }
 
-        public static List<FileEventsInfoLog> ReadLog(string path)
+        public static List<FileEventsInfo> ReadLog(string path)
         {
             string content;
             using (StreamReader reader = new StreamReader(path, System.Text.Encoding.UTF8))
             {
                 content = reader.ReadToEnd();
             }
-            List <FileEventsInfoLog> fileEvent = JsonSerializer.Deserialize<List<FileEventsInfoLog>>(content);
+            List <FileEventsInfo> fileEvent = JsonSerializer.Deserialize<List<FileEventsInfo>>(content);
             return fileEvent;
         }
     }

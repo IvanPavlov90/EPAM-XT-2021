@@ -19,17 +19,6 @@ namespace Task_4
              }
         }
 
-        //public static void Record(FileEventsInfo file)
-        //{
-        //    using (StreamWriter writer = new StreamWriter(@"C:\Users\pavlo\Desktop\projects\EPAM-XT-2021\Task 4\Log.txt", true, System.Text.Encoding.Default))
-        //    {
-        //        writer.WriteLine("FullPath: " + file.FullPath + " "
-        //                         + "Time Of Changes: " + file.LastChangesTime + " "
-        //                         + "Type Of Changes: " + file.EventType + " "
-        //                         + "Content: " + file.Content);
-        //    }
-        //}
-
         private static string Serialize(List<FileEventsInfo> log)
         {
              var options = new JsonSerializerOptions

@@ -34,7 +34,7 @@ namespace Task_4
             watcher.IncludeSubdirectories = true;
             watcher.EnableRaisingEvents = true;
 
-            Print.PrintMessage("Observation mode has been started. For return to main menu press any key.");
+            Print.PrintMessage("Observation mode has been started. For saving data and return to main menu press any key.");
             Console.ReadKey();
             FileLog.Record(_log);
         }
@@ -42,22 +42,22 @@ namespace Task_4
         private void FileCreated(object sender, FileSystemEventArgs fileEvent)
         {
             DateTime date = DateTime.Now;
-            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, date, "Create", "");
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, "Create", "");
             AddFileEventInfoToLog(fileEventInfo);
         }
 
         private void FileDeleted(object sender, FileSystemEventArgs fileEvent)
         {
             DateTime date = DateTime.Now;
-            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, date, "Create", "");
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, "Delete", "");
             AddFileEventInfoToLog(fileEventInfo);
         }
 
-        private void FileRenamed(object sender, FileSystemEventArgs fileEvent)
+        private void FileRenamed(object sender, RenamedEventArgs fileRename)
         {
             DateTime date = DateTime.Now;
-            var content = Reader.ReadContent(fileEvent.FullPath);
-            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, date, "Create", content);
+            var content = Reader.ReadContent(fileRename.FullPath);
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileRename.FullPath, fileRename.OldFullPath, date, "Rename", content);
             AddFileEventInfoToLog(fileEventInfo);
         }
 
@@ -65,7 +65,7 @@ namespace Task_4
         {
             DateTime date = DateTime.Now;
             var content = Reader.ReadContent(fileEvent.FullPath);
-            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, date, "Create", content);
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, "Change", content);
             AddFileEventInfoToLog(fileEventInfo);
         }
 

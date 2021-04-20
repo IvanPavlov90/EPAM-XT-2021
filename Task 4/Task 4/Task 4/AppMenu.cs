@@ -37,8 +37,8 @@ namespace Task_4
                         {
                             date = InputHelper.InputDate();
                         } while (date == defaultDate);
-                        List<FileEventsInfoLog> fileEvent = Reader.ReadLog(@"C:\Users\pavlo\Desktop\projects\EPAM-XT-2021\Task 4\Log.json");
-                        Builder.BuildFiles(fileEvent, date);
+                        List<FileEventsInfo> fileEvent = Reader.ReadLog(@"C:\Users\pavlo\Desktop\projects\EPAM-XT-2021\Task 4\Log.json");
+                        Builder.BuildState(fileEvent, date);
                         break;
                     default:
                         break;
