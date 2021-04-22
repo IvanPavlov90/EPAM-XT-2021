@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -11,12 +8,13 @@ namespace Task_4
 {
     public static class FileLog
     {
-        public static void Record(List<FileEventsInfo> log)
+        public static void Record(List<FileEventsInfo> log, string logPath)
         {
-             using (StreamWriter writer = new StreamWriter(@"C:\Users\pavlo\Desktop\projects\EPAM-XT-2021\Task 4\Log.json", true, System.Text.Encoding.UTF8))
-             {
-                    writer.WriteLine(Serialize(log));
-             }
+            File.WriteAllText(logPath, String.Empty);
+            using (StreamWriter writer = new StreamWriter(logPath, true, System.Text.Encoding.UTF8))
+            {
+                  writer.WriteLine(Serialize(log));
+            }
         }
 
         private static string Serialize(List<FileEventsInfo> log)

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Task_4
 {
@@ -20,6 +18,8 @@ namespace Task_4
             int result;
             do
             {
+                string directoryPath = GetDirectory() + @"\Files";
+                string logPath = GetDirectory() + @"\Log.json";
                 ShowModeMenu();
                 Print.PrintMessage("Choose your option:");
                 string value = Console.ReadLine();
@@ -28,7 +28,7 @@ namespace Task_4
                 {
                     case 1:
                         FileWatcher fileWatcher = new FileWatcher();
-                        fileWatcher.WatchFolder(@"C:\Users\pavlo\Desktop\projects\EPAM-XT-2021\Task 4\Files");
+                        fileWatcher.WatchFolder(directoryPath, logPath);
                         break;
                     case 2:
                         DateTime date;
@@ -37,8 +37,8 @@ namespace Task_4
                         {
                             date = InputHelper.InputDate();
                         } while (date == defaultDate);
-                        List<FileEventsInfo> fileEvent = Reader.ReadLog(@"C:\Users\pavlo\Desktop\projects\EPAM-XT-2021\Task 4\Log.json");
-                        Builder.BuildState(fileEvent, date);
+                        List<FileEventsInfo> fileEvent = Reader.ReadLog(logPath);
+                        Builder.BuildState(fileEvent, date, directoryPath);
                         break;
                     default:
                         break;
@@ -53,6 +53,12 @@ namespace Task_4
                 if ((int)item != 0)
                     Console.WriteLine($"{(int)item}. {item}");
             }
+        }
+
+        private static string GetDirectory ()
+        {
+            string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName;
+            return path;
         }
     }
 }

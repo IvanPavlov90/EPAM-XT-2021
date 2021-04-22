@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -18,22 +13,27 @@ namespace Task_4
 
         public FileEventsInfo(string path, string oldPath, DateTime changes, string typeOfEvent, string content)
         {
-            FullPath = CheckPathAndEventType(path);
-            OldFullPath = CheckContentAndOldPath(oldPath);
+            FullPath = CheckEmptyOrNull(path);
+            OldFullPath = CheckStrNull(oldPath);
             LastChangesTime = changes;
-            EventType = CheckPathAndEventType(typeOfEvent);
-            Content = CheckContentAndOldPath(content);
+            EventType = CheckEmptyOrNull(typeOfEvent);
+            Content = CheckStrNull(content);
         }
 
-        public string FullPath { get; set; }
+        [JsonInclude]
+        public string FullPath { get; private set;  }
 
-        public string OldFullPath { get; set; }
+        [JsonInclude]
+        public string OldFullPath { get; private set; }
 
-        public DateTime LastChangesTime { get; set; }
+        [JsonInclude]
+        public DateTime LastChangesTime { get; private set; }
 
-        public string EventType { get; set; }
+        [JsonInclude]
+        public string EventType { get; private set; }
 
-        public string Content { get; set; }
+        [JsonInclude]
+        public string Content { get; private set; }
 
         public void PrintState()
         {
@@ -43,7 +43,7 @@ namespace Task_4
                                    $"Content: {Content}" + Environment.NewLine);
         }
 
-        private string CheckPathAndEventType (string str)
+        private string CheckEmptyOrNull (string str)
         {
             if (str == String.Empty || str == null)
             {
@@ -52,11 +52,11 @@ namespace Task_4
             return str;
         }
 
-        private string CheckContentAndOldPath (string str)
+        private string CheckStrNull (string str)
         {
             if (str == null)
             {
-                throw new ArgumentException("You can't put empty string or null here.");
+                throw new ArgumentException("You can't put empty null here.");
             }
             return str;
         }

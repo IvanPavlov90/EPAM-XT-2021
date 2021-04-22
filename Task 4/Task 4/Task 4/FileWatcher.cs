@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace Task_4
@@ -11,14 +8,12 @@ namespace Task_4
     {
         private List<FileEventsInfo> _log = new List<FileEventsInfo> { };
 
-        public void WatchFolder (string path)
+        public void WatchFolder (string folderPath, string logPath)
         {
-            if (path == null || path == "")
-            {
-                throw new IOException("Path to file can't be null or empty");
-            }
+            if ((folderPath == null || logPath == null) || (folderPath == String.Empty || logPath == String.Empty))
+                throw new IOException("Path to file or folder can't be null or empty");
 
-            using var watcher = new FileSystemWatcher(path, "*.txt");
+            using var watcher = new FileSystemWatcher(folderPath, "*.txt");
 
             watcher.NotifyFilter = NotifyFilters.Attributes
                                  | NotifyFilters.FileName
@@ -36,7 +31,7 @@ namespace Task_4
 
             Print.PrintMessage("Observation mode has been started. For saving data and return to main menu press any key.");
             Console.ReadKey();
-            FileLog.Record(_log);
+            FileLog.Record(_log, logPath);
         }
 
         private void FileCreated(object sender, FileSystemEventArgs fileEvent)

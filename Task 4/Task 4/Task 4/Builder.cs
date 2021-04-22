@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,9 +9,8 @@ namespace Task_4
 {
     public static class Builder
     {
-        public static void BuildState (List<FileEventsInfo> fileEvent, DateTime date)
+        public static void BuildState (List<FileEventsInfo> fileEvent, DateTime date, string directoryPath)
         {
-            string directoryPath = @"C:\Users\pavlo\Desktop\projects\EPAM-XT-2021\Task 4\Files";
             ClearDirectory(directoryPath);
             foreach (var item in fileEvent)
             {
