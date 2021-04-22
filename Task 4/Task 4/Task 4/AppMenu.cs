@@ -19,6 +19,7 @@ namespace Task_4
             do
             {
                 string directoryPath = GetDirectory() + @"\Files";
+                CreateDirectory(directoryPath);
                 string logPath = GetDirectory() + @"\Log.json";
                 ShowModeMenu();
                 Print.PrintMessage("Choose your option:");
@@ -59,6 +60,13 @@ namespace Task_4
         {
             string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName;
             return path;
+        }
+
+        private static void CreateDirectory(string path)
+        {
+            DirectoryInfo dir = new DirectoryInfo(path);
+            if (!dir.Exists)
+                dir.Create();
         }
     }
 }
