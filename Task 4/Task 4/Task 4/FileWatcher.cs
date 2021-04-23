@@ -10,7 +10,7 @@ namespace Task_4
 
         public void WatchFolder (string folderPath, string logPath)
         {
-            if ((folderPath == null || logPath == null) || (folderPath == String.Empty || logPath == String.Empty))
+            if (folderPath == null || logPath == null || folderPath == String.Empty || logPath == String.Empty)
                 throw new IOException("Path to file or folder can't be null or empty");
 
             using var watcher = new FileSystemWatcher(folderPath, "*.txt");

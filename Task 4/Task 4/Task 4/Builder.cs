@@ -57,10 +57,19 @@ namespace Task_4
         {
             DirectoryInfo dir = new DirectoryInfo(path);
 
-            foreach (FileInfo file in dir.GetFiles())
+            if (dir.Exists)
             {
-                file.Delete();
+                foreach (DirectoryInfo subDir in dir.GetDirectories())
+                {
+                    ClearDirectory(subDir.FullName);
+                }
+                foreach (FileInfo file in dir.GetFiles())
+                {
+                    file.Delete();
+                }
             }
+            else
+                throw new IOException("Directopry doesn't exists");
         }
     }
 }
