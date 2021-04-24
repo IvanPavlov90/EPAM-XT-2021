@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Task_4
 {
@@ -13,14 +14,30 @@ namespace Task_4
             RollingChanges = 2
         }
 
-        public static void ChosingMode ()
+        /// <summary>
+        /// This method asks user to specify folder he wants to observe.
+        /// </summary>
+        public static string AskUserToSpecifyDirectory()
+        {
+            Console.WriteLine("Please, specify directory to observe.");
+            do
+            {
+                var directoryPath = Console.ReadLine();
+                if (Directory.Exists(directoryPath))
+                    return directoryPath;
+                else
+                    Console.WriteLine("You have entered wrong path to directory or directory doesn't exist, please try again.");
+            } while (true);
+        }
+
+        public static void MenuStart (string directoryPath)
         {
             int result;
             do
             {
-                string directoryPath = GetDirectory() + @"\Files";
-                CreateDirectory(directoryPath);
-                string logPath = GetDirectory() + @"\Log.json";
+                string logPath = @"D:Log.json";
+                string backupPath = @"D:\BackUp";
+                Directory.CreateDirectory(backupPath);
                 ShowModeMenu();
                 Print.PrintMessage("Choose your option:");
                 string value = Console.ReadLine();
@@ -28,6 +45,7 @@ namespace Task_4
                 switch (result)
                 {
                     case 1:
+                        Builder.CreateBackUp(directoryPath, backupPath);
                         FileWatcher fileWatcher = new FileWatcher();
                         fileWatcher.WatchFolder(directoryPath, logPath);
                         break;
@@ -54,19 +72,6 @@ namespace Task_4
                 if ((int)item != 0)
                     Console.WriteLine($"{(int)item}. {item}");
             }
-        }
-
-        private static string GetDirectory ()
-        {
-            string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName;
-            return path;
-        }
-
-        private static void CreateDirectory(string path)
-        {
-            DirectoryInfo dir = new DirectoryInfo(path);
-            if (!dir.Exists)
-                dir.Create();
         }
     }
 }

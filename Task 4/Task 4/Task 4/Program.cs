@@ -7,7 +7,8 @@ namespace Task_4
     {
         static void Main(string[] args)
         {
-            AppMenu.ChosingMode();
+            var directoryPath = AppMenu.AskUserToSpecifyDirectory();
+            AppMenu.MenuStart(directoryPath);
         }
     }
 }

@@ -9,6 +9,22 @@ namespace Task_4
 {
     public static class Builder
     {
+        /// <summary>
+        /// This method saves folder's state at the beginning of odservation.
+        /// </summary>
+        public static void CreateBackUp(string sourcePath, string backupPath)
+        {
+            ClearDirectory(backupPath);
+            foreach (string subDirectoryPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            {
+                Directory.CreateDirectory(subDirectoryPath.Replace(sourcePath, backupPath));
+            }
+            foreach (string filePath in Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories))
+            {
+                File.Copy(filePath, filePath.Replace(sourcePath, backupPath), true);
+            }
+        }
+
         public static void BuildState (List<FileEventsInfo> fileEvent, DateTime date, string directoryPath)
         {
             ClearDirectory(directoryPath);
@@ -61,7 +77,7 @@ namespace Task_4
             {
                 foreach (DirectoryInfo subDir in dir.GetDirectories())
                 {
-                    ClearDirectory(subDir.FullName);
+                    subDir.Delete(true);
                 }
                 foreach (FileInfo file in dir.GetFiles())
                 {
@@ -69,7 +85,7 @@ namespace Task_4
                 }
             }
             else
-                throw new IOException("Directopry doesn't exists");
+                throw new IOException("Directopry doesn't exist");
         }
     }
 }
