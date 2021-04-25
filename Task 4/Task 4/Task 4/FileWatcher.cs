@@ -37,14 +37,16 @@ namespace Task_4
         private void FileCreated(object sender, FileSystemEventArgs fileEvent)
         {
             DateTime date = DateTime.Now;
-            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, "Create", "");
+            Console.WriteLine(fileEvent.Name);
+            var content = Reader.ReadContent(fileEvent.FullPath);
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, "Create", content);
             AddFileEventInfoToLog(fileEventInfo);
         }
 
         private void FileDeleted(object sender, FileSystemEventArgs fileEvent)
         {
             DateTime date = DateTime.Now;
-            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, "Delete", "");
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, "Delete", String.Empty);
             AddFileEventInfoToLog(fileEventInfo);
         }
 

@@ -57,7 +57,7 @@ namespace Task_4
                             date = InputHelper.InputDate();
                         } while (date == defaultDate);
                         List<FileEventsInfo> fileEvent = Reader.ReadLog(logPath);
-                        Builder.BuildState(fileEvent, date, directoryPath);
+                        Builder.BuildState(fileEvent, date, directoryPath, backupPath);
                         break;
                     default:
                         break;
