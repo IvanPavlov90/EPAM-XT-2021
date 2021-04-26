@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using static Task_4.FileWatcher;
 
 namespace Task_4
 {
@@ -11,12 +12,12 @@ namespace Task_4
 
         }
 
-        public FileEventsInfo(string path, string oldPath, DateTime changes, string typeOfEvent, string content)
+        public FileEventsInfo(string path, string oldPath, DateTime changes, FileActions typeOfEvent, string content)
         {
             FullPath = CheckEmptyOrNull(path);
             OldFullPath = CheckStrNull(oldPath);
             LastChangesTime = changes;
-            EventType = CheckEmptyOrNull(typeOfEvent);
+            EventType = typeOfEvent;
             Content = CheckStrNull(content);
         }
 
@@ -30,7 +31,7 @@ namespace Task_4
         public DateTime LastChangesTime { get; private set; }
 
         [JsonInclude]
-        public string EventType { get; private set; }
+        public FileActions EventType { get; private set; }
 
         [JsonInclude]
         public string Content { get; private set; }

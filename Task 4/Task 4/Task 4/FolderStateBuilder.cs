@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 
 namespace Task_4
 {
-    public static class Builder
+    public static class FolderStateBuilder
     {
         /// <summary>
         /// This method saves folder's state at the beginning of odservation.
@@ -71,7 +71,7 @@ namespace Task_4
         {
             switch (file.EventType)
             {
-                case "Create":
+                case FileWatcher.FileActions.Create:
                     try
                     {
                         FileCreation(file);
@@ -82,10 +82,10 @@ namespace Task_4
                         FileCreation(file);
                     }
                     break;
-                case "Delete":
+                case FileWatcher.FileActions.Delete:
                     File.Delete(file.FullPath);
                     break;
-                case "Change":
+                case FileWatcher.FileActions.Change:
                     try
                     {
                         FileChanging(file); ;
@@ -96,7 +96,7 @@ namespace Task_4
                         FileChanging(file);
                     }
                     break;
-                case "Rename":
+                case FileWatcher.FileActions.Rename:
                     FileRenaiming(file);
                     break;
                 default:

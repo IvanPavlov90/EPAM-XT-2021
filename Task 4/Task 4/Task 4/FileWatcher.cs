@@ -6,20 +6,27 @@ namespace Task_4
 {
     public class FileWatcher
     {
+        public enum FileActions
+        {
+            Default = 0,
+            Create = 1,
+            Delete = 2,
+            Rename = 3,
+            Change = 4
+        }
+
         private List<FileEventsInfo> _log = new List<FileEventsInfo> { };
 
-        public void WatchFolder (string folderPath, string logPath)
+        public void WatchFolder (string folderPath, LogsSerializer log)
         {
-            if (folderPath == null || logPath == null || folderPath == String.Empty || logPath == String.Empty)
+            if (folderPath == null ||folderPath == String.Empty)
                 throw new IOException("Path to file or folder can't be null or empty");
 
             using var watcher = new FileSystemWatcher(folderPath, "*.txt");
 
-            watcher.NotifyFilter = NotifyFilters.Attributes
-                                 | NotifyFilters.FileName
+            watcher.NotifyFilter = NotifyFilters.FileName
                                  | NotifyFilters.CreationTime
-                                 | NotifyFilters.LastWrite
-                                 | NotifyFilters.LastAccess;
+                                 | NotifyFilters.LastWrite;
 
             watcher.Created += FileCreated;
             watcher.Deleted += FileDeleted;
@@ -31,7 +38,7 @@ namespace Task_4
 
             Print.PrintMessage("Observation mode has been started. For saving data and return to main menu press any key.");
             Console.ReadKey();
-            FileLog.Record(_log, logPath);
+            log.Record(_log);
         }
 
         private void FileCreated(object sender, FileSystemEventArgs fileEvent)
@@ -39,14 +46,14 @@ namespace Task_4
             DateTime date = DateTime.Now;
             Console.WriteLine(fileEvent.Name);
             var content = Reader.ReadContent(fileEvent.FullPath);
-            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, "Create", content);
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, FileActions.Create, content);
             AddFileEventInfoToLog(fileEventInfo);
         }
 
         private void FileDeleted(object sender, FileSystemEventArgs fileEvent)
         {
             DateTime date = DateTime.Now;
-            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, "Delete", String.Empty);
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, FileActions.Delete, String.Empty);
             AddFileEventInfoToLog(fileEventInfo);
         }
 
@@ -54,7 +61,7 @@ namespace Task_4
         {
             DateTime date = DateTime.Now;
             var content = Reader.ReadContent(fileRename.FullPath);
-            FileEventsInfo fileEventInfo = new FileEventsInfo(fileRename.FullPath, fileRename.OldFullPath, date, "Rename", content);
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileRename.FullPath, fileRename.OldFullPath, date, FileActions.Rename, content);
             AddFileEventInfoToLog(fileEventInfo);
         }
 
@@ -62,7 +69,7 @@ namespace Task_4
         {
             DateTime date = DateTime.Now;
             var content = Reader.ReadContent(fileEvent.FullPath);
-            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, "Change", content);
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, FileActions.Change, content);
             AddFileEventInfoToLog(fileEventInfo);
         }
 

@@ -8,6 +8,9 @@ namespace Task_4
 {
     public static class Reader
     {
+        /// <summary>
+        /// This method reads content from file
+        /// </summary>
         public static string ReadContent(string path)
         {
             string content;
@@ -16,17 +19,6 @@ namespace Task_4
                 content = reader.ReadToEnd();
             }
             return content;
-        }
-
-        public static List<FileEventsInfo> ReadLog(string path)
-        {
-            string content;
-            using (StreamReader reader = new StreamReader(path, System.Text.Encoding.UTF8))
-            {
-                content = reader.ReadToEnd();
-            }
-            List <FileEventsInfo> fileEvent = JsonSerializer.Deserialize<List<FileEventsInfo>>(content);
-            return fileEvent;
         }
     }
 }

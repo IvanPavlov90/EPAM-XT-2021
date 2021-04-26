@@ -36,6 +36,7 @@ namespace Task_4
             do
             {
                 string logPath = @"D:Log.json";
+                LogsSerializer log = new LogsSerializer(logPath);
                 string backupPath = @"D:\BackUp";
                 Directory.CreateDirectory(backupPath);
                 ShowModeMenu();
@@ -45,19 +46,14 @@ namespace Task_4
                 switch (result)
                 {
                     case 1:
-                        Builder.CreateBackUp(directoryPath, backupPath);
+                        FolderStateBuilder.CreateBackUp(directoryPath, backupPath);
                         FileWatcher fileWatcher = new FileWatcher();
-                        fileWatcher.WatchFolder(directoryPath, logPath);
+                        fileWatcher.WatchFolder(directoryPath, log);
                         break;
                     case 2:
-                        DateTime date;
-                        DateTime defaultDate = new DateTime(2000, 1, 1);
-                        do
-                        {
-                            date = InputHelper.InputDate();
-                        } while (date == defaultDate);
-                        List<FileEventsInfo> fileEvent = Reader.ReadLog(logPath);
-                        Builder.BuildState(fileEvent, date, directoryPath, backupPath);
+                        DateTime date = InputHelper.InputDate();
+                        List<FileEventsInfo> fileEvent = log.ReadLog();
+                        FolderStateBuilder.BuildState(fileEvent, date, directoryPath, backupPath);
                         break;
                     default:
                         break;
