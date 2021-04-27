@@ -88,7 +88,7 @@ namespace Task_4
                 case FileWatcher.FileActions.Change:
                     try
                     {
-                        FileChanging(file); ;
+                        FileChanging(file);
                     }
                     catch
                     {

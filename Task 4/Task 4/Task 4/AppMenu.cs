@@ -35,12 +35,11 @@ namespace Task_4
             int result;
             do
             {
-                string logPath = @"D:Log.json";
+                string logPath = CreateLog();
                 LogsSerializer log = new LogsSerializer(logPath);
-                string backupPath = @"D:\BackUp";
-                Directory.CreateDirectory(backupPath);
+                string backupPath = CreateBackUpFolder();
                 ShowModeMenu();
-                Print.PrintMessage("Choose your option:");
+                Console.WriteLine("Choose your option:");
                 string value = Console.ReadLine();
                 Int32.TryParse(value, out result);
                 switch (result)
@@ -68,6 +67,22 @@ namespace Task_4
                 if ((int)item != 0)
                     Console.WriteLine($"{(int)item}. {item}");
             }
+        }
+
+        private static string CreateLog()
+        {
+            string path = Directory.GetCurrentDirectory() + @"FileSystemLog.json";
+            if (!File.Exists(path)) 
+                using (var stream = File.Create(path)) { };
+            return path;
+        }
+
+        private static string CreateBackUpFolder()
+        {
+            string path = Directory.GetCurrentDirectory() + @"\BackUpFolder";
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+            return path;
         }
     }
 }

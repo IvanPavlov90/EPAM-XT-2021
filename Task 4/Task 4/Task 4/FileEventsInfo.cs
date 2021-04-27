@@ -14,11 +14,11 @@ namespace Task_4
 
         public FileEventsInfo(string path, string oldPath, DateTime changes, FileActions typeOfEvent, string content)
         {
-            FullPath = CheckEmptyOrNull(path);
-            OldFullPath = CheckStrNull(oldPath);
+            FullPath = CheckFullPath(path);
+            OldFullPath = oldPath;
             LastChangesTime = changes;
             EventType = typeOfEvent;
-            Content = CheckStrNull(content);
+            Content = CheckContent(content);
         }
 
         [JsonInclude]
@@ -38,27 +38,22 @@ namespace Task_4
 
         public void PrintState()
         {
-            Print.PrintMessage($"FullPath: {FullPath}" + Environment.NewLine +
-                                   $"Time Of Changes: {LastChangesTime} " + Environment.NewLine +
-                                   $"Type Of Changes: {EventType} " + Environment.NewLine +
-                                   $"Content: {Content}" + Environment.NewLine);
+            Console.WriteLine($"FullPath: {FullPath}" + Environment.NewLine +
+                              $"Time Of Changes: {LastChangesTime} " + Environment.NewLine +
+                              $"Type Of Changes: {EventType} " + Environment.NewLine);
         }
 
-        private string CheckEmptyOrNull (string str)
+        private string CheckFullPath (string str)
         {
-            if (str == String.Empty || str == null)
-            {
-                throw new ArgumentException("You can't put empty string or null here.");
-            }
+            if (String.IsNullOrWhiteSpace(str))
+                throw new ArgumentException(String.Format("You can't put null or white spaces into {0}", FullPath));
             return str;
         }
 
-        private string CheckStrNull (string str)
+        private string CheckContent (string str)
         {
             if (str == null)
-            {
-                throw new ArgumentException("You can't put empty null here.");
-            }
+                throw new ArgumentException(String.Format("You can't put null into {0}", Content));
             return str;
         }
     }

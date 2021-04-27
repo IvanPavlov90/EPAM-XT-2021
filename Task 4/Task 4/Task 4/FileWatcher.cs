@@ -36,7 +36,7 @@ namespace Task_4
             watcher.IncludeSubdirectories = true;
             watcher.EnableRaisingEvents = true;
 
-            Print.PrintMessage("Observation mode has been started. For saving data and return to main menu press any key.");
+            Console.WriteLine("Observation mode has been started. For saving data and return to main menu press any key.");
             Console.ReadKey();
             log.Record(_log);
         }
@@ -44,23 +44,28 @@ namespace Task_4
         private void FileCreated(object sender, FileSystemEventArgs fileEvent)
         {
             DateTime date = DateTime.Now;
-            Console.WriteLine(fileEvent.Name);
-            var content = Reader.ReadContent(fileEvent.FullPath);
-            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, FileActions.Create, content);
-            AddFileEventInfoToLog(fileEventInfo);
+            try
+            {
+                CreationAndReadingContent(fileEvent, date);
+            }
+            catch (FileNotFoundException e)
+            {
+                using (var stream = File.Create(e.FileName)) { };
+                CreationAndReadingContent(fileEvent, date);
+            }
         }
 
         private void FileDeleted(object sender, FileSystemEventArgs fileEvent)
         {
             DateTime date = DateTime.Now;
-            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, FileActions.Delete, String.Empty);
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, null, date, FileActions.Delete, String.Empty);
             AddFileEventInfoToLog(fileEventInfo);
         }
 
         private void FileRenamed(object sender, RenamedEventArgs fileRename)
         {
             DateTime date = DateTime.Now;
-            var content = Reader.ReadContent(fileRename.FullPath);
+            var content = File.ReadAllText(fileRename.FullPath);
             FileEventsInfo fileEventInfo = new FileEventsInfo(fileRename.FullPath, fileRename.OldFullPath, date, FileActions.Rename, content);
             AddFileEventInfoToLog(fileEventInfo);
         }
@@ -68,8 +73,8 @@ namespace Task_4
         private void FileChanged(object sender, FileSystemEventArgs fileEvent)
         {
             DateTime date = DateTime.Now;
-            var content = Reader.ReadContent(fileEvent.FullPath);
-            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, "", date, FileActions.Change, content);
+            var content = File.ReadAllText(fileEvent.FullPath);
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, null, date, FileActions.Change, content);
             AddFileEventInfoToLog(fileEventInfo);
         }
 
@@ -77,6 +82,18 @@ namespace Task_4
         {
             file.PrintState();
             _log.Add(file);
+        }
+
+        private void CreationAndReadingContent(FileSystemEventArgs fileEvent, DateTime date)
+        {
+            //var content = File.ReadAllText(fileEvent.FullPath);
+            string content;
+            using (StreamReader reader = new StreamReader(fileEvent.FullPath, System.Text.Encoding.Default))
+            {
+                content = reader.ReadToEnd();
+            }
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, null, date, FileActions.Create, content);
+            AddFileEventInfoToLog(fileEventInfo);
         }
     }
 }

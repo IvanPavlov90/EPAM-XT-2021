@@ -14,7 +14,7 @@ namespace Task_4
             string value;
             do
             {
-                Print.PrintMessage("Please, enter date in format day.month.year hour:minute:seconds, for example 18.04.2020 10:01:43");
+                Console.WriteLine("Please, enter date in format day.month.year hour:minute:seconds, for example 18.04.2020 10:01:43");
                 value = Console.ReadLine();
                 CultureInfo provider = CultureInfo.InvariantCulture;
                 string format = "dd.MM.yyyy HH:mm:ss";
