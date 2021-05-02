@@ -44,15 +44,8 @@ namespace Task_4
         private void FileCreated(object sender, FileSystemEventArgs fileEvent)
         {
             DateTime date = DateTime.Now;
-            try
-            {
-                CreationAndReadingContent(fileEvent, date);
-            }
-            catch (FileNotFoundException e)
-            {
-                using (var stream = File.Create(e.FileName)) { };
-                CreationAndReadingContent(fileEvent, date);
-            }
+            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, null, date, FileActions.Create, "");
+            AddFileEventInfoToLog(fileEventInfo);
         }
 
         private void FileDeleted(object sender, FileSystemEventArgs fileEvent)
@@ -82,18 +75,6 @@ namespace Task_4
         {
             file.PrintState();
             _log.Add(file);
-        }
-
-        private void CreationAndReadingContent(FileSystemEventArgs fileEvent, DateTime date)
-        {
-            //var content = File.ReadAllText(fileEvent.FullPath);
-            string content;
-            using (StreamReader reader = new StreamReader(fileEvent.FullPath, System.Text.Encoding.Default))
-            {
-                content = reader.ReadToEnd();
-            }
-            FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, null, date, FileActions.Create, content);
-            AddFileEventInfoToLog(fileEventInfo);
         }
     }
 }
