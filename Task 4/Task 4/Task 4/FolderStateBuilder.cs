@@ -71,7 +71,7 @@ namespace Task_4
         {
             switch (file.EventType)
             {
-                case FileWatcher.FileActions.Create:
+                case FileActions.Create:
                     try
                     {
                         FileCreation(file);
@@ -82,10 +82,10 @@ namespace Task_4
                         FileCreation(file);
                     }
                     break;
-                case FileWatcher.FileActions.Delete:
+                case FileActions.Delete:
                     File.Delete(file.FullPath);
                     break;
-                case FileWatcher.FileActions.Change:
+                case FileActions.Change:
                     try
                     {
                         FileChanging(file);
@@ -96,7 +96,7 @@ namespace Task_4
                         FileChanging(file);
                     }
                     break;
-                case FileWatcher.FileActions.Rename:
+                case FileActions.Rename:
                     FileRenaiming(file);
                     break;
                 default:

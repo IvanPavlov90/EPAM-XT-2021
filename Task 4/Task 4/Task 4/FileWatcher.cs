@@ -4,17 +4,16 @@ using System.IO;
 
 namespace Task_4
 {
+    public enum FileActions
+    {
+        Default = 0,
+        Create = 1,
+        Delete = 2,
+        Rename = 3,
+        Change = 4
+    }
     public class FileWatcher
     {
-        public enum FileActions
-        {
-            Default = 0,
-            Create = 1,
-            Delete = 2,
-            Rename = 3,
-            Change = 4
-        }
-
         private List<FileEventsInfo> _log = new List<FileEventsInfo> { };
 
         public void WatchFolder (string folderPath, LogsSerializer log)
