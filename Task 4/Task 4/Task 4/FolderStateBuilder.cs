@@ -129,14 +129,9 @@ namespace Task_4
         /// </summary>
         private static void CreateSubFolders(string path)
         {
-            string[] separateString = path.Split('\\');
-            string subFolderPath = String.Empty;
-            for (int i = 0; i < separateString.Length - 1; i++)
-            {
-                subFolderPath += separateString[i];
-                Directory.CreateDirectory(subFolderPath);
-                subFolderPath += @"\";
-            }
+            var lastindex = path.LastIndexOf(@"\");
+            string subFolderPath = path.Remove(lastindex);
+            Directory.CreateDirectory(subFolderPath);
         }
 
         /// <summary>
