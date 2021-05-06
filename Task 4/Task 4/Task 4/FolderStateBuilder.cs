@@ -74,12 +74,12 @@ namespace Task_4
                 case FileActions.Create:
                     try
                     {
-                        FileCreation(file);
+                        CreateFile(file);
                     }
                     catch (DirectoryNotFoundException)
                     {
                         CreateSubFolders(file.FullPath);
-                        FileCreation(file);
+                        CreateFile(file);
                     }
                     break;
                 case FileActions.Delete:
@@ -88,16 +88,16 @@ namespace Task_4
                 case FileActions.Change:
                     try
                     {
-                        FileChanging(file);
+                        ChangeFile(file);
                     }
                     catch (DirectoryNotFoundException)
                     {
                         CreateSubFolders(file.FullPath);
-                        FileChanging(file);
+                        ChangeFile(file);
                     }
                     break;
                 case FileActions.Rename:
-                    FileRenaiming(file);
+                    RenameFile(file);
                     break;
                 default:
                     break;
@@ -108,7 +108,7 @@ namespace Task_4
         /// This method creates files with the help of information from example of
         /// FileEventsInfo class.
         /// </summary>
-        private static void FileCreation (FileEventsInfo file)
+        private static void CreateFile (FileEventsInfo file)
         {
             using (var stream = File.Create(file.FullPath)) { };
             if (file.Content.Length != 0)
@@ -137,7 +137,7 @@ namespace Task_4
         /// <summary>
         /// This method removes text from file and record to file necessary stand text.
         /// </summary>
-        private static void FileChanging(FileEventsInfo file)
+        private static void ChangeFile (FileEventsInfo file)
         {
             File.WriteAllText(file.FullPath, String.Empty);
             using (StreamWriter writer = new StreamWriter(file.FullPath, true, System.Text.Encoding.UTF8))
@@ -151,10 +151,9 @@ namespace Task_4
         /// This method contains logic of renaiming file.
         /// </summary>
         /// <param name="file"></param>
-        private static void FileRenaiming(FileEventsInfo file)
+        private static void RenameFile (FileEventsInfo file)
         {
-            File.Delete(file.OldFullPath);
-            using (var stream = File.Create(file.FullPath)) { };
+            File.Move(file.OldFullPath, file.FullPath);
             using (StreamWriter writer = new StreamWriter(file.FullPath, true, System.Text.Encoding.UTF8))
             {
                 writer.WriteLine(file.Content);

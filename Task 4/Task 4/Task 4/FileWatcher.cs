@@ -27,10 +27,10 @@ namespace Task_4
                                  | NotifyFilters.CreationTime
                                  | NotifyFilters.LastWrite;
 
-            watcher.Created += FileCreated;
-            watcher.Deleted += FileDeleted;
-            watcher.Renamed += FileRenamed;
-            watcher.Changed += FileChanged;
+            watcher.Created += CreateFile;
+            watcher.Deleted += DeleteFile;
+            watcher.Renamed += RenameFile;
+            watcher.Changed += ChangeFile;
 
             watcher.IncludeSubdirectories = true;
             watcher.EnableRaisingEvents = true;
@@ -40,21 +40,21 @@ namespace Task_4
             log.Record(_log);
         }
 
-        private void FileCreated(object sender, FileSystemEventArgs fileEvent)
+        private void CreateFile(object sender, FileSystemEventArgs fileEvent)
         {
             DateTime date = DateTime.Now;
             FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, null, date, FileActions.Create, "");
             AddFileEventInfoToLog(fileEventInfo);
         }
 
-        private void FileDeleted(object sender, FileSystemEventArgs fileEvent)
+        private void DeleteFile(object sender, FileSystemEventArgs fileEvent)
         {
             DateTime date = DateTime.Now;
             FileEventsInfo fileEventInfo = new FileEventsInfo(fileEvent.FullPath, null, date, FileActions.Delete, String.Empty);
             AddFileEventInfoToLog(fileEventInfo);
         }
 
-        private void FileRenamed(object sender, RenamedEventArgs fileRename)
+        private void RenameFile(object sender, RenamedEventArgs fileRename)
         {
             DateTime date = DateTime.Now;
             var content = File.ReadAllText(fileRename.FullPath);
@@ -62,7 +62,7 @@ namespace Task_4
             AddFileEventInfoToLog(fileEventInfo);
         }
 
-        private void FileChanged(object sender, FileSystemEventArgs fileEvent)
+        private void ChangeFile(object sender, FileSystemEventArgs fileEvent)
         {
             DateTime date = DateTime.Now;
             var content = File.ReadAllText(fileEvent.FullPath);
