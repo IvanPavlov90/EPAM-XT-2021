@@ -18,8 +18,8 @@ namespace Task_4
 
         public void WatchFolder (string folderPath, LogsSerializer log)
         {
-            if (folderPath == null ||folderPath == String.Empty)
-                throw new IOException("Path to file or folder can't be null or empty");
+            if (folderPath == null || folderPath == String.Empty)
+                throw new ArgumentException("Path to file or folder can't be null or empty");
 
             using var watcher = new FileSystemWatcher(folderPath, "*.txt");
 

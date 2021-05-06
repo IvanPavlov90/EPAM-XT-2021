@@ -45,7 +45,7 @@ namespace Task_4
         private string CheckFullPath (string str)
         {
             if (String.IsNullOrWhiteSpace(str))
-                throw new ArgumentException(String.Format("You can't put null or white spaces into {0}", FullPath));
+                throw new ArgumentException("You can't put null or white spaces into {FullPath}");
             return str;
         }
 

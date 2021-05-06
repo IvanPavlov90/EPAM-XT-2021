@@ -76,7 +76,7 @@ namespace Task_4
                     {
                         FileCreation(file);
                     }
-                    catch
+                    catch (DirectoryNotFoundException)
                     {
                         CreateSubFolders(file.FullPath);
                         FileCreation(file);
@@ -90,7 +90,7 @@ namespace Task_4
                     {
                         FileChanging(file);
                     }
-                    catch
+                    catch (DirectoryNotFoundException)
                     {
                         CreateSubFolders(file.FullPath);
                         FileChanging(file);
