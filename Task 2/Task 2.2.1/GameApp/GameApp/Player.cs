@@ -21,7 +21,7 @@ namespace GameApp
         /// </summary>
         /// <param name="border"></param>
         /// <param name="obstacles"></param>
-        public void MoveForward(int border, List<GameObject> obstacles)
+        public void MoveForward(int border, List<Obstacle> obstacles)
         {
             if (CoordinatY + Speed > border)
             {
@@ -37,7 +37,7 @@ namespace GameApp
             }
         }
 
-        public void MoveBackward(int border, List<GameObject> obstacles)
+        public void MoveBackward(int border, List<Obstacle> obstacles)
         {
             if (CoordinatY - Speed < border)
             {
@@ -54,7 +54,7 @@ namespace GameApp
             }
         }
 
-        public void MoveLeft(int border, List<GameObject> obstacles)
+        public void MoveLeft(int border, List<Obstacle> obstacles)
         {
             if (CoordinatX - Speed < border)
             {
@@ -71,7 +71,7 @@ namespace GameApp
             }
         }
 
-        public void MoveRight(int border, List<GameObject> obstacles)
+        public void MoveRight(int border, List<Obstacle> obstacles)
         {
             if (CoordinatX + Speed > border)
             {
@@ -101,9 +101,9 @@ namespace GameApp
         /// </summary>
         /// <param name="gameobjects"></param>
         /// <returns>If true, player can't go to this coordinat.</returns>
-        public bool CheckingPlayerAndObstacles(List<GameObject> gameobjects)
+        public bool CheckingPlayerAndObstacles(List<Obstacle> gameobjects)
         {
-            foreach (GameObject item in gameobjects)
+            foreach (Obstacle item in gameobjects)
             {
                 if (item.CoordinatX == CoordinatX && item.CoordinatY == CoordinatY)
                 {

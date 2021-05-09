@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace GameApp
 {
     public static class ObjectCreator
     {
-        public static List <(int, int)> coordinatsObjects = new List<(int, int)> { };
+        private static List <(int, int)> coordinatsObjects = new List<(int, int)> { };
 
         public static Player CreatePlayer()
         {
@@ -16,29 +16,16 @@ namespace GameApp
         }
 
         /// <summary>
-        /// Method for creating irresistible objects. In this method I've tried to input logic that will be
-        /// prohibit to create two mountains with the same coordinats. If method creates mountain with coordinats
-        /// taht already has another mountain, method will create object with negative coordinats and player
-        /// will never see them.
+        /// Method for creating irresistible objects.
         /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
         /// <returns>new obstacle</returns>
-        public static Obstacle CreateObstacle(int width, int height)
+        private static Obstacle CreateObstacle(int width, int height)
         {
-            string name = "Mountain";
+            string name = GetObstacleName();
             Random rnd = new Random();
             int coordinatX = rnd.Next(0, width);
-            int coordinatY = rnd.Next(1, height);
-            if (!CheckingCoordinats(coordinatsObjects, coordinatX, coordinatY))
-            {
-                coordinatsObjects.Add((coordinatX, coordinatY));
-                return new Obstacle(name, coordinatX, coordinatY);
-            } 
-            else
-            {
-                return null;
-            }
+            int coordinatY = rnd.Next(0, height);
+            return new Obstacle(name, coordinatX, coordinatY);
         }
 
         public static Enemy CreateEnemy(int width, int height)
@@ -58,21 +45,13 @@ namespace GameApp
             }
         }
 
-        public static Bonus CreateSword(int width, int height)
+        public static Sword CreateSword(int width, int height)
         {
-            string name = "Sword";
+            (string, int) parametres = GetSwordParametres();
             Random rnd = new Random();
             int coordinatX = rnd.Next(0, width);
-            int coordinatY = rnd.Next(1, height);
-            if (!CheckingCoordinats(coordinatsObjects, coordinatX, coordinatY))
-            {
-                coordinatsObjects.Add((coordinatX, coordinatY));
-                return new Sword(name, coordinatX, coordinatY);
-            }
-            else
-            {
-                return null;
-            }
+            int coordinatY = rnd.Next(0, height);
+            return new Sword(parametres.Item1, coordinatX, coordinatY, parametres.Item2);
         }
 
         public static Bonus CreatePotion(int width, int height)
@@ -98,7 +77,7 @@ namespace GameApp
         /// <param name="coordinatX"></param>
         /// <param name="coordinatY"></param>
         /// <returns>true if the yare similar, false if they are not.</returns>
-        public static bool CheckingCoordinats (List<(int, int)> coordinatsObjects, int coordinatX, int coordinatY)
+        private static bool CheckingCoordinats (List<(int, int)> coordinatsObjects, int coordinatX, int coordinatY)
         {
             foreach ((int, int) item in coordinatsObjects)
             {
@@ -123,7 +102,7 @@ namespace GameApp
             while (count > 0)
             {
                 Obstacle obstacle = CreateObstacle(field.GetWidth, field.GetHeight);
-                if (obstacle != null)
+                if (!CheckImpositionOfObjects(obstacle, field))
                 {
                     field.AddObject(obstacle);
                     count--;
@@ -144,11 +123,8 @@ namespace GameApp
             int count2 = 7;
             while (count2 > 0)
             {
-                Bonus sword = CreateSword(field.GetWidth, field.GetHeight);
-                if (sword != null)
-                {
-                    field.AddBonus(sword);
-                }
+                Sword sword = CreateSword(field.GetWidth, field.GetHeight);
+                field.AddBonus(sword);
                 Bonus potion = CreatePotion(field.GetWidth, field.GetHeight);
                 if (potion != null)
                 {
@@ -157,6 +133,39 @@ namespace GameApp
                     count2--;
                 }
             }
+        }
+
+        /// <summary>
+        /// Method for appointment obstacle name.
+        /// </summary>
+        /// <returns>Obstacle name</returns>
+        private static string GetObstacleName ()
+        {
+            List<string> obstacleNames = DataBase.ObstacleNames;
+            Random rnd = new Random();
+            int value = rnd.Next(0, obstacleNames.Count());
+            return obstacleNames[value];
+        }
+
+        private static (string, int) GetSwordParametres ()
+        {
+            List<(string, int)> swordParametres = DataBase.SwordParametres;
+            Random rnd = new Random();
+            int value = rnd.Next(0, swordParametres.Count());
+            return swordParametres[value];
+        }
+
+        /// <summary>
+        /// Method for checking imposition of object's coordinats. 
+        /// If there is any object in List that has the same coordinates with just created object
+        /// method returns true, else it returns false.
+        /// </summary>
+        private static bool CheckImpositionOfObjects (Obstacle obstacle, Field field)
+        {
+            List <Obstacle> obstacles = field.Obstacles;
+            if (obstacle.CoordinatX == 0 & obstacle.CoordinatY == 0) return false;
+            bool result = obstacles.Any(item => item.CoordinatX == obstacle.CoordinatX & item.CoordinatY == obstacle.CoordinatY);
+            return result;
         }
     }
 }
