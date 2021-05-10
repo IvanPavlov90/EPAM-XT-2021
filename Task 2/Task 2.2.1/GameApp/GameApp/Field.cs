@@ -10,18 +10,13 @@ namespace GameApp
         private int _height = 10;
 
         private List<Obstacle> _obstacles = new List<Obstacle> { };
-        private List<Bonus> _bonuses = new List<Bonus> { };
+        private List<Sword> _swords = new List<Sword> { };
+        private List<Potion> _potions = new List<Potion> { };
         private List<Enemy> _enemies = new List<Enemy> { };
 
-        public int GetWidth
-        {
-            get => _width;
-        }
+        public int GetWidth => _width;
 
-        public int GetHeight
-        {
-            get => _height;
-        }
+        public int GetHeight => _height;
 
         private int _quantityOfPotions;
 
@@ -31,25 +26,13 @@ namespace GameApp
             set => _quantityOfPotions = value;
         }
 
-        public void AddObject(Obstacle obj)
-        {
-            _obstacles.Add(obj);
-        }
+        public List<Obstacle> Obstacles => _obstacles;
 
-        public List <Obstacle> Obstacles => _obstacles;
+        public void AddObject(Obstacle obj) => _obstacles.Add(obj);
 
-        public void AddBonus(Bonus obj)
-        {
-            _bonuses.Add(obj);
-        }
+        public List<Sword> Swords => _swords;
 
-        public List<Bonus> Bonus
-        {
-            get
-            {
-                return _bonuses;
-            }
-        }
+        public List<Potion> Potions => _potions;
 
         public void AddEnemy(Enemy obj)
         {

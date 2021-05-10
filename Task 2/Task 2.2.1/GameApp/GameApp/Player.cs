@@ -12,9 +12,22 @@ namespace GameApp
 
         public int Speed { get; } = 1;
 
-        public bool HasSword { get; private set; } = false;
+        private bool _hasSword = false;
+
+        public bool HasSword => _hasSword;
 
         public int CountBonus { get; private set; } = 0;
+
+        private Sword _mySword;
+
+        public Sword MySword => _mySword;
+
+        public void TakeSword (Sword sword)
+        {
+            _mySword = sword;
+            AttackRange = 6 + sword.IncreaseAttackRange;
+            _hasSword = true;
+        }
 
         /// <summary>
         /// Method for moving
@@ -114,10 +127,8 @@ namespace GameApp
             return false;
         }
 
-        public void IncreaseAttackrange(int value) => AttackRange += value;
+        private void IncreaseAttackrange(int value) => AttackRange += value;
 
         public void IncreaseCountBonus() => CountBonus ++;
-
-        public void TakingSword() => HasSword = true;
     }
 }

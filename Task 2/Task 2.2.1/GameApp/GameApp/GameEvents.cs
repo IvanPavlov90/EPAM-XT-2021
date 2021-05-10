@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace GameApp
 {
@@ -11,34 +11,54 @@ namespace GameApp
         /// </summary>
         /// <param name="player"></param>
         /// <param name="gameobjects"></param>
-        public static void IsPlayerStandingOnTheGameObject(Player player, List <Bonus> gamebonuses)
+        public static void IsPlayerStandingOnTheGameObject(Player player, Field field)
         {
-            foreach (Bonus item in gamebonuses)
+            Sword sword = CheckImpositionOfObjects<Sword>(player, field.Swords);
+            if (sword != null)
             {
-                if (item.CoordinatX == player.CoordinatX && item.CoordinatY == player.CoordinatY && item.HaveBeenVisited == false)
+                if (player.HasSword == false)
                 {
-                    Console.WriteLine($"You find {item.Name}");
-                    if (item is Sword)
-                    {
-                        if (!player.HasSword)
-                        {
-                            item.BonusWasTaken();
-                            player.TakingSword();
-                            Console.WriteLine($"You attack rang has been increased on {item.Increase}");
-                            player.IncreaseAttackrange(item.Increase);
-                        } 
-                        else
-                            Console.WriteLine($"You already have a sword");
-                    }
-                    if (item is Potion)
-                    {
-                        item.BonusWasTaken();
-                        player.IncreaseCountBonus();
-                        Console.WriteLine($"You collect Potion. You health has been increased on {item.Increase}");
-                        player.IncreaseHealth(item.Increase);
-                    }
+                    Console.WriteLine($"You find {sword.Name}");
+                    player.TakeSword(sword);
+                    field.Swords.Remove(sword);
+                }
+                else if (player.HasSword == true)
+                {
+                    string playerAnswer;
+                    Console.WriteLine($"You already have a sword. Do you want to change it? Press Y to accept, N - to decline.");
+                    Console.WriteLine($"Your sword - {player.MySword.Name}, attack range - {player.MySword.IncreaseAttackRange}" +
+                                      $"this sword - {sword.Name}, attack range - {sword.IncreaseAttackRange}.");
+
+                    playerAnswer = Console.ReadLine();
+                    if (playerAnswer == "Y") player.TakeSword(sword);
                 }
             }
+            //foreach (Bonus item in gamebonuses)
+            //{
+            //    if (item.CoordinatX == player.CoordinatX && item.CoordinatY == player.CoordinatY && item.HaveBeenVisited == false)
+            //    {
+            //        Console.WriteLine($"You find {item.Name}");
+            //        if (item is Sword)
+            //        {
+            //            if (!player.HasSword)
+            //            {
+            //                item.BonusWasTaken();
+            //                player.TakingSword();
+            //                Console.WriteLine($"You attack rang has been increased on {item.Increase}");
+            //                player.IncreaseAttackrange(item.Increase);
+            //            } 
+            //            else
+            //                Console.WriteLine($"You already have a sword");
+            //        }
+            //        if (item is Potion)
+            //        {
+            //            item.BonusWasTaken();
+            //            player.IncreaseCountBonus();
+            //            Console.WriteLine($"You collect Potion. You health has been increased on {item.Increase}");
+            //            player.IncreaseHealth(item.Increase);
+            //        }
+            //    }
+            //}
         }
 
         public static void IsPlayerMeetEnemy(Player player, List <Enemy> enemies)
@@ -92,6 +112,12 @@ namespace GameApp
                 Console.WriteLine($"You journey through this rough and dangerous lands was succesfull. Greetings, {player.Name}, you win....");
                 Environment.Exit(0);
             }
+        }
+
+        private static T CheckImpositionOfObjects<T> (Player player, List<T> gameobjects) where T: GameObject
+        {
+            T gameobject = gameobjects.FirstOrDefault(item => item.CoordinatX == player.CoordinatX & item.CoordinatY == player.CoordinatY);
+            return gameobject;
         }
     }
 }

@@ -11,6 +11,10 @@ namespace GameApp
             Player player = ObjectCreator.CreatePlayer();
             Field field = new Field();
             ObjectCreator.PlaceObjects(field);
+            foreach (var item in field.Swords)
+            {
+                Console.WriteLine($"{item.CoordinatX}, {item.CoordinatY}, {item.Name}, {item.IncreaseAttackRange}");
+            }
             Console.WriteLine($"Greetings, {player.Name}. You start this game and I want to tell you the rules. They are very simple. " +
                 $"You must collect all potions on the field (there are only {field.QuantityOfPotions} of them) - that is your main aim. Your start point " +
                 $"is (0, 0). On each step you can move only by one piece in X, or y directions. You can see your current coordinats " +

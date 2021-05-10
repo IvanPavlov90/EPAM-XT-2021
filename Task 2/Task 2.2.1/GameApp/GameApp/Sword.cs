@@ -4,26 +4,23 @@ using System.Text;
 
 namespace GameApp
 {
-    public class Sword : Bonus
+    public class Sword : GameObject
     {
         public Sword(string name, int coordinatX, int coordinatY, int increase)
         {
             Name = name;
             CoordinatX = coordinatX;
             CoordinatY = coordinatY;
-            _increaseAttackrange = CheckIncreaseAttackRangeLessOrEqualZero(increase);
+            _increaseAttackRange = CheckIncreaseAttackRangeLessOrEqualZero(increase);
         }
 
-        private int _increaseAttackrange;
+        private int _increaseAttackRange;
 
-        public int IncreaseAttackrange
-        {
-            get => _increaseAttackrange;
-        }
+        public int IncreaseAttackRange => _increaseAttackRange;
 
         private int CheckIncreaseAttackRangeLessOrEqualZero (int value)
         {
-            if (value <= 0) throw new ArgumentException($"{nameof(_increaseAttackrange)} value can't be less or equal zero");
+            if (value <= 0) throw new ArgumentException($"{nameof(_increaseAttackRange)} value can't be less or equal zero");
             return value;
         }
     }

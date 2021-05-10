@@ -54,26 +54,26 @@ namespace GameApp
                 case MenuElements.MoveForward:
                     player.MoveForward(field.GetHeight, field.Obstacles);
                     GameEvents.IsPlayerMeetEnemy(player, field.Enemy);
-                    GameEvents.IsPlayerStandingOnTheGameObject(player, field.Bonus);
+                    GameEvents.IsPlayerStandingOnTheGameObject(player, field);
                     GameEvents.Victory(player, field);
                     Program.StartApp(player, field);
                     break;
                 case MenuElements.MoveBackward:
                     player.MoveBackward(0, field.Obstacles);
                     GameEvents.IsPlayerMeetEnemy(player, field.Enemy);
-                    GameEvents.IsPlayerStandingOnTheGameObject(player, field.Bonus);
+                    GameEvents.IsPlayerStandingOnTheGameObject(player, field);
                     Program.StartApp(player, field);
                     break;
                 case MenuElements.MoveLeft:
                     player.MoveLeft(0, field.Obstacles);
                     GameEvents.IsPlayerMeetEnemy(player, field.Enemy);
-                    GameEvents.IsPlayerStandingOnTheGameObject(player, field.Bonus);
+                    GameEvents.IsPlayerStandingOnTheGameObject(player, field);
                     Program.StartApp(player, field);
                     break;
                 case MenuElements.MoveRight:
                     player.MoveRight(field.GetWidth, field.Obstacles);
                     GameEvents.IsPlayerMeetEnemy(player, field.Enemy);
-                    GameEvents.IsPlayerStandingOnTheGameObject(player, field.Bonus);
+                    GameEvents.IsPlayerStandingOnTheGameObject(player, field);
                     GameEvents.Victory(player, field);
                     Program.StartApp(player, field);
                     break;

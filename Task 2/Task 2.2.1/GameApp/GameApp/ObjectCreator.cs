@@ -54,7 +54,7 @@ namespace GameApp
             return new Sword(parametres.Item1, coordinatX, coordinatY, parametres.Item2);
         }
 
-        public static Bonus CreatePotion(int width, int height)
+        public static Potion CreatePotion(int width, int height)
         {
             string name = "Potion";
             Random rnd = new Random();
@@ -63,7 +63,7 @@ namespace GameApp
             if (!CheckingCoordinats(coordinatsObjects, coordinatX, coordinatY))
             {
                 coordinatsObjects.Add((coordinatX, coordinatY));
-                return new Potion(name, coordinatX, coordinatY);
+                return new Potion(name, coordinatX, coordinatY, 10);
             }
             else
             {
@@ -98,18 +98,18 @@ namespace GameApp
         /// <param name="height"></param>
         public static void PlaceObjects(Field field)
         {
-            int count = 20;
-            while (count > 0)
+            int countObstacles = 0;
+            while (countObstacles > 0)
             {
                 Obstacle obstacle = CreateObstacle(field.GetWidth, field.GetHeight);
                 if (!CheckImpositionOfObjects(obstacle, field))
                 {
                     field.AddObject(obstacle);
-                    count--;
+                    countObstacles--;
                 }
             }
 
-            int count1 = 10;
+            int count1 = 0;
             while (count1 > 0)
             {
                 Enemy enemy = CreateEnemy(field.GetWidth, field.GetHeight);
@@ -120,17 +120,26 @@ namespace GameApp
                 }
             }
 
-            int count2 = 7;
-            while (count2 > 0)
+            int countSwords = 17;
+            while (countSwords > 0)
             {
                 Sword sword = CreateSword(field.GetWidth, field.GetHeight);
-                field.AddBonus(sword);
-                Bonus potion = CreatePotion(field.GetWidth, field.GetHeight);
+                if (!CheckImpositionOfObjects(sword, field))
+                {
+                    field.Swords.Add(sword);
+                    countSwords--;
+                }
+            }
+
+            int countPotions = 7;
+            while (countPotions > 0)
+            {
+                Potion potion = CreatePotion(field.GetWidth, field.GetHeight);
                 if (potion != null)
                 {
                     field.QuantityOfPotions++;
-                    field.AddBonus(potion);
-                    count2--;
+                    field.Potions.Add(potion);
+                    countPotions--;
                 }
             }
         }
@@ -160,11 +169,11 @@ namespace GameApp
         /// If there is any object in List that has the same coordinates with just created object
         /// method returns true, else it returns false.
         /// </summary>
-        private static bool CheckImpositionOfObjects (Obstacle obstacle, Field field)
+        private static bool CheckImpositionOfObjects (GameObject gameobject, Field field)
         {
             List <Obstacle> obstacles = field.Obstacles;
-            if (obstacle.CoordinatX == 0 & obstacle.CoordinatY == 0) return false;
-            bool result = obstacles.Any(item => item.CoordinatX == obstacle.CoordinatX & item.CoordinatY == obstacle.CoordinatY);
+            if (gameobject.CoordinatX == 0 & gameobject.CoordinatY == 0) return false;
+            bool result = obstacles.Any(item => item.CoordinatX == gameobject.CoordinatX & item.CoordinatY == gameobject.CoordinatY);
             return result;
         }
     }
