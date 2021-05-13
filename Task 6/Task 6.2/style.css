@@ -1,0 +1,61 @@
+body {
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+}
+
+.mainForm {
+    width: 600px;
+    border: 4px solid #375ed1;
+    background-color: #5686dd;
+}
+
+.formHeader {
+    font-size: 30px;
+    margin: 4% 0% 2.5% 4%;
+}
+
+.registrationUnderline {
+    background-color: white;
+}
+
+.e-mail {
+    margin: 5% 0% 5% 4%;
+    width: 84%;
+}
+
+.e-mail input {
+    width: 99%;
+    border: 1.5px solid #C0C0C0;
+}
+
+.passwordContainter {
+    margin-left: 4%;
+    width: 84%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.password {
+    width: 50%;
+}
+
+.password input {
+    width: 92%;
+    border: 1.5px solid #C0C0C0;
+}
+
+.passwordOnceAgain {
+    width: 50%;
+}
+
+.passwordOnceAgain input {
+    margin-left: 6%;
+    width: 92%;
+    border: 1.5px solid #C0C0C0;
+}
+
+.passwordOnceAgain label {
+    margin-left: 6%;
+}
