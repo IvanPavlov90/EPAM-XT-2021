@@ -6,8 +6,8 @@ body {
 
 .mainForm {
     width: 600px;
-    border: 4px solid #4169E1;
-    background-color: #6495ED;
+    border: 4px solid #0075b2;
+    background-color: #0690cf;
 }
 
 .formHeader {
@@ -26,7 +26,7 @@ body {
 
 .e-mail input {
     width: 100%;
-    border: 1.5px solid #C0C0C0;
+    border: 1.5px solid #abadb3;
 }
 
 .passwordContainter {
@@ -43,7 +43,7 @@ body {
 
 .password input {
     width: 100%;
-    border: 1.5px solid #C0C0C0;
+    border: 1.5px solid #abadb3;
 }
 
 .passwordOnceAgain {
@@ -53,7 +53,7 @@ body {
 .passwordOnceAgain input {
     margin-left: 40px;
     width: 230px;
-    border: 1.5px solid #C0C0C0;
+    border: 1.5px solid #abadb3;
 }
 
 .passwordOnceAgain label {
@@ -65,5 +65,5 @@ body {
     height: 35px;
     margin: 0% 0% 5% 4%;
     font-size: 18px;
-    background-color: #F0E68C;
+    background-color: #ffdf7f;
 }
