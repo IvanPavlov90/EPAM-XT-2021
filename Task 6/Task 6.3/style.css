@@ -1,0 +1,33 @@
+body {
+    font-size: 18px;
+}
+
+.mainBlock{
+    border: 5px solid #69eeff;
+    text-align: center;
+    margin: auto;
+    margin-top: 70px;
+    background: #89ceee;
+}
+
+.mainBlock::before {
+    content: "";
+    border-top: 50px solid transparent;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 50px solid #69eeff;
+    position: absolute;
+    top: -30px;
+    margin-left: -50px;
+}
+
+.mainBlock::after {
+    content: "";
+    border-top: 46px solid transparent;
+    border-left: 46px solid transparent;
+    border-right: 46px solid transparent;
+    border-bottom: 46px solid #89ceee;
+    position: absolute;
+    top: -17px;
+    margin-left: -46px;
+}
