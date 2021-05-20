@@ -1,0 +1,49 @@
+body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 18px;
+  background-color: #4e6379;
+}
+
+.mainSection {
+  margin: auto;
+  width: 1000px;
+  border: 8px solid #ffffff;
+  border-radius: 8px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mainSection div {
+  border-right: 1px solid #d9d9d9;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.description {
+  font-weight: bold;
+  color: #f56332;
+}
+
+.price {
+  font-size: 16px;
+}
+
+.infoBtn {
+  border: 0px;
+  background-color: #f57a32;
+  font-size: 16px;
+  color: white;
+  height: 30px;
+  width: 110px;
+  border-radius: 2px;
+}
+
+.image {
+  width: 65px;
+  height: 60px;
+}
+
+.mainSection div:last-child {
+  border-right: 0px;
+}
