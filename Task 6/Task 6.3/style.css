@@ -9,6 +9,7 @@ body {
     margin: auto;
     margin-top: 70px;
     background: #88b7d5;
+    min-width: 300px;
 }
 
 .mainBlock::before {
