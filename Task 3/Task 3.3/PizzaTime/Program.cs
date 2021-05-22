@@ -11,7 +11,7 @@ namespace PizzaTime
             Pizzeria tashir = new Pizzeria();
             tashir.ShowInfo += InfoTable.ShowMessage;
             tashir.OrderCreated += InfoTable.OrderInformation;
-            tashir.ChosingPizza(user.name);
+            tashir.ChosingPizza(user.Name);
         }
     }
 }

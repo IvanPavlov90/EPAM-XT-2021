@@ -11,29 +11,29 @@ namespace PizzaTime.Classes
             if (pizzaname == string.Empty)
                 throw new ArgumentException("Name can't be empty.");
             else 
-                name = pizzaname;
+                Name = pizzaname;
             Cost = pizzacost;
             CookingTime = cookTime;
         }
 
-        private int _cost;
+        private int _Cost;
 
-        private int _cookingTime;
+        private int _CookingTime;
 
-        public string name { get;  }
+        public string Name { get; }
 
         public int CookingTime 
         {
             get
             {
-                return _cookingTime;
+                return _CookingTime;
             }
             private set
             {
                 if (value <= 0)
                     throw new ArgumentException("CookingTime can'te be less then 0.");
                 else
-                    _cookingTime = value;
+                    _CookingTime = value;
             }
         }
 
@@ -41,14 +41,14 @@ namespace PizzaTime.Classes
         {
             get
             {
-                return _cost;
+                return _Cost;
             }
             private set
             {
                 if (value <= 0)
                     throw new ArgumentException("Pizza can't costs less then 0.");
                 else
-                    _cost = value;
+                    _Cost = value;
             } 
         }
     }

@@ -11,9 +11,9 @@ namespace PizzaTime.Classes
             if (username == string.Empty)
                 throw new ArgumentException("Name can't be empty.");
             else
-                name = username;
+                Name = username;
         }
 
-        public string name { get; }
+        public string Name { get; }
     }
 }
