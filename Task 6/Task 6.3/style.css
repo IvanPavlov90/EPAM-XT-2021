@@ -1,35 +1,39 @@
 body {
-    font-size: 18px;
     background-color: #333333;
 }
 
-.mainBlock{
+.main-block{
     border: 5px solid #c2e1f5;
     text-align: center;
     margin: auto;
     margin-top: 70px;
     background: #88b7d5;
-    min-width: 300px;
+    min-width: 350px;
 }
 
-.mainBlock::before {
+.main-block::before {
     content: "";
     border-top: 50px solid transparent;
     border-left: 50px solid transparent;
     border-right: 50px solid transparent;
     border-bottom: 50px solid #c2e1f5;
-    position: absolute;
-    top: -30px;
-    margin-left: -50px;
+    position: relative;
+    top: -70px;
 }
 
-.mainBlock::after {
+.main-block::after {
     content: "";
     border-top: 46px solid transparent;
     border-left: 46px solid transparent;
     border-right: 46px solid transparent;
     border-bottom: 46px solid #88b7d5;
-    position: absolute;
-    top: -17px;
-    margin-left: -46px;
+    position: relative;
+    top: -124px;
+}
+
+.text {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 24px;
+    color: white;
 }
