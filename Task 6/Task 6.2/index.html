@@ -10,24 +10,24 @@
     <title>Task 6.2</title>
 </head>
 <body>
-    <form action="" class = "mainForm">
-        <p class = "formHeader">Регистрация</p>
-        <hr class = "registrationUnderline">
-        <div class = "e-mail"> 
+    <form action="" class="main-form">
+        <h1>Регистрация</h1>
+        <hr>
+        <div class="e-mail"> 
             <label for="e-mail">E-mail</label><br>
-            <input type="text" id = "e-mail">
+            <input type="text" id="e-mail" class="form-input" required>
         </div>
-        <div class = "passwordContainter">
-            <div class = "password">
-                <label for="password">Пароль</label><br>
-                <input type="text" id = "password">
+        <div class="password-containter">
+            <div class="password-containter-block">
+                <label for="password">Пароль</label>
+                <input type="text" id="password" class="form-input" required>
             </div>
-            <div class = "passwordOnceAgain">
+            <div class="password-containter-block">
                 <label for="passwordOnceAgain">Ещё раз</label><br>
-                <input type="text" id = "passwordOnceAgain">
+                <input type="text" id="passwordOnceAgain" class="form-input" required>
             </div>
         </div>
-        <input type="submit" value="Отправить" class = "submitBtn">
+        <input type="submit" value="Отправить">
     </form>
 </body>
 </html>

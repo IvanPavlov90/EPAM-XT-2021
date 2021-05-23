@@ -2,7 +2,7 @@ body {
   font-size: 15px;
 }
 
-.mainList {
+ul.main-list {
   box-sizing: border-box;
   width: 200px;
   background-color: #F0E68C;
@@ -10,15 +10,14 @@ body {
   list-style: none;
   border: 1px solid black;
   border-radius: 10px;
-  box-shadow: 5px 5px 0 0px black;
-  text-align: left;
+  box-shadow: 5px 5px 0 0px brown;
+  padding-left: 7px;
 }
 
-.mainList li {
-  margin-left: -20%;
+ul.main-list > li {
   margin-top: 0.5rem;
 }
 
-.mainList li:last-child {
+ul.main-list > li:last-child {
   margin-bottom: 0.5rem;
 }
