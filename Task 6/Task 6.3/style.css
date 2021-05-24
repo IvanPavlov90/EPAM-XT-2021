@@ -2,6 +2,11 @@ body {
     background-color: #333333;
 }
 
+:root {
+    --border-width-before-element: 50px;
+    --border-width-after-element: 46px;
+}
+
 .main-block{
     border: 5px solid #c2e1f5;
     text-align: center;
@@ -13,20 +18,20 @@ body {
 
 .main-block::before {
     content: "";
-    border-top: 50px solid transparent;
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
-    border-bottom: 50px solid #c2e1f5;
+    border-top: var(--border-width-before-element) solid transparent;
+    border-left: var(--border-width-before-element) solid transparent;
+    border-right: var(--border-width-before-element) solid transparent;
+    border-bottom: var(--border-width-before-element) solid #c2e1f5;
     position: relative;
-    top: -70px;
+    top: -72px;
 }
 
 .main-block::after {
     content: "";
-    border-top: 46px solid transparent;
-    border-left: 46px solid transparent;
-    border-right: 46px solid transparent;
-    border-bottom: 46px solid #88b7d5;
+    border-top: var(--border-width-after-element) solid transparent;
+    border-left: var(--border-width-after-element) solid transparent;
+    border-right: var(--border-width-after-element) solid transparent;
+    border-bottom: var(--border-width-after-element) solid #88b7d5;
     position: relative;
     top: -124px;
 }

@@ -33,6 +33,9 @@ form.main-form hr {
 .password-containter {
     margin: 0% 0% 7% 4%;
     width: 500px;
+}
+
+.flex {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;

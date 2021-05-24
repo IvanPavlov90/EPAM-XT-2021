@@ -10,9 +10,12 @@ section.main-section {
   border: 8px solid #ffffff;
   border-radius: 8px;
   background-color: #ffffff;
+  box-shadow: 0 20px 30px rgba(0,0,0,0.65);
+}
+
+.flex {
   display: flex;
   justify-content: space-between;
-  box-shadow: 0 20px 30px rgba(0,0,0,0.65);
 }
 
 .info-window {
@@ -31,7 +34,7 @@ section.main-section {
 }
 
 section.main-section button {
-  border: 0px;
+  border: none;
   background-color: #f57a32;
   font-size: 16px;
   color: white;
