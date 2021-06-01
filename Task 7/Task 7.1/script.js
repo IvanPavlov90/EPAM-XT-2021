@@ -5,16 +5,20 @@ function charSeparator (text) {
     for (let i = 0; i < textArray.length; i++) {
         if (!charComparison(textArray[i])) {
             if (dataAnalysis(textArray[i], word)) {
-                console.log(textArray[i]);
-                repeats.push(textArray[i].toLowerCase());
+                if (!repeats.includes(textArray[i].toLowerCase())) {
+                    repeats.push(textArray[i].toLowerCase());
+                }
             }
         } else {
             word = [];
         }
     }
-    changeText(textArray, repeats);
+    return changeText(textArray, repeats);
 }
 
+/* This function compares symbols from the sentence with separators. 
+   Returns true if symbol is separator. */
+   
 function charComparison (letter) {
     const separators = [" ", ",", "?", "!", ".", ":", ";"];
     return separators.includes(letter);
@@ -35,7 +39,7 @@ function changeText (textArray, repeats) {
             i = i - 1;
         }
     }
-    console.log(textArray.join(""));
+    return textArray.join("");
 }
 
-charSeparator("Локомотив сегодня выиграл у Спартака со счетом 3-1.");
+console.log(charSeparator("Локомотив сегодня выиграл у Спартака со счетом 3-1."));
