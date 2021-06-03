@@ -3,8 +3,7 @@ body {
 }
 
 :root {
-    --border-width-before-element: 50px;
-    --border-width-after-element: 46px;
+    --border-width-element: 50px;
 }
 
 .main-block{
@@ -16,24 +15,23 @@ body {
     min-width: 350px;
 }
 
-.main-block::before {
+.main-block::before,
+.main-block::after {
     content: "";
-    border-top: var(--border-width-before-element) solid transparent;
-    border-left: var(--border-width-before-element) solid transparent;
-    border-right: var(--border-width-before-element) solid transparent;
-    border-bottom: var(--border-width-before-element) solid #c2e1f5;
+    border-top: var(--border-width-element) solid transparent;
+    border-left: var(--border-width-element) solid transparent;
+    border-right: var(--border-width-element) solid transparent;
     position: relative;
+}
+
+.main-block::before {
+    border-bottom: var(--border-width-element) solid #c2e1f5;
     top: -72px;
 }
 
 .main-block::after {
-    content: "";
-    border-top: var(--border-width-after-element) solid transparent;
-    border-left: var(--border-width-after-element) solid transparent;
-    border-right: var(--border-width-after-element) solid transparent;
-    border-bottom: var(--border-width-after-element) solid #88b7d5;
-    position: relative;
-    top: -124px;
+    border-bottom: var(--border-width-element) solid #88b7d5;
+    top: -125px;
 }
 
 .text {
