@@ -1,4 +1,4 @@
-let userText = "null or undefined";
+let userText = "";
 console.log(changeText(userText));
 
 function changeText (userText) {
@@ -20,14 +20,14 @@ function changeText (userText) {
         } 
         return deleteDuplicates(textArray, repeats);
     } catch (e) {
-        alert(e.message);
+        alert(e.name + " " + e.message);
     }
 
 }
 
 function checkText (userText) {
-    if (userText === null || userText === undefined) {
-        throw new Error ("You can do nothing with null or undefined")
+    if (typeof userText !== "string") {
+        throw new SyntaxError ("You can't put anything in variable userText beside string")
     }
 }
 
