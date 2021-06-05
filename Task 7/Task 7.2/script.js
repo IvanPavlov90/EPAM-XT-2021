@@ -32,9 +32,11 @@ function checkExpression (expression) {
     if (expression.startsWith("*") || expression.startsWith("/")) {
         throw new Error ("Your expression isn't valid.");
     } else {
-        let regexp = /[0-9]/;
+        const regexp = /[0-9]/;
+        const symbolsRegexp = /[A-Za-zА-Яа-яЁё]/;
         let index = expression.search(regexp);
-        if (index == -1 || index > 1) {
+        let symbolsIndex = expression.search(symbolsRegexp);
+        if (index == -1 || index > 1 || symbolsIndex != -1) {
             throw new Error ("Your expression isn't valid.");
         }
         return expression;
@@ -51,7 +53,7 @@ function cutRightPartOfExpression (expression) {
 
 function getAriphmeticSigns(expression) {
     let signs = [];
-    let separators = ["+", "-", "/", "*"];
+    const separators = ["+", "-", "/", "*"];
     for (let i = 0; i < expression.length; i ++) {
         if (separators.includes(expression[i])) {
             signs.push(expression[i]);
@@ -61,11 +63,29 @@ function getAriphmeticSigns(expression) {
 }
 
 function getDigits (expression) {
-    let digitsArray = expression.split(/[\/\*+-]/);
-    if (expression.startsWith("+") || expression.startsWith("-")) {
-        digitsArray[0] = 0;
+    try {
+        let digitsArray = expression.split(/[\/\*+-]/);
+        if (expression.startsWith("+") || expression.startsWith("-")) {
+            digitsArray[0] = "0";
+        }
+        checkDigitsArray(digitsArray);
+        return digitsArray;
+    } catch (e) {
+        throw e;
     }
-    return digitsArray;
+}
+
+/* This method provides protection on cases when there are no digits 
+   between separators. Like 4/5++2= */
+
+function checkDigitsArray(digitsArray) {
+    const regexp = /[0-9]/;
+    for (let i = 0; i < digitsArray.length; i++) {
+        let index = digitsArray[i].search(regexp);
+        if (index == -1) {
+            throw new Error ("Your expression isn't valid.");
+        }
+    }
 }
 
 function getResult (digitsArray, ariphmeticSigns) {
