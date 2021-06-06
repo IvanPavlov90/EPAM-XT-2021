@@ -21,10 +21,11 @@ class Storage {
         this.checkTypeOfID(id);
         let resultObj = this.#storage.find(item => item.id === id);
         if (resultObj === undefined) {
-            console.log("There is no element with such id, nothing to delete.");
+            return null;
         } else {
             let objIndex = this.#storage.indexOf(resultObj);
             this.#storage.splice(objIndex, 1);
+            return resultObj;
         }
     };
 
@@ -72,41 +73,60 @@ class Storage {
     };
 }
 
-/* Create stroage. */
+function exampleFunction() {
+    try {
+        /* Create stroage. */
 
-const footballTeams = new Storage();
+        const footballTeams = new Storage();
 
-/* Add elements to storage. */
+        /* Add elements to storage. */
 
-footballTeams.add({id: "1", name: "Lyon", foundationYear: 1950});
-footballTeams.add({id: "2", name: "AC Milan", foundationYear: 1899});
-footballTeams.add({id: "3", name: "FC Barcelona", foundationYear: 1899});
-footballTeams.add({id: "4", name: "Bayer 04", foundationYear: 1904});
+        footballTeams.add({id: "1", name: "Lyon", foundationYear: 1950});
+        footballTeams.add({id: "2", name: "AC Milan", foundationYear: 1899});
+        footballTeams.add({id: "3", name: "FC Barcelona", foundationYear: 1899});
+        footballTeams.add({id: "4", name: "Bayer 04", foundationYear: 1904});
 
-/* Check elements of our storage  and search by id */
+        /* Check elements of our storage and search by id */
 
-footballTeams.getAll();
-console.log(footballTeams.getById("1"));
-console.log(footballTeams.getById("5"));
+        console.log("Get all elements from storage.");
+        footballTeams.getAll();
+        console.log("Object with id = 1");
+        console.log(footballTeams.getById("1"));
+        console.log("Object with id = 5");
+        console.log(footballTeams.getById("5"));
 
-/* Delete some elemnts and check if it works correctly. */
+        /* Delete some elemnts and check if it works correctly. */
 
-footballTeams.deleteById("3");
-footballTeams.deleteById("9");
-footballTeams.deleteById("3");
-footballTeams.deleteById("4");
-footballTeams.getAll();
+        console.log("Delete element with id = 3");
+        console.log(footballTeams.deleteById("3"));
+        console.log("Delete element with id = 9");
+        console.log(footballTeams.deleteById("9"));
+        console.log("Once again delete element with id = 3");
+        console.log(footballTeams.deleteById("3"));
+        console.log("Delete element with id = 4");
+        console.log(footballTeams.deleteById("4"));
+        console.log("Get all elements from storage to see changes.");
+        footballTeams.getAll();
 
-/* Add antoher element and then replace the first */
+        /* Add antoher element and then replace the first */
 
-footballTeams.add({id: "3", name: "Valencia", foundationYear: 1919});
-footballTeams.replaceById("1", {id: "6", name: "Ajax", foundationYear: 1900});
-footballTeams.getAll();
+        footballTeams.add({id: "3", name: "Valencia", foundationYear: 1919});
+        footballTeams.replaceById("1", {id: "6", name: "Ajax", foundationYear: 1900});
+        console.log("Get all elements from storage to see changes after adding new element and replacing element with id = 1.");
+        footballTeams.getAll();
 
-/* Update element with id = 2 */
+        /* Update element with id = 2 */
 
-footballTeams.updateById("2", ["Manchester United", 1878,]);
-footballTeams.getAll();
+        footballTeams.updateById("2", ["Manchester United", 1878]);
+        console.log("Get all elements from storage to see changes after updating element with id = 2.");
+        footballTeams.getAll();
+    } catch (e) {
+        console.log(e.message);
+    }
+};
+
+exampleFunction();
+
 
 
 

@@ -1,4 +1,4 @@
-let userText = "Is this love????";
+let userText = "During this days we play a lot of different games.";
 console.log(changeText(userText));
 
 function changeText (userText) {

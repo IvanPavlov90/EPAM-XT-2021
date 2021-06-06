@@ -5,7 +5,7 @@ function calculateExpression () {
     let output = document.getElementById("result");
     userInput.addEventListener("blur", (event) => {
         let result = calculator (event.target.value);
-        if (result === undefined) {
+        if (result === undefined || result == Infinity) {
             output.innerHTML = "";
         } else {
             output.innerHTML = "Your result is " + result;
