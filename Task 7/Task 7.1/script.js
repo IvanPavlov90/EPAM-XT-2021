@@ -1,4 +1,4 @@
-let userText = "";
+let userText = "Is this love????";
 console.log(changeText(userText));
 
 function changeText (userText) {
@@ -20,7 +20,7 @@ function changeText (userText) {
         } 
         return deleteDuplicates(textArray, repeats);
     } catch (e) {
-        alert(e.name + " " + e.message);
+        console.log(e.name + " " + e.message);
     }
 
 }
