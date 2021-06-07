@@ -1,5 +1,17 @@
-let userText = "During this days we play a lot of different games.";
-console.log(changeText(userText));
+exampleFunction();
+
+function exampleFunction () {
+    try {
+        let userInput = document.getElementById("userExpression");
+        let output = document.getElementById("result");
+        userInput.addEventListener("blur", (event) => {
+            let result = changeText (event.target.value);
+            output.innerHTML = result;
+        });
+    } catch (e) {
+        alert(e.message);
+    }
+}
 
 function changeText (userText) {
     try {
@@ -20,9 +32,8 @@ function changeText (userText) {
         } 
         return deleteDuplicates(textArray, repeats);
     } catch (e) {
-        console.log(e.name + " " + e.message);
+        throw e;
     }
-
 }
 
 function checkText (userText) {
