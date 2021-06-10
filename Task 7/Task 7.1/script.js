@@ -35,7 +35,7 @@ function checkText (userText) {
     }
 }
 
-/* This function checks if symbol repeats during word (word is a group of symbols)
+/** This function checks if symbol repeats during word (word is a group of symbols)
     that are not separators) */
 
 function isSymbolRepeatedOrNot (letter, word2, repeatedLetters) {
@@ -46,23 +46,18 @@ function isSymbolRepeatedOrNot (letter, word2, repeatedLetters) {
     }
 }
 
-/* This function compares symbols from the sentence with separators. 
-   Returns true if symbol is separator. */
+/** This function compares symbols from the sentence with separators. 
+   Returns true if symbol is separator.*/
    
 function isSymbolSeparator (letter) {
     const separators = [" ", ",", "?", "!", ".", ":", ";"];
     return separators.includes(letter);
 }
 
-/* This function search symbols in user's text that are in repeats array.
-   Then it deletes such symbols from user's text. */ 
+/** This function search symbols in user's text that are in repeats array.
+   Then it deletes such symbols from user's text.*/ 
 
 function deleteDuplicates (textArray, repeats) {
-    for (let i = 0; i < textArray.length; i++) {
-        if (repeats.has(textArray[i].toLowerCase())) {
-            textArray.splice(i, 1);
-            i = i - 1;
-        }
-    }
-    return textArray.join("");
+    let textResult = textArray.filter(item => !repeats.has(item))
+    return textResult.join("");
 }
