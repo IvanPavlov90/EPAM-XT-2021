@@ -1,0 +1,53 @@
+body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 18px;
+  background-color: #4e6379;
+}
+
+section.main-section {
+  margin: auto;
+  width: 1000px;
+  border: 8px solid #ffffff;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 20px 30px rgba(0,0,0,0.65);
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-window {
+  border-right: 1px solid #d9d9d9;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.description {
+  font-weight: bold;
+  color: #f56332;
+}
+
+.price {
+  font-size: 16px;
+}
+
+section.main-section button {
+  border: none;
+  background-color: #f57a32;
+  font-size: 16px;
+  color: white;
+  height: 30px;
+  width: 110px;
+  border-radius: 2px;
+}
+
+.info-window-icon-image {
+  max-width: 65px;
+  max-height: 60px;
+}
+
+.main-section div:last-child {
+  border-right: none;
+}

@@ -1,0 +1,42 @@
+body {
+    background-color: #333333;
+}
+
+:root {
+    --border-width-element: 50px;
+}
+
+.main-block{
+    border: 5px solid #c2e1f5;
+    text-align: center;
+    margin: auto;
+    margin-top: 70px;
+    background: #88b7d5;
+    min-width: 350px;
+}
+
+.main-block::before,
+.main-block::after {
+    content: "";
+    border-top: var(--border-width-element) solid transparent;
+    border-left: var(--border-width-element) solid transparent;
+    border-right: var(--border-width-element) solid transparent;
+    position: relative;
+}
+
+.main-block::before {
+    border-bottom: var(--border-width-element) solid #c2e1f5;
+    top: -72px;
+}
+
+.main-block::after {
+    border-bottom: var(--border-width-element) solid #88b7d5;
+    top: -125px;
+}
+
+.text {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 24px;
+    color: white;
+}

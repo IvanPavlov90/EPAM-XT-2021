@@ -1,0 +1,23 @@
+body {
+  font-size: 15px;
+}
+
+ul.main-list {
+  box-sizing: border-box;
+  width: 200px;
+  background-color: #F0E68C;
+  color: #8B0000;
+  list-style: none;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0 0px brown;
+  padding-left: 7px;
+}
+
+ul.main-list > li {
+  margin-top: 0.5rem;
+}
+
+ul.main-list > li:last-child {
+  margin-bottom: 0.5rem;
+}
