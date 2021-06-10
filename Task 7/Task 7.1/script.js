@@ -13,21 +13,17 @@ function exampleFunction () {
 function changeText (userText) {
     try {
         checkText(userText);
-        let word = [];
-        let repeats = [];
+        let repeatedLetters = new Set();
+        let word2 = new Set();
         let textArray = Array.from(userText);
-        for (let i = 0; i < textArray.length; i++) {
-            if (!isSymbolSeparator(textArray[i])) {
-                if (findRepetitiveSymbolsInWord(textArray[i], word)) {
-                    if (!repeats.includes(textArray[i].toLowerCase())) {
-                        repeats.push(textArray[i].toLowerCase());
-                    }
-                }
+        for (let symbol of textArray) {
+            if (!isSymbolSeparator(symbol)) {
+                isSymbolRepeatedOrNot(symbol.toLowerCase(), word2, repeatedLetters);
             } else {
-                word = [];
+                word2.clear();
             }
-        } 
-        return deleteDuplicates(textArray, repeats);
+        }
+        return deleteDuplicates(textArray, repeatedLetters);
     } catch (e) {
         alert(e.message);
     }
@@ -39,6 +35,17 @@ function checkText (userText) {
     }
 }
 
+/* This function checks if symbol repeats during word (word is a group of symbols)
+    that are not separators) */
+
+function isSymbolRepeatedOrNot (letter, word2, repeatedLetters) {
+    if (!word2.has(letter)) {
+        word2.add(letter);
+    } else {
+        repeatedLetters.add(letter);
+    }
+}
+
 /* This function compares symbols from the sentence with separators. 
    Returns true if symbol is separator. */
    
@@ -47,23 +54,12 @@ function isSymbolSeparator (letter) {
     return separators.includes(letter);
 }
 
-/* This function analyzes if letter from word repeats or not. 
-   Returns true if symbol repeats inside word.*/
-
-function findRepetitiveSymbolsInWord (letter, word) {
-    if (!word.includes(letter.toLowerCase())) {
-        word.push(letter.toLowerCase());
-    } else {
-        return true;
-    }
-}
-
 /* This function search symbols in user's text that are in repeats array.
    Then it deletes such symbols from user's text. */ 
 
 function deleteDuplicates (textArray, repeats) {
     for (let i = 0; i < textArray.length; i++) {
-        if (repeats.includes(textArray[i].toLowerCase())) {
+        if (repeats.has(textArray[i].toLowerCase())) {
             textArray.splice(i, 1);
             i = i - 1;
         }
