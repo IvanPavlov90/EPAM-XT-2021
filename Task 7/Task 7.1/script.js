@@ -1,16 +1,13 @@
 exampleFunction();
 
 function exampleFunction () {
-    try {
-        let userInput = document.getElementById("userExpression");
-        let output = document.getElementById("result");
-        userInput.addEventListener("blur", (event) => {
-            let result = changeText (event.target.value);
-            output.innerHTML = result;
-        });
-    } catch (e) {
-        alert(e.message);
-    }
+    let userInput = document.getElementById("userExpression");
+    let btn = document.getElementById("getResult");
+    let output = document.getElementById("result");
+    btn.addEventListener("click", () => {
+        let result = changeText (userInput.value);
+        output.innerHTML = result;
+    });
 }
 
 function changeText (userText) {
@@ -18,9 +15,9 @@ function changeText (userText) {
         checkText(userText);
         let word = [];
         let repeats = [];
-        let textArray = userText.split("");
+        let textArray = Array.from(userText);
         for (let i = 0; i < textArray.length; i++) {
-            if (!comparisingWithSeparators(textArray[i])) {
+            if (!isSymbolSeparator(textArray[i])) {
                 if (findRepetitiveSymbolsInWord(textArray[i], word)) {
                     if (!repeats.includes(textArray[i].toLowerCase())) {
                         repeats.push(textArray[i].toLowerCase());
@@ -32,7 +29,7 @@ function changeText (userText) {
         } 
         return deleteDuplicates(textArray, repeats);
     } catch (e) {
-        throw e;
+        alert(e.message);
     }
 }
 
@@ -45,7 +42,7 @@ function checkText (userText) {
 /* This function compares symbols from the sentence with separators. 
    Returns true if symbol is separator. */
    
-function comparisingWithSeparators (letter) {
+function isSymbolSeparator (letter) {
     const separators = [" ", ",", "?", "!", ".", ":", ";"];
     return separators.includes(letter);
 }
