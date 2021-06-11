@@ -34,9 +34,11 @@ class Storage {
     };
 
     getAll() {
+        let outputArray = [];
         this._storage.forEach((element) => {
-            console.log(element);
+            outputArray.push(element);
         })
+        return outputArray;
     };
 
     updateById(id, obj) {
