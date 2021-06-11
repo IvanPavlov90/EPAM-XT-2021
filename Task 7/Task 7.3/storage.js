@@ -7,7 +7,7 @@ class Storage {
 
     add(obj) {
         this.checkIncomingElement(obj);
-        this.getObjectID(obj);
+        this.setObjectID(obj);
         this._storage.push(obj);
     };
 
@@ -25,7 +25,7 @@ class Storage {
         this.checkTypeOfID(id);
         let resultObj = this._storage.find(item => item.id === id);
         if (resultObj === undefined) {
-            return null;
+            return undefined;
         } else {
             let objIndex = this._storage.indexOf(resultObj);
             this._storage.splice(objIndex, 1);
@@ -39,31 +39,22 @@ class Storage {
         })
     };
 
-    updateById(id, data) {
+    updateById(id, obj) {
         this.checkTypeOfID(id);
-        if (!Array.isArray(data)) {
-            throw new Error ("Data should be presented only as array")
-        };
-        let count = 0;
+        this.checkIncomingElement(obj);
         let resultObj = this._storage.find(item => item.id === id);
-        for (let prop in resultObj) {
-            if (prop !== "id") {
-                resultObj[prop] = data[count];
-                count++;
-            }
-        }
+        Object.assign(resultObj, obj);
     };
 
     replaceById(id, obj) {
         this.checkTypeOfID(id);
         this.checkIncomingElement(obj);
-        let resultObj = this._storage.find(item => item.id === id);
         obj.id = id;
-        let objIndex = this._storage.indexOf(resultObj);
+        let objIndex = this._storage.findIndex(item => item.id === id)
         this._storage[objIndex] = obj;
     };
 
-    getObjectID(obj) {
+    setObjectID(obj) {
         obj.id = this._idCount.toString();
         this._idCount++;
     };

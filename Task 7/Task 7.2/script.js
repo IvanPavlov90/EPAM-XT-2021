@@ -23,7 +23,7 @@ function calculator (userExpression) {
     }
 }
 
-/* This function checks if format of user's expression is correct or not. */
+/** This function checks if format of user's expression is correct or not. */
 
 function checkExpression (expression) {
     expression = cutRightPartOfExpression(expression.trim());
@@ -31,7 +31,7 @@ function checkExpression (expression) {
         throw new Error ("Your expression isn't valid.");
     } else {
         const regexp = /[0-9]/;
-        const symbolsRegexp = /[A-Za-zА-Яа-яЁё]/;
+        const symbolsRegexp = /[A-Za-zА-Яа-яЁё()\[\]]/;
         let index = expression.search(regexp);
         let symbolsIndex = expression.search(symbolsRegexp);
         if (index == -1 || index > 1 || symbolsIndex != -1) {
@@ -41,7 +41,7 @@ function checkExpression (expression) {
     }
 }
 
-/* This method cuts everything that is located after sign "=" */
+/** This method cuts everything that is located after sign "=" */
 
 function cutRightPartOfExpression (expression) {
     let index = expression.indexOf("=");
@@ -50,13 +50,8 @@ function cutRightPartOfExpression (expression) {
 }
 
 function getAriphmeticSigns(expression) {
-    let signs = [];
     const separators = ["+", "-", "/", "*"];
-    for (let i = 0; i < expression.length; i ++) {
-        if (separators.includes(expression[i])) {
-            signs.push(expression[i]);
-        }
-    }
+    let signs = Array.from(expression).filter(char => separators.includes(char));
     return signs;
 }
 
@@ -73,7 +68,7 @@ function getDigits (expression) {
     }
 }
 
-/* This method provides protection on cases when there are no digits 
+/** This method provides protection on cases when there are no digits 
    between separators. Like 4/5++2= */
 
 function checkDigitsArray(digitsArray) {

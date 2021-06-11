@@ -16,7 +16,7 @@ function exampleFunction() {
         /* Check elements of our storage and search by id */
 
         console.log("Get all elements from storage.");
-        footballTeams.getAll();
+        console.log(footballTeams.getAll());
         console.log("Object with id = 1");
         console.log(footballTeams.getById("1"));
         console.log("Object with id = 5");
@@ -44,7 +44,7 @@ function exampleFunction() {
 
         /* Update element with id = 2 */
 
-        footballTeams.updateById("2", ["Manchester United", 1878]);
+        footballTeams.updateById("2", {name: "Manchester Unider", foundationYear: 1878});
         console.log("Get all elements from storage to see changes after updating element with id = 2.");
         footballTeams.getAll();
     } catch (e) {
