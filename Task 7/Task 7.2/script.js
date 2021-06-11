@@ -1,16 +1,13 @@
 calculateExpression();
 
 function calculateExpression () {
-    try {
-        let userInput = document.getElementById("userExpression");
-        let output = document.getElementById("result");
-        userInput.addEventListener("blur", (event) => {
-            let result = calculator (event.target.value);
-            output.innerHTML = "Your result is " + result;
-        });
-    } catch (e) {
-        alert(e.message);
-    }
+    let userInput = document.getElementById("userExpression");
+    let getResult = document.getElementById("getResult");
+    let output = document.getElementById("result");
+    getResult.addEventListener("click", () => {
+        let result = calculator (userInput.value);
+        output.innerHTML = "Your result is " + result;
+    });
 }
 
 function calculator (userExpression) {
@@ -21,7 +18,8 @@ function calculator (userExpression) {
         let result = getResult (digitsArray, ariphmeticSigns);
         return result;
     } catch (e) {
-        throw e;
+        alert(e.message);
+        return "";
     }
 }
 
