@@ -26,28 +26,13 @@ function calculator (userExpression) {
 /** This function checks if format of user's expression is correct or not. */
 
 function checkExpression (expression) {
-    expression = cutRightPartOfExpression(expression.trim());
-    if (expression.startsWith("*") || expression.startsWith("/")) {
+    const regexp = /^([+-]{1}\s?)?([0-9]+\s?[\/\*+-]{1}\s?)+([0-9]+\s?){1}=$/;
+    if (!regexp.test(expression)) {
         throw new Error ("Your expression isn't valid.");
     } else {
-        const regexp = /[0-9]/;
-        const symbolsRegexp = /[A-Za-zА-Яа-яЁё()\[\]]/;
-        let index = expression.search(regexp);
-        let symbolsIndex = expression.search(symbolsRegexp);
-        if (index == -1 || index > 1 || symbolsIndex != -1) {
-            throw new Error ("Your expression isn't valid.");
-        }
         return expression;
     }
-}
-
-/** This method cuts everything that is located after sign "=" */
-
-function cutRightPartOfExpression (expression) {
-    let index = expression.indexOf("=");
-    let result = expression.slice(0, index + 1);
-    return result;
-}
+}   
 
 function getAriphmeticSigns(expression) {
     const separators = ["+", "-", "/", "*"];
@@ -56,29 +41,11 @@ function getAriphmeticSigns(expression) {
 }
 
 function getDigits (expression) {
-    try {
-        let digitsArray = expression.split(/[\/\*+-]/);
-        if (expression.startsWith("+") || expression.startsWith("-")) {
-            digitsArray[0] = "0";
-        }
-        checkDigitsArray(digitsArray);
-        return digitsArray;
-    } catch (e) {
-        throw e;
+    let digitsArray = expression.split(/[\/\*+-]/);
+    if (expression.startsWith("+") || expression.startsWith("-")) {
+        digitsArray[0] = "0";
     }
-}
-
-/** This method provides protection on cases when there are no digits 
-   between separators. Like 4/5++2= */
-
-function checkDigitsArray(digitsArray) {
-    const regexp = /[0-9]/;
-    for (let i = 0; i < digitsArray.length; i++) {
-        let index = digitsArray[i].search(regexp);
-        if (index == -1) {
-            throw new Error ("Your expression isn't valid.");
-        }
-    }
+    return digitsArray;
 }
 
 function getResult (digitsArray, ariphmeticSigns) {
