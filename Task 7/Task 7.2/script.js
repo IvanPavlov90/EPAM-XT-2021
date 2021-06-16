@@ -26,8 +26,8 @@ function calculator (userExpression) {
 /** This function checks if format of user's expression is correct or not. */
 
 function checkExpression (expression) {
-    const regexp = /^([+-]{1}\s?)?([0-9]+\s?[\/\*+-]{1}\s?)+([0-9]+\s?){1}=$/;
-    if (!regexp.test(expression)) {
+    const validExpression = /^([+-]{1}\s?)?([0-9]+(\.{1}[0-9]+)?\s?[\/\*+-]{1}\s?)+([0-9]+(\.{1}[0-9]+)?\s?){1}=$/;
+    if (!validExpression.test(expression)) {
         throw new Error ("Your expression isn't valid.");
     } else {
         return expression;
