@@ -33,7 +33,7 @@ function exampleFunction() {
         console.log("Delete element with id = 4");
         console.log(footballTeams.deleteById("4"));
         console.log("Get all elements from storage to see changes.");
-        footballTeams.getAll();
+        console.log(footballTeams.getAll());
 
         /* Add antoher element and then replace the first */
 
@@ -44,9 +44,9 @@ function exampleFunction() {
 
         /* Update element with id = 2 */
 
-        footballTeams.updateById("2", {name: "Manchester Unider", foundationYear: 1878});
+        footballTeams.updateById("2", {name: "Manchester United", foundationYear: 1878});
         console.log("Get all elements from storage to see changes after updating element with id = 2.");
-        footballTeams.getAll();
+        console.log(footballTeams.getAll());
     } catch (e) {
         console.log(e.message);
     }

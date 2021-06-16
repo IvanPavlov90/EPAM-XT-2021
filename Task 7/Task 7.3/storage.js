@@ -7,8 +7,9 @@ class Storage {
 
     add(obj) {
         this.checkIncomingElement(obj);
-        this.setObjectID(obj);
-        this._storage.push(obj);
+        let newObject = obj;
+        this.setObjectID(newObject);
+        this._storage.push(newObject);
     };
 
     getById(id) {
