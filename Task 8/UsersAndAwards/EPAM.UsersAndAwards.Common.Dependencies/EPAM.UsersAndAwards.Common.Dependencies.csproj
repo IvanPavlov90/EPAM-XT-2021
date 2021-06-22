@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EPAM.UsersAndAwards.BLL.Interfaces\EPAM.UsersAndAwards.BLL.Interfaces.csproj" />
+    <ProjectReference Include="..\EPAM.UsersAndAwards.BLL.Logic\EPAM.UsersAndAwards.BLL.Logic.csproj" />
+    <ProjectReference Include="..\EPAM.UsersAndAwards.DAL.Interfaces\EPAM.UsersAndAwards.DAL.Interfaces.csproj" />
+    <ProjectReference Include="..\EPAM.UsersAndAwards.JsonDao\EPAM.UsersAndAwards.DAL.JsonDao.csproj" />
+  </ItemGroup>
+
+</Project>
