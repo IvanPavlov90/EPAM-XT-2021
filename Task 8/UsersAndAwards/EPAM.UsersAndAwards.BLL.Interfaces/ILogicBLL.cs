@@ -17,5 +17,7 @@ namespace EPAM.UsersAndAwards.BLL.Interfaces
         List<User> GetAllUsers();
 
         List<Award> GetAllAwards();
+
+        void RecordData(Guid userID, Guid awardID);
     }
 }

@@ -14,6 +14,8 @@ namespace EPAM.UsersAndAwards.DAL.JsonDao
 
         private string _awardsFolderPath = @"D:\Files\Awards\";
 
+        private string _dataFilePath = @"D:\Files\data.json";
+
         public void RecordAwardToFile(Award award)
         {
             using (StreamWriter writer = new StreamWriter(getFilePath(_awardsFolderPath, award.id), true, System.Text.Encoding.UTF8))
@@ -56,6 +58,23 @@ namespace EPAM.UsersAndAwards.DAL.JsonDao
             string[] filePath = Directory.GetFiles(_usersFolderPath);
             string pathToDelete = filePath.FirstOrDefault(item => item == getFilePath(_usersFolderPath, id));
             File.Delete(pathToDelete);
+        }
+
+        public Data LoadData ()
+        {
+            if (File.Exists(_dataFilePath))
+                return JsonSerializer.Deserialize<Data>(ReadFile(_dataFilePath));
+            else 
+                return new Data();
+        }
+
+        public void RecordData(Data data)
+        {
+            File.Delete(_dataFilePath);
+            using (StreamWriter writer = new StreamWriter(_dataFilePath, true, System.Text.Encoding.UTF8))
+            {
+                writer.WriteLine(Serialize(data));
+            }
         }
 
         /// <summary>

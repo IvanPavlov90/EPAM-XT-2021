@@ -15,7 +15,8 @@ namespace EPAM.UsersAndAwards.PL.ConsolePL
             RemoveAward = 4,
             GetAllUsers = 5,
             GetAllAwards = 6,
-            Exit = 7,
+            AddAwardToUser = 7,
+            Exit = 8,
             Default = 0
         }
 
@@ -63,6 +64,20 @@ namespace EPAM.UsersAndAwards.PL.ConsolePL
                         break;
                     case (int)Actions.GetAllAwards:
                         ShowAwards(DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards());
+                        break;
+                    case (int)Actions.AddAwardToUser:
+                        Console.WriteLine("Please specify user you want to award: ");
+                        List<User> users2 = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
+                        ShowUsers(users2);
+                        int userToAward = InputHelper.UserChoise(users2.Count);
+                        Console.WriteLine("Please specify award you have chosen: ");
+                        List<Award> awards2 = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
+                        ShowAwards(awards2);
+                        int chosenAward = InputHelper.UserChoise(awards2.Count);
+                        DependencyResolver.Instance.UsersAndAwardsBLL.RecordData(users2[userToAward - 1].id, awards2[chosenAward - 1].id);
+                        break;
+                    case (int)Actions.Exit:
+                        Environment.Exit(0);
                         break;
                     default:
                         break;

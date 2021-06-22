@@ -44,5 +44,12 @@ namespace EPAM.UsersAndAwards.BLL.Logic
         {
             _daoLogic.RemoveUser(id);
         }
+
+        public void RecordData (Guid userID, Guid awardID)
+        {
+            Data data = _daoLogic.LoadData();
+            data.AddData(userID, awardID);
+            _daoLogic.RecordData(data);
+        }
     }
 }

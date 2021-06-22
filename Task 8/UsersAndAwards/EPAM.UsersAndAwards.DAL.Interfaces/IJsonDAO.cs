@@ -17,5 +17,9 @@ namespace EPAM.UsersAndAwards.DAL.Interfaces
         List<User> GetAllUsers();
 
         List<Award> GetAllAwards();
+
+        Data LoadData();
+
+        void RecordData(Data data);
     }
 }
