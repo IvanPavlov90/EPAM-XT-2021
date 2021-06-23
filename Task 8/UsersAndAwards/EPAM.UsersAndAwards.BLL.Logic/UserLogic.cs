@@ -22,7 +22,10 @@ namespace EPAM.UsersAndAwards.BLL.Logic
 
         public void AddUser(User user)
         {
+            Data data = _daoLogic.LoadData();
+            data.AddKey(user.id);
             _daoLogic.RecordUserToFile(user);
+            _daoLogic.RecordData(data);
         }
 
         public List<Award> GetAllAwards()
@@ -37,11 +40,25 @@ namespace EPAM.UsersAndAwards.BLL.Logic
 
         public void RemoveAward(Guid id)
         {
-            _daoLogic.RemoveAward(id);
+            Data data = _daoLogic.LoadData();
+            /*foreach (var item in data.DataValue)
+            {
+                if (item.Value.Contains(id))
+                {
+                    AwardToDelete?.Invoke();
+                    _daoLogic.RemoveAward(id);
+                } else
+                {
+                    _daoLogic.RemoveAward(id);
+                }
+            }*/
         }
 
         public void RemoveUser(Guid id)
         {
+            Data data = _daoLogic.LoadData();
+            if (data.DataValue.Remove(id))
+                _daoLogic.RecordData(data);
             _daoLogic.RemoveUser(id);
         }
 

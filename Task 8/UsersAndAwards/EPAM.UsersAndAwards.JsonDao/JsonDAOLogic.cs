@@ -63,9 +63,13 @@ namespace EPAM.UsersAndAwards.DAL.JsonDao
         public Data LoadData ()
         {
             if (File.Exists(_dataFilePath))
+            {
                 return JsonSerializer.Deserialize<Data>(ReadFile(_dataFilePath));
-            else 
+            }
+            else
+            {
                 return new Data();
+            }
         }
 
         public void RecordData(Data data)

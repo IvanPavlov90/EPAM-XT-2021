@@ -57,6 +57,7 @@ namespace EPAM.UsersAndAwards.PL.ConsolePL
                         List<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
                         ShowAwards(awards);
                         int awardChoise = InputHelper.UserChoise(awards.Count);
+                        /*DependencyResolver.Instance.UsersAndAwardsBLL.AwardToDelete += AskUserForDeletingAward;*/
                         DependencyResolver.Instance.UsersAndAwardsBLL.RemoveAward(awards[awardChoise - 1].id);
                         break;
                     case (int)Actions.GetAllUsers:
@@ -83,6 +84,11 @@ namespace EPAM.UsersAndAwards.PL.ConsolePL
                         break;
                 }
             } while (result >= 1 && result <= 7);
+        }
+
+        private bool UsersAndAwardsBLL_AwardToDelete()
+        {
+            throw new NotImplementedException();
         }
 
         private void ShowMenu()
@@ -114,6 +120,12 @@ namespace EPAM.UsersAndAwards.PL.ConsolePL
                 Console.WriteLine($"{count}. Title - {item.Title}, ID - {item.id}");
                 count++;
             }
+        }
+
+        private bool AskUserForDeletingAward()
+        {
+            Console.WriteLine("Some users have this award.");
+            return false;
         }
     }
 }
