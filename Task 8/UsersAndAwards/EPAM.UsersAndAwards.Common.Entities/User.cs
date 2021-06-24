@@ -30,6 +30,13 @@ namespace EPAM.UsersAndAwards.Common.Entities
         [JsonInclude]
         public double Age { get; private set; }
 
+        public void EditUser(string username, DateTime birthDate)
+        {
+            Name = checkUsername(username);
+            DateOfBirth = checkBirthDate(birthDate).ToShortDateString();
+            Age = Math.Truncate((DateTime.Now - checkBirthDate(birthDate)).TotalDays / 365);
+        }
+
         private string checkUsername (string username)
         {
             if (username.Trim().Length == 0 || username == String.Empty)

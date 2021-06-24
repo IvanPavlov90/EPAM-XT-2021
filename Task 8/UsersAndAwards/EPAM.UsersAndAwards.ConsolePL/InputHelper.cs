@@ -34,5 +34,19 @@ namespace EPAM.UsersAndAwards.PL.ConsolePL
                     Console.WriteLine("You have entered wrong index.");
             } while (true);
         }
+
+        public static bool AskUserForDeletingAward()
+        {
+            Console.WriteLine("Some users have this award. Do you really want to delete it? Y/N");
+            string answer;
+            do
+            {
+                answer = Console.ReadLine();
+                if (answer == "Y")
+                    return true;
+                else if (answer == "N")
+                    return false;
+            } while (true);
+        }
     }
 }

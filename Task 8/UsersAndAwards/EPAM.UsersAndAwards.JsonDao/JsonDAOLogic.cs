@@ -18,7 +18,7 @@ namespace EPAM.UsersAndAwards.DAL.JsonDao
 
         public void RecordAwardToFile(Award award)
         {
-            using (StreamWriter writer = new StreamWriter(getFilePath(_awardsFolderPath, award.id), true, System.Text.Encoding.UTF8))
+            using (StreamWriter writer = new StreamWriter(getFilePath(_awardsFolderPath, award.id), false, System.Text.Encoding.UTF8))
             {
                 writer.WriteLine(Serialize(award));
             }
@@ -26,7 +26,7 @@ namespace EPAM.UsersAndAwards.DAL.JsonDao
 
         public void RecordUserToFile(User user)
         {
-            using (StreamWriter writer = new StreamWriter(getFilePath(_usersFolderPath, user.id), true, System.Text.Encoding.UTF8))
+            using (StreamWriter writer = new StreamWriter(getFilePath(_usersFolderPath, user.id), false, System.Text.Encoding.UTF8))
             {
                 writer.WriteLine(Serialize(user));
             }
@@ -84,9 +84,9 @@ namespace EPAM.UsersAndAwards.DAL.JsonDao
         /// <summary>
         /// This function is for building correct filepath
         /// </summary>
-        private string getFilePath (string folder, Guid name)
+        private string getFilePath (string folder, Guid id)
         {
-            return folder + name + ".json";
+            return folder + id + ".json";
         }
 
         /// <summary>

@@ -22,6 +22,11 @@ namespace EPAM.UsersAndAwards.Common.Entities
         [JsonInclude]
         public string Title { get; private set; }
 
+        public void EdtiTitle (string title)
+        {
+            Title = checkTitle(title);
+        }
+
         private string checkTitle(string title)
         {
             if (title.Trim().Length == 0 || title == String.Empty)

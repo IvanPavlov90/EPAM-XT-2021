@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EPAM.UsersAndAwards.BLL.Interfaces;
 using EPAM.UsersAndAwards.Common.Entities;
 using EPAM.UsersAndAwards.DAL.Interfaces;
@@ -38,20 +39,36 @@ namespace EPAM.UsersAndAwards.BLL.Logic
             return _daoLogic.GetAllUsers();
         }
 
-        public void RemoveAward(Guid id)
+        public void EditUser(User user)
+        {
+            _daoLogic.RecordUserToFile(user);
+        }
+
+        public bool CheckUsersHasAward (Guid id)
         {
             Data data = _daoLogic.LoadData();
-            /*foreach (var item in data.DataValue)
+            foreach (var item in data.DataValue)
             {
                 if (item.Value.Contains(id))
+                    return true;
+            }
+            return false;
+        }
+
+        public void RemoveAward(Guid id, bool result)
+        {
+            if (result == true)
+            {
+                Data data = _daoLogic.LoadData();
+                foreach (var item in data.DataValue)
                 {
-                    AwardToDelete?.Invoke();
-                    _daoLogic.RemoveAward(id);
-                } else
-                {
-                    _daoLogic.RemoveAward(id);
+                    if (item.Value.Contains(id))
+                        item.Value.Remove(id);
                 }
-            }*/
+                _daoLogic.RecordData(data);
+                _daoLogic.RemoveAward(id);
+            } else if (result == false)
+                _daoLogic.RemoveAward(id);
         }
 
         public void RemoveUser(Guid id)
