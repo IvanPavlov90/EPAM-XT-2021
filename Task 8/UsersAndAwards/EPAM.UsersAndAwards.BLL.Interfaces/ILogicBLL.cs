@@ -6,8 +6,6 @@ namespace EPAM.UsersAndAwards.BLL.Interfaces
 {
     public interface ILogicBLL
     {
-        void AddUser(User user);
-
         void AddAward(Award award);
 
         void RemoveUser(Guid id);

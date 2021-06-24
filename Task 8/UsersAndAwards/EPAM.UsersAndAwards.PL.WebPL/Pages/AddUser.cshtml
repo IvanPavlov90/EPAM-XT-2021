@@ -1,0 +1,29 @@
+﻿@using EPAM.UsersAndAwards.PL.WebPL.Models;
+@using EPAM.UsersAndAwards.Common.Dependencies;
+@using EPAM.UsersAndAwards.BLL.Interfaces;
+@using EPAM.UsersAndAwards.Common.Entities;
+@{
+    Layout = "~/Layouts/_OptionPage.cshtml";
+
+    Page.Title = "AddUser";
+
+    if (IsPost)
+    {
+        string username = Request["username"];
+        DateTime birthdate = InputHelper.InputDate(Request["birthdate"]);
+        DependencyResolver.Instance.UsersAndAwardsBLL.AddUser(new User(username, birthdate));
+    }
+}
+
+<h3>Add User</h3>
+<form id="userForm" method="post">
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input name="username" type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Lionel Messi" required>
+    </div>
+    <div class="mb-3">
+        <label for="birthdate" class="form-label">Birthdate</label>
+        <input name="birthdate" type="text" class="form-control" id="birthdate" placeholder="12.12.1997" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using EPAM.UsersAndAwards.BLL.Interfaces;
 using EPAM.UsersAndAwards.Common.Entities;
 using EPAM.UsersAndAwards.DAL.Interfaces;

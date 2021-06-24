@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "~/Layouts/_BasicLayout.cshtml";
+
+    Page.Title = "StartPage";
+
+    Dictionary<string, string> menu = new Dictionary<string, string> {
+        { "AddUser", "Pages/AddUser.cshtml" }
+    };
+}
+
+<h3>Main Menu</h3>
+<ul>
+    @foreach (var item in menu)
+    {
+        <li><a href="@item.Value">@item.Key</a></li>
+    }
+</ul>

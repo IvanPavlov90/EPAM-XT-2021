@@ -11,19 +11,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{77EE7787-198
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{9D7CBBA0-E691-4DBC-9E4D-9E4013E9BDAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPAM.UsersAndAwards.PL.ConsolePL", "EPAM.UsersAndAwards.ConsolePL\EPAM.UsersAndAwards.PL.ConsolePL.csproj", "{65B0E422-397F-4405-A2F2-8AD200510444}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPAM.UsersAndAwards.PL.ConsolePL", "EPAM.UsersAndAwards.ConsolePL\EPAM.UsersAndAwards.PL.ConsolePL.csproj", "{65B0E422-397F-4405-A2F2-8AD200510444}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPAM.UsersAndAwards.DAL.JsonDao", "EPAM.UsersAndAwards.JsonDao\EPAM.UsersAndAwards.DAL.JsonDao.csproj", "{CBA3D808-923A-4473-9D84-450E92EB34FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPAM.UsersAndAwards.DAL.JsonDao", "EPAM.UsersAndAwards.JsonDao\EPAM.UsersAndAwards.DAL.JsonDao.csproj", "{CBA3D808-923A-4473-9D84-450E92EB34FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPAM.UsersAndAwards.BLL.Logic", "EPAM.UsersAndAwards.BLL.Logic\EPAM.UsersAndAwards.BLL.Logic.csproj", "{78F6C36A-8749-4412-8DC8-34C3C39D9C60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPAM.UsersAndAwards.BLL.Logic", "EPAM.UsersAndAwards.BLL.Logic\EPAM.UsersAndAwards.BLL.Logic.csproj", "{78F6C36A-8749-4412-8DC8-34C3C39D9C60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPAM.UsersAndAwards.DAL.Interfaces", "EPAM.UsersAndAwards.DAL.Interfaces\EPAM.UsersAndAwards.DAL.Interfaces.csproj", "{F1A90928-4E47-4CD4-8F3C-50AEA7509A4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPAM.UsersAndAwards.DAL.Interfaces", "EPAM.UsersAndAwards.DAL.Interfaces\EPAM.UsersAndAwards.DAL.Interfaces.csproj", "{F1A90928-4E47-4CD4-8F3C-50AEA7509A4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPAM.UsersAndAwards.Common.Entities", "EPAM.UsersAndAwards.Common.Entities\EPAM.UsersAndAwards.Common.Entities.csproj", "{A4FCD9A0-2B9D-475D-BA89-E92A68032665}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPAM.UsersAndAwards.Common.Entities", "EPAM.UsersAndAwards.Common.Entities\EPAM.UsersAndAwards.Common.Entities.csproj", "{A4FCD9A0-2B9D-475D-BA89-E92A68032665}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPAM.UsersAndAwards.Common.Dependencies", "EPAM.UsersAndAwards.Common.Dependencies\EPAM.UsersAndAwards.Common.Dependencies.csproj", "{20AA30B2-9B09-4797-A78D-4B5EAC6CD3A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPAM.UsersAndAwards.Common.Dependencies", "EPAM.UsersAndAwards.Common.Dependencies\EPAM.UsersAndAwards.Common.Dependencies.csproj", "{20AA30B2-9B09-4797-A78D-4B5EAC6CD3A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPAM.UsersAndAwards.BLL.Interfaces", "EPAM.UsersAndAwards.BLL.Interfaces\EPAM.UsersAndAwards.BLL.Interfaces.csproj", "{129D1C1E-C0DD-4D6A-A7F7-DAF29BDF4320}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPAM.UsersAndAwards.BLL.Interfaces", "EPAM.UsersAndAwards.BLL.Interfaces\EPAM.UsersAndAwards.BLL.Interfaces.csproj", "{129D1C1E-C0DD-4D6A-A7F7-DAF29BDF4320}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPAM.UsersAndAwards.PL.WebPL", "EPAM.UsersAndAwards.PL.WebPL\EPAM.UsersAndAwards.PL.WebPL.csproj", "{25B6912E-A87D-42E6-BDB1-53B2E4298BF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{129D1C1E-C0DD-4D6A-A7F7-DAF29BDF4320}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{129D1C1E-C0DD-4D6A-A7F7-DAF29BDF4320}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{129D1C1E-C0DD-4D6A-A7F7-DAF29BDF4320}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25B6912E-A87D-42E6-BDB1-53B2E4298BF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25B6912E-A87D-42E6-BDB1-53B2E4298BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25B6912E-A87D-42E6-BDB1-53B2E4298BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25B6912E-A87D-42E6-BDB1-53B2E4298BF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +77,7 @@ Global
 		{A4FCD9A0-2B9D-475D-BA89-E92A68032665} = {9D7CBBA0-E691-4DBC-9E4D-9E4013E9BDAF}
 		{20AA30B2-9B09-4797-A78D-4B5EAC6CD3A7} = {9D7CBBA0-E691-4DBC-9E4D-9E4013E9BDAF}
 		{129D1C1E-C0DD-4D6A-A7F7-DAF29BDF4320} = {E35366C2-A9ED-47C7-8637-F7A05C85C926}
+		{25B6912E-A87D-42E6-BDB1-53B2E4298BF4} = {B98931BB-79E3-44E5-ADC6-692FF358FB97}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1E9CFC21-6C13-4FCD-9296-A88702BC8ECB}
