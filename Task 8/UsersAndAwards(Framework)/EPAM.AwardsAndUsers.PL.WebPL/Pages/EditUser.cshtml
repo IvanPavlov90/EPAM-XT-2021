@@ -1,0 +1,41 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+
+@{
+    Layout = "~/Layouts/_OptionPage.cshtml";
+
+    Page.Title = "Edit User";
+
+    if (IsPost)
+    {
+        try
+        {
+            string userID = Request["UserList"];
+            Guid id = Guid.Parse(userID);
+            List<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
+            int userIndex = users.FindIndex(item => item.id == id);
+            string username = Request["username"];
+            DateTime birthdate = InputHelper.InputDate(Request["birthdate"]);
+            users[userIndex].EditUser(username, birthdate);
+            DependencyResolver.Instance.UsersAndAwardsBLL.EditUser(users[userIndex]);
+        }
+        catch (Exception e)
+        {
+            Response.Redirect("~/Pages/errorPage");
+        }
+    }
+}
+
+@RenderPage("~/Partial Pages/_EditUser.cshtml")
+
+@if (IsPost)
+{
+    <br />
+    <div class="alert alert-success" role="alert">
+        User has been succesfully edited!
+    </div>
+}
+
+
+

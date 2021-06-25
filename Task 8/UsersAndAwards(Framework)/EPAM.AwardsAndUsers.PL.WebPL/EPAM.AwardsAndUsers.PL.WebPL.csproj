@@ -152,6 +152,8 @@
     <Content Include="Pages\GetAllAwards.cshtml" />
     <Content Include="Pages\AddAwardToUser.cshtml" />
     <Content Include="Partial Pages\_AddAwardToUser.cshtml" />
+    <Content Include="Pages\EditUser.cshtml" />
+    <Content Include="Partial Pages\_EditUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

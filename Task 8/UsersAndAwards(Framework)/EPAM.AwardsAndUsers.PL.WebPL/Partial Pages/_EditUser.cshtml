@@ -10,7 +10,7 @@
         <div class="mb-3">
             <label for="disabledSelect" class="form-label">Select user</label>
             <select id="disabledSelect" class="form-select" name="UserList" disabled>
-                <option>Please, add user before delete them.</option>
+                <option>Please, add user before edit him.</option>
             </select>
         </div>
     </form>
@@ -21,12 +21,20 @@ else
         <div class="mb-3">
             <label for="disabledSelect" class="form-label">Select user</label>
             <select id="disabledSelect" class="form-select" name="UserList">
-                @foreach (var item in users)
-                {
+                 @foreach (var item in users)
+                 {
                     <option value="@item.id">@item.Name, @item.DateOfBirth</option>
-                }
+                 }
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input name="username" type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Lionel Messi" required>
+        </div>
+        <div class="mb-3">
+            <label for="birthdate" class="form-label">Birthdate</label>
+            <input name="birthdate" type="text" class="form-control" id="birthdate" placeholder="date should be in this format ----> 12.12.1997" required>
+        </div>
+        <button id="editUser" tupe="submit" class="btn btn-primary">Edit User</button>
     </form>
 }
