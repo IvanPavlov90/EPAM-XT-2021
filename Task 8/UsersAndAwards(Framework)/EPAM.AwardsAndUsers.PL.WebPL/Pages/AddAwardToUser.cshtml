@@ -1,0 +1,36 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+
+@{
+    Layout = "~/Layouts/_OptionPage.cshtml";
+
+    Page.Title = "Add award to user";
+
+    if (IsPost)
+    {
+        try
+        {
+            string userID = Request["UserList"];
+            Guid userid = Guid.Parse(userID);
+            string awardID = Request["AwardList"];
+            Guid awardid = Guid.Parse(awardID);
+            DependencyResolver.Instance.UsersAndAwardsBLL.RecordData(userid, awardid);
+
+        }
+        catch (Exception e)
+        {
+            Response.Redirect("~/Pages/errorPage");
+        }
+    }
+}
+
+@RenderPage("~/Partial Pages/_AddAwardToUser.cshtml")
+
+@if (IsPost)
+{
+    <br />
+    <div class="alert alert-success" role="alert">
+        Award has been succesfully added to user
+    </div>
+}

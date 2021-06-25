@@ -148,6 +148,10 @@
     <Content Include="Pages\AddAward.cshtml" />
     <Content Include="Pages\RemoveUser.cshtml" />
     <Content Include="Partial Pages\_RemoveUserList.cshtml" />
+    <Content Include="Pages\GetAllUsers.cshtml" />
+    <Content Include="Pages\GetAllAwards.cshtml" />
+    <Content Include="Pages\AddAwardToUser.cshtml" />
+    <Content Include="Partial Pages\_AddAwardToUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

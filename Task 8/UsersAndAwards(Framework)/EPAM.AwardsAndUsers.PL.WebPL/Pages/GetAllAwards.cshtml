@@ -1,0 +1,37 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+
+@{
+    Layout = "~/Layouts/_OptionPage.cshtml";
+
+    Page.Title = "Get all awards";
+
+    List<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
+
+}
+
+@if (awards.Count == 0)
+{
+    <div class="alert alert-danger" role="alert">
+        You haven't added any awards.
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in awards)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

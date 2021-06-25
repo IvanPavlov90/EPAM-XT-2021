@@ -1,0 +1,41 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+
+@{
+    Layout = "~/Layouts/_OptionPage.cshtml";
+
+    Page.Title = "Get all users";
+
+    List<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
+
+}
+
+@if (users.Count == 0)
+{
+    <div class="alert alert-danger" role="alert">
+        You haven't added any users.
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">BirthDate</th>
+                <th scope="col">Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in users)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.DateOfBirth</td>
+                    <td>@item.Age</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
