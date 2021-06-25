@@ -1,0 +1,7 @@
+body {
+    font-size: 20px;
+}
+
+.box > input {
+    width: 300px;
+}
