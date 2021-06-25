@@ -1,0 +1,32 @@
+﻿@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+@{
+    List<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
+}
+
+@if (users.Count == 0)
+{
+    <form method="post">
+        <div class="mb-3">
+            <label for="disabledSelect" class="form-label">Select user for deleting</label>
+            <select id="disabledSelect" class="form-select" name="UserList" disabled>
+                <option>Please, add user before delete them.</option>
+            </select>
+        </div>
+    </form>
+}
+else
+{
+    <form method="post">
+        <div class="mb-3">
+            <label for="disabledSelect" class="form-label">Select user for deleting</label>
+            <select id="disabledSelect" class="form-select" name="UserList">
+                @foreach (var item in users)
+                {
+                    <option value="@item.id">@item.Name, @item.DateOfBirth</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+}
