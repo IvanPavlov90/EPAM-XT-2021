@@ -10,5 +10,9 @@ namespace EPAM.AwardsAndUsers.PL.WebPL.Models
         public static int UserCount { get; set; }
 
         public static int AwardCount { get; set; }
+
+        public static bool AwardSearchResult { get; set; }
+
+        public static Guid awardID { get; set; }
     }
 }

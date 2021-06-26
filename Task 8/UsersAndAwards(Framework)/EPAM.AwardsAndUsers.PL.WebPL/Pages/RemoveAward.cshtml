@@ -1,0 +1,37 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+
+@{
+    Layout = "~/Layouts/_OptionPage.cshtml";
+
+    Page.Title = "Remove Award";
+
+    if (IsPost)
+    {
+        string awardID = Request["AwardList"];
+        Guid id = Guid.Parse(awardID);
+        DataModel.AwardSearchResult = DependencyResolver.Instance.UsersAndAwardsBLL.CheckUsersHasAward(id);
+        if (!DataModel.AwardSearchResult)
+        {
+            DependencyResolver.Instance.UsersAndAwardsBLL.RemoveAward(id, false);
+        }
+        else
+        {
+            DataModel.awardID = id;
+            Response.Redirect("~/Pages/ConfirmDeleting");
+        }
+    }
+}
+
+<form method="post">
+    <div class="mb-3">
+        @RenderPage("~/Partial Pages/_EditAward.cshtml")
+    </div>
+    @if (DataModel.AwardCount != 0)
+    {
+        <button tupe="submit" class="btn btn-primary">Delete Award</button>
+    }
+</form>
+
+

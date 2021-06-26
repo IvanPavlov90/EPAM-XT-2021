@@ -15,8 +15,8 @@
 }
 else
 {
-     <label for="disabledSelect" class="form-label">Select award</label>
-     <select id="disabledSelect" class="form-select" name="AwardList">
+     <label for="select" class="form-label">Select award</label>
+     <select id="select" class="form-select" name="AwardList">
         @foreach (var item in awards)
         {
             <option value="@item.id">@item.Title</option>
