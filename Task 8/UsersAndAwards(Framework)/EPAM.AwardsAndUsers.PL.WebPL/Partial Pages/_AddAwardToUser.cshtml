@@ -11,19 +11,11 @@
     <div class="mb-3">
         <label for="disabledSelect" class="form-label">Select user</label>
         <select id="disabledSelect" class="form-select" name="UserList" disabled>
-            @foreach (var item in users)
-            {
-                <option value="@item.id">@item.Name, @item.DateOfBirth</option>
-            }
         </select>
     </div>
     <div class="mb-3">
         <label for="disabledSelect" class="form-label">Select award</label>
         <select id="disabledSelect" class="form-select" name="AwardList" disabled>
-            @foreach (var item in awards)
-            {
-                <option value="@item.id">@item.Title</option>
-            }
         </select>
     </div>
     <div class="alert alert-danger" role="alert">

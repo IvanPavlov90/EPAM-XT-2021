@@ -27,7 +27,23 @@
     }
 }
 
-@RenderPage("~/Partial Pages/_EditUser.cshtml")
+<form method="post">
+    <div class="mb-3">
+        @RenderPage("~/Partial Pages/_EditUser.cshtml")
+    </div>
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input name="username" type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Lionel Messi" required>
+    </div>
+    <div class="mb-3">
+        <label for="birthdate" class="form-label">Birthdate</label>
+        <input name="birthdate" type="text" class="form-control" id="birthdate" placeholder="date should be in this format ----> 12.12.1997" required>
+    </div>
+    @if (DataModel.UserCount != 0)
+    {
+        <button id="editUser" tupe="submit" class="btn btn-primary">Edit User</button>
+    }
+</form>
 
 @if (IsPost)
 {

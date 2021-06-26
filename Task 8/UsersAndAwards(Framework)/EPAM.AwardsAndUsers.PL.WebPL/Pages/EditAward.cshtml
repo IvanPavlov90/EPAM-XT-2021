@@ -1,0 +1,52 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+
+@{
+    Layout = "~/Layouts/_OptionPage.cshtml";
+
+    Page.Title = "Edit Award";
+
+    if (IsPost)
+    {
+        try
+        {
+            string awardID = Request["AwardList"];
+            Guid id = Guid.Parse(awardID);
+            List<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
+            int awardIndex = awards.FindIndex(item => item.id == id);
+            string awardTitle = Request["Title"];
+            awards[awardIndex].EdtiTitle(awardTitle);
+            DependencyResolver.Instance.UsersAndAwardsBLL.AddAward(awards[awardIndex]);
+        }
+        catch (Exception e)
+        {
+            Response.Redirect("~/Pages/errorPage");
+        }
+    }
+}
+
+<form method="post">
+    <div class="mb-3">
+        @RenderPage("~/Partial Pages/_EditAward.cshtml")
+    </div>
+    <div class="mb-3">
+        <label for="Title" class="form-label">Title</label>
+        <input name="Title" type="text" class="form-control" id="Title" aria-describedby="emailHelp" placeholder="any text" required>
+    </div>
+    @if(DataModel.AwardCount != 0)
+    {
+        <button tupe="submit" class="btn btn-primary">Edit User</button>
+    }
+</form>
+
+@if (IsPost)
+{
+    <br />
+    <div class="alert alert-success" role="alert">
+        Award has been succesfully edited!
+    </div>
+}
+
+
+
