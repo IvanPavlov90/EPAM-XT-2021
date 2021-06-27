@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EPAM.AwardsAndUsers.BLL.Interfaces;
 using EPAM.AwardsAndUsers.Common.Entities;
 using EPAM.AwardsAndUsers.DAL.Interfaces;
@@ -71,6 +72,32 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
                 _daoLogic.RemoveAward(id);
         }
 
+        public bool AuthUser(string username, int passwordHash)
+        {
+            List<AuthData> authData = _daoLogic.LoadAuthData();
+            List<User> users = _daoLogic.GetAllUsers();
+            User user = users.FirstOrDefault(item => item.Name == username);
+            if (user != null)
+            {
+                foreach (var item in authData)
+                {
+                    if (item.UserPasswordHash == passwordHash && item.UserID == user.id)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        public void RecordAuthData(AuthData newData)
+        {
+            _daoLogic.RecordAuthToFile(newData);
+        }
+
+        public void RecordRoleData(RoleData roleData)
+        {
+            _daoLogic.RecordRolesToFile(roleData);
+        }
+
         public void RemoveUser(Guid id)
         {
             Data data = _daoLogic.LoadData();
@@ -84,6 +111,12 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
             Data data = _daoLogic.LoadData();
             data.AddData(userID, awardID);
             _daoLogic.RecordData(data);
+        }
+
+        public string[] FindRole (string username)
+        {
+            RoleData user = _daoLogic.LoadRolesData().First(item => item.Usernames[0] == username);
+            return user.RoleNames;
         }
     }
 }

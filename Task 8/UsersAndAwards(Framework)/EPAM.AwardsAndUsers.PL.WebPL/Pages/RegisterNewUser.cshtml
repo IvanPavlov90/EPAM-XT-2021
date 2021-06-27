@@ -1,0 +1,41 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+
+@{
+    Layout = "~/Layouts/_BasicLayout.cshtml";
+
+    Page.Title = "Register New User";
+
+    if (IsPost)
+    {
+        InputHelper help = new InputHelper();
+        string username = Request["username"];
+        DateTime birthdate = help.InputDate(Request["birthdate"]);
+        string password = help.CheckAuthParametres(Request["password"]);
+        User newUser = new User(username, birthdate);
+        DependencyResolver.Instance.UsersAndAwardsBLL.AddUser(newUser);
+        AuthData authUser = new AuthData(newUser.id, password.GetHashCode());
+        DependencyResolver.Instance.UsersAndAwardsBLL.RecordAuthData(authUser);
+        AppRoles approle = new AppRoles();
+        approle.AddUsersToRoles(new string[] { username }, new string[] { "User" });
+        Response.Redirect("~/Pages/LogIn");
+    }
+
+}
+
+<form id="userForm" method="post">
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input name="username" type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Lionel Messi" required>
+    </div>
+    <div class="mb-3">
+        <label for="birthdate" class="form-label">Birthdate</label>
+        <input name="birthdate" type="text" class="form-control" id="birthdate" placeholder="date should be in this format ----> 12.12.1997" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input name="password" type="password" class="form-control" id="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>

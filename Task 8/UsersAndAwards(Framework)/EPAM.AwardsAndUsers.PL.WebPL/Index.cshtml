@@ -1,25 +1,49 @@
-﻿@{
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+
+@{
     Layout = "~/Layouts/_BasicLayout.cshtml";
 
     Page.Title = "StartPage";
 
-    Dictionary<string, string> menu = new Dictionary<string, string> {
-        { "AddUser", "Pages/AddUser.cshtml" },
-        { "AddAward", "Pages/AddAward.cshtml" },
-        { "RemoveUser", "Pages/RemoveUser.cshtml" },
-        { "RemoveAward", "Pages/RemoveAward.cshtml" },
-        { "GetAllUsers", "Pages/GetAllUsers.cshtml" },
-        { "GetAllAwards", "Pages/GetAllAwards.cshtml" },
-        { "EditUser", "Pages/EditUser.cshtml" },
-        { "EditAward", "Pages/EditAward.cshtml" },
-        { "AddAwardToUser", "Pages/AddAwardToUser.cshtml" }
-    };
+    Menu menu = new Menu();
+
+    Dictionary<string, string> adminMenu = menu.AdminMenu;
+
+    Dictionary<string, string> userMenu = menu.UserMenu;
 }
 
-<h3>Main Menu</h3>
-<ul>
-    @foreach (var item in menu)
-    {
-        <li><a href="@item.Value">@item.Key</a></li>
-    }
-</ul>
+@if (User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
+{
+    <h4>Main Menu</h4>
+    <ul>
+        @foreach (var item in adminMenu)
+        {
+            <li><a href="@item.Value">@item.Key</a></li>
+        }
+    </ul>
+}
+else if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+{
+    <h4>Main Menu</h4>
+    <ul>
+        @foreach (var item in userMenu)
+        {
+            <li><a href="@item.Value">@item.Key</a></li>
+        }
+    </ul>
+
+    <button id="signout" type="button" class="btn btn-warning">Sign out</button>
+}
+else
+{
+    <button id="login" type="button" class="btn btn-warning">Please Log In</button>
+}
+
+<script>
+    $("#signout").click(function () {
+        location.href = "/Pages/LogIn";
+    })
+    $("#login").click(function () {
+        location.href = "/Pages/LogIn";
+    })
+</script>

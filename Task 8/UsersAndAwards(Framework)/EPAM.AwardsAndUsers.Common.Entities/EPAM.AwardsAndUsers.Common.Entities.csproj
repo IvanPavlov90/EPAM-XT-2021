@@ -69,9 +69,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthData.cs" />
     <Compile Include="Award.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleData.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>

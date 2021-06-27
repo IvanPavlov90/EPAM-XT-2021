@@ -10,6 +10,10 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
 
         void RecordAwardToFile(Award award);
 
+        void RecordAuthToFile(AuthData newData);
+
+        void RecordRolesToFile(RoleData roleData);
+
         void RemoveUser(Guid id);
 
         void RemoveAward(Guid id);
@@ -21,5 +25,9 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
         Data LoadData();
 
         void RecordData(Data data);
+
+        List<AuthData> LoadAuthData();
+
+        List<RoleData> LoadRolesData();
     }
 }

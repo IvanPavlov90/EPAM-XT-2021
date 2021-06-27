@@ -3,9 +3,9 @@ using System.Globalization;
 
 namespace EPAM.AwardsAndUsers.PL.WebPL.Models
 {
-    public static class InputHelper
+    public class InputHelper
     {
-        public static DateTime InputDate(string birthdate)
+        public DateTime InputDate(string birthdate)
         {
             CultureInfo provider = CultureInfo.InvariantCulture;
             string format = "dd.MM.yyyy";
@@ -13,6 +13,15 @@ namespace EPAM.AwardsAndUsers.PL.WebPL.Models
                 return result;
             else
                 throw new ArgumentException("Date isn't in correct format");
+        }
+
+        public string CheckAuthParametres(string param)
+        {
+            if (param.Trim().Length == 0 || param == String.Empty)
+            {
+                throw new ArgumentException($"You can't put empty or white space string into username");
+            }
+            return param;
         }
     }
 }

@@ -11,8 +11,9 @@
     {
         try
         {
+            InputHelper help = new InputHelper();
             string username = Request["username"];
-            DateTime birthdate = InputHelper.InputDate(Request["birthdate"]);
+            DateTime birthdate = help.InputDate(Request["birthdate"]);
             DependencyResolver.Instance.UsersAndAwardsBLL.AddUser(new User(username, birthdate));
         }
         catch (Exception e)

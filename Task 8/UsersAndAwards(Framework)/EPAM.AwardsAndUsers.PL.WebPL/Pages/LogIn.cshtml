@@ -1,0 +1,40 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+
+@{
+    Layout = "~/Layouts/_BasicLayout.cshtml";
+
+    Page.Title = "Log In";
+
+    FormsAuthentication.SignOut();
+
+    if (IsPost)
+    {
+        InputHelper help = new InputHelper();
+        string username = help.CheckAuthParametres(Request["username"]);
+        string password = help.CheckAuthParametres(Request["password"]);
+
+        if (DependencyResolver.Instance.UsersAndAwardsBLL.AuthUser(username, password.GetHashCode()))
+        {
+            FormsAuthentication.SetAuthCookie(username, createPersistentCookie: true);
+            Response.Redirect("~");
+        }
+        else if (!DependencyResolver.Instance.UsersAndAwardsBLL.AuthUser(username, password.GetHashCode()))
+        {
+            Response.Redirect("~/Pages/RegisterNewUser");
+        }
+    }
+}
+
+<form id="userForm" method="post">
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input name="username" type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Lionel Messi" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input name="password" type="password" class="form-control" id="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Logging In</button>
+</form>

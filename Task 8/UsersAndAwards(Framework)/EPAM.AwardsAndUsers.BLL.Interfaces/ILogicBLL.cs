@@ -23,5 +23,13 @@ namespace EPAM.AwardsAndUsers.BLL.Interfaces
         bool CheckUsersHasAward(Guid id);
 
         void RecordData(Guid userID, Guid awardID);
+
+        bool AuthUser(string username, int passwordHash);
+
+        void RecordAuthData(AuthData newData);
+
+        void RecordRoleData(RoleData roleData);
+
+        string[] FindRole (string username);
     }
 }

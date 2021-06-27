@@ -16,6 +16,10 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
 
         private string _dataFilePath = @"D:\Files\data.json";
 
+        private string _authentificationPath = @"D:\Files\Passwords\";
+
+        private string _rolesPath = @"D:\Files\Roles\";
+
         public void RecordAwardToFile(Award award)
         {
             using (StreamWriter writer = new StreamWriter(getFilePath(_awardsFolderPath, award.id), false, System.Text.Encoding.UTF8))
@@ -29,6 +33,21 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             using (StreamWriter writer = new StreamWriter(getFilePath(_usersFolderPath, user.id), false, System.Text.Encoding.UTF8))
             {
                 writer.WriteLine(Serialize(user));
+            }
+        }
+        public void RecordAuthToFile(AuthData newData)
+        {
+            using (StreamWriter writer = new StreamWriter(getFilePath(_authentificationPath, newData.UserID), false, System.Text.Encoding.UTF8))
+            {
+                writer.WriteLine(Serialize(newData));
+            }
+        }
+
+        public void RecordRolesToFile(RoleData roleData)
+        {
+            using (StreamWriter writer = new StreamWriter(_rolesPath + roleData.Usernames[0] + ".json", false, System.Text.Encoding.UTF8))
+            {
+                writer.WriteLine(Serialize(roleData));
             }
         }
 
@@ -79,6 +98,18 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             {
                 writer.WriteLine(Serialize(data));
             }
+        }
+
+        public List<AuthData> LoadAuthData()
+        {
+            string[] filePath = Directory.GetFiles(_authentificationPath);
+            return Deserialize<AuthData>(filePath);
+        }
+
+        public List<RoleData> LoadRolesData()
+        {
+            string[] filePath = Directory.GetFiles(_rolesPath);
+            return Deserialize<RoleData>(filePath);
         }
 
         /// <summary>
