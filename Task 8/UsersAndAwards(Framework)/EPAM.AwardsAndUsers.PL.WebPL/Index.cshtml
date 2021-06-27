@@ -1,9 +1,12 @@
 ﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
 
 @{
     Layout = "~/Layouts/_BasicLayout.cshtml";
 
     Page.Title = "StartPage";
+
+    DependencyResolver.Instance.UsersAndAwardsBLL.SetBase();
 
     Menu menu = new Menu();
 
@@ -21,6 +24,8 @@
             <li><a href="@item.Value">@item.Key</a></li>
         }
     </ul>
+
+    <button id="signout" type="button" class="btn btn-warning">Sign out</button>
 }
 else if (User.Identity.IsAuthenticated && User.IsInRole("User"))
 {

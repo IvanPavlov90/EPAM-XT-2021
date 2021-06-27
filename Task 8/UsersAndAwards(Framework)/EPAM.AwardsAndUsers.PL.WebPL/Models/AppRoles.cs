@@ -36,7 +36,10 @@ namespace EPAM.AwardsAndUsers.PL.WebPL.Models
 
         public override string[] GetRolesForUser(string username)
         {
-            return DependencyResolver.Instance.UsersAndAwardsBLL.FindRole(username);
+            if (username == "Administrator")
+                return new string[] { "Administrator" };
+            else
+                return DependencyResolver.Instance.UsersAndAwardsBLL.FindRole(username);
         }
 
         public override string[] GetUsersInRole(string roleName)

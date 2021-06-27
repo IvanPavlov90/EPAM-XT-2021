@@ -6,6 +6,8 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
 {
     public interface IDAL
     {
+
+        void SetBase();
         void RecordUserToFile(User user);
 
         void RecordAwardToFile(Award award);

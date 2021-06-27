@@ -16,6 +16,11 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
             _daoLogic = daoLogic;
         }
 
+        public void SetBase()
+        {
+            _daoLogic.SetBase();
+        }
+
         public void AddAward(Award award)
         {
             _daoLogic.RecordAwardToFile(award);
@@ -116,6 +121,11 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
             Data data = _daoLogic.LoadData();
             data.AddData(userID, awardID);
             _daoLogic.RecordData(data);
+        }
+
+        public Data LoadData()
+        {
+            return _daoLogic.LoadData();
         }
 
         public string[] FindRole (string username)

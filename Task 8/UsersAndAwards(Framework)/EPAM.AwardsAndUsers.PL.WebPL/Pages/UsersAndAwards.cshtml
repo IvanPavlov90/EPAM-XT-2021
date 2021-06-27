@@ -1,0 +1,60 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+
+@{
+    Layout = "~/Layouts/_OptionPage.cshtml";
+
+    Page.Title = "Get all awards";
+
+    List<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
+    List<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
+    Data data = DependencyResolver.Instance.UsersAndAwardsBLL.LoadData();
+
+}
+
+@if (awards.Count == 0 || users.Count == 0)
+{
+    <div class="alert alert-danger" role="alert">
+        You haven't added any awards or users.
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Name</th>
+                <th scope="col">BirthDate</th>
+                <th scope="col">Age</th>
+            </tr>
+        </thead>
+        <tbody>
+               @foreach (var item in data.DataValue.Keys)
+                {
+                    foreach (var user in users)
+                    {
+                        if (user.id == item && data.DataValue[item].Count != 0)
+                        {
+                            foreach (var award in data.DataValue[item])
+                            {
+                                foreach (var award2 in awards)
+                                {
+                                    if (award == award2.id)
+                                    {
+                                        <tr>
+                                            <td>@award2.Title</td>
+                                            <td>@user.Name</td>
+                                            <td>@user.DateOfBirth</td>
+                                            <td>@user.Age</td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+        </tbody>
+    </table>
+}

@@ -6,6 +6,8 @@ namespace EPAM.AwardsAndUsers.BLL.Interfaces
 {
     public interface ILogicBLL
     {
+        void SetBase();
+
         void AddUser(User user);
 
         void AddAward(Award award);
@@ -23,6 +25,8 @@ namespace EPAM.AwardsAndUsers.BLL.Interfaces
         bool CheckUsersHasAward(Guid id);
 
         void RecordData(Guid userID, Guid awardID);
+
+        Data LoadData();
 
         bool AuthUser(int passwordHash);
 

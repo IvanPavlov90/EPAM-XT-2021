@@ -20,6 +20,30 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
 
         private string _rolesPath = @"D:\Files\Roles\";
 
+        public void SetBase()
+        {
+            User user = new User("Administrator", new DateTime(1990, 5, 11));
+            if (!Directory.Exists(_usersFolderPath))
+            {
+                Directory.CreateDirectory(_usersFolderPath);
+                RecordUserToFile(user);
+            }
+            if (!Directory.Exists(_awardsFolderPath))
+                Directory.CreateDirectory(_awardsFolderPath);
+            if (!Directory.Exists(_authentificationPath))
+            {
+                Directory.CreateDirectory(_authentificationPath);
+                AuthData authAdmin = new AuthData(user.id, "admin".GetHashCode());
+                RecordAuthToFile(authAdmin);
+            }
+                Directory.CreateDirectory(_authentificationPath);
+            if (!Directory.Exists(_rolesPath))
+            {
+                Directory.CreateDirectory(_rolesPath);
+                RecordRolesToFile(new RoleData(new string[] { "Administrator" }, new string[] { "Administrator" }));
+            }
+        }
+
         public void RecordAwardToFile(Award award)
         {
             using (StreamWriter writer = new StreamWriter(getFilePath(_awardsFolderPath, award.id), false, System.Text.Encoding.UTF8))
