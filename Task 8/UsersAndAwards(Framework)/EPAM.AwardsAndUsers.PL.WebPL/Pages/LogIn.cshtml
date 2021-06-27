@@ -9,18 +9,27 @@
 
     FormsAuthentication.SignOut();
 
+    DataModel.WrongPassword = false;
+
     if (IsPost)
     {
         InputHelper help = new InputHelper();
         string username = help.CheckAuthParametres(Request["username"]);
         string password = help.CheckAuthParametres(Request["password"]);
 
-        if (DependencyResolver.Instance.UsersAndAwardsBLL.AuthUser(username, password.GetHashCode()))
+        if (DependencyResolver.Instance.UsersAndAwardsBLL.FindUser(username))
         {
-            FormsAuthentication.SetAuthCookie(username, createPersistentCookie: true);
-            Response.Redirect("~");
+            if (DependencyResolver.Instance.UsersAndAwardsBLL.AuthUser(password.GetHashCode()))
+            {
+                FormsAuthentication.SetAuthCookie(username, createPersistentCookie: true);
+                Response.Redirect("~");
+            }
+            else
+            {
+                DataModel.WrongPassword = true;
+            }
         }
-        else if (!DependencyResolver.Instance.UsersAndAwardsBLL.AuthUser(username, password.GetHashCode()))
+        else
         {
             Response.Redirect("~/Pages/RegisterNewUser");
         }
@@ -38,3 +47,9 @@
     </div>
     <button type="submit" class="btn btn-primary">Logging In</button>
 </form>
+@if (DataModel.WrongPassword == true)
+{
+    <div class="alert alert-info" role="alert">
+        You have entered wrong password!
+    </div>
+}

@@ -24,7 +24,9 @@ namespace EPAM.AwardsAndUsers.BLL.Interfaces
 
         void RecordData(Guid userID, Guid awardID);
 
-        bool AuthUser(string username, int passwordHash);
+        bool AuthUser(int passwordHash);
+
+        bool FindUser(string username);
 
         void RecordAuthData(AuthData newData);
 

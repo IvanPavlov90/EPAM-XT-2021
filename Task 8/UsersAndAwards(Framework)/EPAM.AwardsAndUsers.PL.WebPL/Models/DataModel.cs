@@ -14,5 +14,10 @@ namespace EPAM.AwardsAndUsers.PL.WebPL.Models
         public static bool AwardSearchResult { get; set; }
 
         public static Guid awardID { get; set; }
+
+        public static bool WrongPassword { get; set; }
+
+        public static bool UserAlreadyHasBeenCreated { get; set; }
+
     }
 }

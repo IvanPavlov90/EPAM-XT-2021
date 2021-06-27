@@ -7,19 +7,28 @@
 
     Page.Title = "Register New User";
 
+    DataModel.UserAlreadyHasBeenCreated = false;
+
     if (IsPost)
     {
         InputHelper help = new InputHelper();
         string username = Request["username"];
-        DateTime birthdate = help.InputDate(Request["birthdate"]);
-        string password = help.CheckAuthParametres(Request["password"]);
-        User newUser = new User(username, birthdate);
-        DependencyResolver.Instance.UsersAndAwardsBLL.AddUser(newUser);
-        AuthData authUser = new AuthData(newUser.id, password.GetHashCode());
-        DependencyResolver.Instance.UsersAndAwardsBLL.RecordAuthData(authUser);
-        AppRoles approle = new AppRoles();
-        approle.AddUsersToRoles(new string[] { username }, new string[] { "User" });
-        Response.Redirect("~/Pages/LogIn");
+        if (DependencyResolver.Instance.UsersAndAwardsBLL.FindUser(username))
+        {
+            DataModel.UserAlreadyHasBeenCreated = true;
+        }
+        else
+        {
+            DateTime birthdate = help.InputDate(Request["birthdate"]);
+            string password = help.CheckAuthParametres(Request["password"]);
+            User newUser = new User(username, birthdate);
+            DependencyResolver.Instance.UsersAndAwardsBLL.AddUser(newUser);
+            AuthData authUser = new AuthData(newUser.id, password.GetHashCode());
+            DependencyResolver.Instance.UsersAndAwardsBLL.RecordAuthData(authUser);
+            AppRoles approle = new AppRoles();
+            approle.AddUsersToRoles(new string[] { username }, new string[] { "User" });
+            Response.Redirect("~/Pages/LogIn");
+        }
     }
 
 }
@@ -39,3 +48,9 @@
     </div>
     <button type="submit" class="btn btn-primary">Register</button>
 </form>
+@if (DataModel.UserAlreadyHasBeenCreated == true)
+{
+    <div class="alert alert-info" role="alert">
+        User with such nickname has already been created, please change your nickname.
+    </div>
+}

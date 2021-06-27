@@ -72,18 +72,23 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
                 _daoLogic.RemoveAward(id);
         }
 
-        public bool AuthUser(string username, int passwordHash)
+        public bool FindUser (string username)
         {
-            List<AuthData> authData = _daoLogic.LoadAuthData();
             List<User> users = _daoLogic.GetAllUsers();
             User user = users.FirstOrDefault(item => item.Name == username);
             if (user != null)
+                return true;
+            else
+                return false;
+        }
+
+        public bool AuthUser(int passwordHash)
+        {
+            List<AuthData> authData = _daoLogic.LoadAuthData();
+            foreach (var item in authData)
             {
-                foreach (var item in authData)
-                {
-                    if (item.UserPasswordHash == passwordHash && item.UserID == user.id)
-                        return true;
-                }
+                if (item.UserPasswordHash == passwordHash)
+                    return true;
             }
             return false;
         }
