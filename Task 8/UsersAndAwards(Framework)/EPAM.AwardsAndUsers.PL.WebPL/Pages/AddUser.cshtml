@@ -4,17 +4,43 @@
 
 @{
     Layout = "~/Layouts/_OptionPage.cshtml";
-
-    Page.Title = "AddUser";
+    Page.Title = "Add User";
+    DataModel dataModel = new DataModel();
+    dataModel.UserAlreadyHasBeenCreated = false;
+    InputHelper help = new InputHelper();
 
     if (IsPost)
     {
         try
         {
-            InputHelper help = new InputHelper();
             string username = Request["username"];
-            DateTime birthdate = help.InputDate(Request["birthdate"]);
-            DependencyResolver.Instance.UsersAndAwardsBLL.AddUser(new User(username, birthdate));
+            string password = Request["password"];
+            string birthdate = Request["birthdate"];
+            if (help.CheckAuthParametres(username) && help.CheckAuthParametres(password))
+            {
+                if (DependencyResolver.Instance.UsersAndAwardsBLL.FindUser(username))
+                {
+                    dataModel.UserAlreadyHasBeenCreated = true;
+                }
+                else
+                {
+                    DateTime userBirthdate = help.InputDate(birthdate);
+                    User newUser = new User(username, userBirthdate);
+                    DependencyResolver.Instance.UsersAndAwardsBLL.AddUser(newUser);
+                    AuthData authUser = new AuthData(newUser.id, password.GetHashCode());
+                    DependencyResolver.Instance.UsersAndAwardsBLL.RecordAuthData(authUser);
+                    AppRoles approle = new AppRoles();
+                    string isAdmin = Request["isUserAdmin"];
+                    if (isAdmin == "on")
+                    {
+                        approle.AddUsersToRoles(new string[] { username }, new string[] { "Administrator" });
+                    }
+                    else
+                    {
+                        approle.AddUsersToRoles(new string[] { username }, new string[] { "User" });
+                    }
+                }
+            }
         }
         catch (Exception e)
         {
@@ -23,6 +49,9 @@
     }
 }
 
+<div class="alert alert-info" role="alert">
+    Password should contains at least one letter and one digit.
+</div>
 <form id="userForm" method="post">
     <div class="mb-3">
         <label for="username" class="form-label">Username</label>
@@ -32,12 +61,58 @@
         <label for="birthdate" class="form-label">Birthdate</label>
         <input name="birthdate" type="text" class="form-control" id="birthdate" placeholder="date should be in this format ----> 12.12.1997" required>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input name="password" type="password" class="form-control" id="password" required>
+    </div>
+    <div class="mb-3 form-check">
+        <input name="isUserAdmin" type="checkbox" class="form-check-input" id="isUserAdmin">
+        <label class="form-check-label" for="isUserAdmin">Admin</label>
+    </div>
+    <div id="formBtn">
+        
+    </div>
 </form>
-@if (IsPost)
+<div id="info">
+
+</div>
+@if (dataModel.UserAlreadyHasBeenCreated)
+{
+    <div class="alert alert-info" role="alert">
+        User with such nickname has already been created, please change nickname.
+    </div>
+}
+@if (IsPost && !dataModel.UserAlreadyHasBeenCreated)
 {
     <br />
     <div class="alert alert-success" role="alert">
-         User has been succesfully added!
+        User has been succesfully added!
     </div>
 }
+
+<script type="text/javascript">
+    let birthdateregExp = new RegExp(/^(\d{2}.{1}){2}\d{4}$/);
+    let passwordExp = new RegExp(/\d[A-Za-z]/);
+    let usernameExp = new RegExp(/^\w+$/);
+    let userForm = document.getElementById("userForm");
+    let formBtn = document.getElementById("formBtn");
+    let infoDiv = document.getElementById("info");
+    userForm.addEventListener("keyup", () => {
+        if (birthdateregExp.test(userForm.birthdate.value) && passwordExp.test(userForm.password.value)
+            && usernameExp.test(userForm.password.value)) {
+            formBtn.innerHTML = "";
+            formBtn.insertAdjacentHTML("afterbegin", `
+                <button type="submit" class="btn btn-primary">Submit</button>
+            `)
+            infoDiv.innerHTML = "";
+        } else {
+            infoDiv.innerHTML = "";
+            formBtn.innerHTML = "";
+            infoDiv.insertAdjacentHTML("afterbegin", `
+                <div class="alert alert-info" role="alert">
+                    Your data isn't valid
+                </div>
+            `)
+        }
+    })
+</script>

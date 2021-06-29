@@ -10,15 +10,15 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
 {
     public class JSONDALLogic : IDAL
     {
-        private string _usersFolderPath = @"D:\Files\Users\";
+        private string _usersFolderPath = AppDomain.CurrentDomain.BaseDirectory + @"\Files\Users\";
 
-        private string _awardsFolderPath = @"D:\Files\Awards\";
+        private string _awardsFolderPath = AppDomain.CurrentDomain.BaseDirectory + @"\Files\Awards\";
 
-        private string _dataFilePath = @"D:\Files\data.json";
+        private string _dataFilePath = AppDomain.CurrentDomain.BaseDirectory + @"\Files\data.json";
 
-        private string _authentificationPath = @"D:\Files\Passwords\";
+        private string _authentificationPath = AppDomain.CurrentDomain.BaseDirectory + @"\Files\Passwords\";
 
-        private string _rolesPath = @"D:\Files\Roles\";
+        private string _rolesPath = AppDomain.CurrentDomain.BaseDirectory + @"\Files\Roles\";
 
         public void SetBase()
         {
@@ -36,11 +36,18 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
                 AuthData authAdmin = new AuthData(user.id, "admin".GetHashCode());
                 RecordAuthToFile(authAdmin);
             }
-                Directory.CreateDirectory(_authentificationPath);
             if (!Directory.Exists(_rolesPath))
             {
                 Directory.CreateDirectory(_rolesPath);
                 RecordRolesToFile(new RoleData(new string[] { "Administrator" }, new string[] { "Administrator" }));
+            }
+        }
+
+        public void RecordUserToFile(User user)
+        {
+            using (StreamWriter writer = new StreamWriter(getFilePath(_usersFolderPath, user.id), false, System.Text.Encoding.UTF8))
+            {
+                writer.WriteLine(Serialize(user));
             }
         }
 
@@ -52,13 +59,6 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             }
         }
 
-        public void RecordUserToFile(User user)
-        {
-            using (StreamWriter writer = new StreamWriter(getFilePath(_usersFolderPath, user.id), false, System.Text.Encoding.UTF8))
-            {
-                writer.WriteLine(Serialize(user));
-            }
-        }
         public void RecordAuthToFile(AuthData newData)
         {
             using (StreamWriter writer = new StreamWriter(getFilePath(_authentificationPath, newData.UserID), false, System.Text.Encoding.UTF8))
@@ -75,18 +75,11 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             }
         }
 
-        public List<Award> GetAllAwards()
-        {
-            string[] filePath = Directory.GetFiles(_awardsFolderPath);
-            List<Award> awards = Deserialize<Award>(filePath);
-            return awards;
-        }
-
-        public List<User> GetAllUsers()
+        public void RemoveUser(Guid id)
         {
             string[] filePath = Directory.GetFiles(_usersFolderPath);
-            List<User> users = Deserialize<User>(filePath);
-            return users;
+            string pathToDelete = filePath.FirstOrDefault(item => item == getFilePath(_usersFolderPath, id));
+            File.Delete(pathToDelete);
         }
 
         public void RemoveAward(Guid id)
@@ -96,11 +89,32 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             File.Delete(pathToDelete);
         }
 
-        public void RemoveUser(Guid id)
+        public void RemoveAuthData(Guid id)
+        {
+            string[] filePath = Directory.GetFiles(_authentificationPath);
+            string pathToDelete = filePath.FirstOrDefault(item => item == getFilePath(_authentificationPath, id));
+            File.Delete(pathToDelete);
+        }
+
+        public void RemoveRolesData(string username)
+        {
+            string[] filePath = Directory.GetFiles(_rolesPath);
+            string pathToDelete = filePath.FirstOrDefault(item => item == _rolesPath + username + ".json");
+            File.Delete(pathToDelete);
+        }
+
+        public List<User> GetAllUsers()
         {
             string[] filePath = Directory.GetFiles(_usersFolderPath);
-            string pathToDelete = filePath.FirstOrDefault(item => item == getFilePath(_usersFolderPath, id));
-            File.Delete(pathToDelete);
+            List<User> users = Deserialize<User>(filePath);
+            return users;
+        }
+
+        public List<Award> GetAllAwards()
+        {
+            string[] filePath = Directory.GetFiles(_awardsFolderPath);
+            List<Award> awards = Deserialize<Award>(filePath);
+            return awards;
         }
 
         public Data LoadData()

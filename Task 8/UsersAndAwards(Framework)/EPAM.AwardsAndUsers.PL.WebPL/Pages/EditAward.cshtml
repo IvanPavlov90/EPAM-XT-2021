@@ -7,6 +7,9 @@
 
     Page.Title = "Edit Award";
 
+    DataModel dataModel = new DataModel();
+    dataModel.AwardCount = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards().Count;
+
     if (IsPost)
     {
         try
@@ -34,7 +37,7 @@
         <label for="Title" class="form-label">Title</label>
         <input name="Title" type="text" class="form-control" id="Title" aria-describedby="emailHelp" placeholder="any text" required>
     </div>
-    @if(DataModel.AwardCount != 0)
+    @if(dataModel.AwardCount != 0)
     {
         <button tupe="submit" class="btn btn-primary">Edit Award</button>
     }

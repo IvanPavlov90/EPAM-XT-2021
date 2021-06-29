@@ -8,7 +8,6 @@
     Page.Title = "Get all awards";
 
     List<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
-
 }
 
 @if (awards.Count == 0)

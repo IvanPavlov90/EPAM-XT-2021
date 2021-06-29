@@ -21,11 +21,6 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
             _daoLogic.SetBase();
         }
 
-        public void AddAward(Award award)
-        {
-            _daoLogic.RecordAwardToFile(award);
-        }
-
         public void AddUser(User user)
         {
             Data data = _daoLogic.LoadData();
@@ -34,30 +29,20 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
             _daoLogic.RecordData(data);
         }
 
-        public List<Award> GetAllAwards()
+        public void AddAward(Award award)
         {
-            return _daoLogic.GetAllAwards();
+            _daoLogic.RecordAwardToFile(award);
         }
 
-        public List<User> GetAllUsers()
-        {
-            return _daoLogic.GetAllUsers();
-        }
-
-        public void EditUser(User user)
-        {
-            _daoLogic.RecordUserToFile(user);
-        }
-
-        public bool CheckUsersHasAward(Guid id)
+        public void RemoveUser(Guid id)
         {
             Data data = _daoLogic.LoadData();
-            foreach (var item in data.DataValue)
-            {
-                if (item.Value.Contains(id))
-                    return true;
-            }
-            return false;
+            User user = _daoLogic.GetAllUsers().First(item => item.id == id);
+            if (data.DataValue.Remove(id))
+                _daoLogic.RecordData(data);
+            _daoLogic.RemoveUser(id);
+            _daoLogic.RemoveAuthData(id);
+            _daoLogic.RemoveRolesData(user.Name);
         }
 
         public void RemoveAward(Guid id, bool result)
@@ -77,14 +62,49 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
                 _daoLogic.RemoveAward(id);
         }
 
-        public bool FindUser (string username)
+        public bool RemoveRole(string username)
         {
-            List<User> users = _daoLogic.GetAllUsers();
-            User user = users.FirstOrDefault(item => item.Name == username);
-            if (user != null)
-                return true;
-            else
-                return false;
+            _daoLogic.RemoveRolesData(username);
+            return true;
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return _daoLogic.GetAllUsers();
+        }
+
+
+        public List<Award> GetAllAwards()
+        {
+            return _daoLogic.GetAllAwards();
+        }
+
+        public void EditUser(User user)
+        {
+            _daoLogic.RecordUserToFile(user);
+        }
+
+        public bool CheckUsersHasAward(Guid id)
+        {
+            Data data = _daoLogic.LoadData();
+            foreach (var item in data.DataValue)
+            {
+                if (item.Value.Contains(id))
+                    return true;
+            }
+            return false;
+        }
+
+        public void RecordData(Guid userID, Guid awardID)
+        {
+            Data data = _daoLogic.LoadData();
+            data.AddData(userID, awardID);
+            _daoLogic.RecordData(data);
+        }
+
+        public Data LoadData()
+        {
+            return _daoLogic.LoadData();
         }
 
         public bool AuthUser(int passwordHash)
@@ -98,6 +118,16 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
             return false;
         }
 
+        public bool FindUser (string username)
+        {
+            List<User> users = _daoLogic.GetAllUsers();
+            User user = users.FirstOrDefault(item => item.Name == username);
+            if (user != null)
+                return true;
+            else
+                return false;
+        }
+
         public void RecordAuthData(AuthData newData)
         {
             _daoLogic.RecordAuthToFile(newData);
@@ -106,26 +136,6 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
         public void RecordRoleData(RoleData roleData)
         {
             _daoLogic.RecordRolesToFile(roleData);
-        }
-
-        public void RemoveUser(Guid id)
-        {
-            Data data = _daoLogic.LoadData();
-            if (data.DataValue.Remove(id))
-                _daoLogic.RecordData(data);
-            _daoLogic.RemoveUser(id);
-        }
-
-        public void RecordData(Guid userID, Guid awardID)
-        {
-            Data data = _daoLogic.LoadData();
-            data.AddData(userID, awardID);
-            _daoLogic.RecordData(data);
-        }
-
-        public Data LoadData()
-        {
-            return _daoLogic.LoadData();
         }
 
         public string[] FindRole (string username)

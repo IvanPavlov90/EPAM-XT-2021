@@ -4,35 +4,37 @@
 
 @{
     Layout = "~/Layouts/_BasicLayout.cshtml";
-
     Page.Title = "Register New User";
-
-    DataModel.UserAlreadyHasBeenCreated = false;
+    DataModel dataModel = new DataModel();
+    dataModel.UserAlreadyHasBeenCreated = false;
+    InputHelper help = new InputHelper();
 
     if (IsPost)
     {
-        InputHelper help = new InputHelper();
         string username = Request["username"];
-        if (DependencyResolver.Instance.UsersAndAwardsBLL.FindUser(username))
+        string password = Request["password"];
+        DateTime birthdate = help.InputDate(Request["birthdate"]);
+        if (help.CheckAuthParametres(username) && help.CheckAuthParametres(password))
         {
-            DataModel.UserAlreadyHasBeenCreated = true;
-        }
-        else
-        {
-            DateTime birthdate = help.InputDate(Request["birthdate"]);
-            string password = help.CheckAuthParametres(Request["password"]);
-            User newUser = new User(username, birthdate);
-            DependencyResolver.Instance.UsersAndAwardsBLL.AddUser(newUser);
-            AuthData authUser = new AuthData(newUser.id, password.GetHashCode());
-            DependencyResolver.Instance.UsersAndAwardsBLL.RecordAuthData(authUser);
-            AppRoles approle = new AppRoles();
-            approle.AddUsersToRoles(new string[] { username }, new string[] { "User" });
-            Response.Redirect("~/Pages/LogIn");
+            if (DependencyResolver.Instance.UsersAndAwardsBLL.FindUser(username))
+            {
+                dataModel.UserAlreadyHasBeenCreated = true;
+            }
+            else
+            {
+                User newUser = new User(username, birthdate);
+                DependencyResolver.Instance.UsersAndAwardsBLL.AddUser(newUser);
+                AuthData authUser = new AuthData(newUser.id, password.GetHashCode());
+                DependencyResolver.Instance.UsersAndAwardsBLL.RecordAuthData(authUser);
+                AppRoles approle = new AppRoles();
+                approle.AddUsersToRoles(new string[] { username }, new string[] { "User" });
+                Response.Redirect("~/Pages/LogIn");
+            }
         }
     }
-
 }
 
+<h3>Registry Form. Please enter your name and password</h3>
 <form id="userForm" method="post">
     <div class="mb-3">
         <label for="username" class="form-label">Username</label>
@@ -48,9 +50,15 @@
     </div>
     <button type="submit" class="btn btn-primary">Register</button>
 </form>
-@if (DataModel.UserAlreadyHasBeenCreated == true)
+@if (dataModel.UserAlreadyHasBeenCreated == true)
 {
     <div class="alert alert-info" role="alert">
         User with such nickname has already been created, please change your nickname.
+    </div>
+}
+@if (IsPost && (!help.CheckAuthParametres(Request["username"]) || !help.CheckAuthParametres(Request["password"])))
+{
+    <div class="alert alert-info" role="alert">
+        You have entered empty username or password!
     </div>
 }

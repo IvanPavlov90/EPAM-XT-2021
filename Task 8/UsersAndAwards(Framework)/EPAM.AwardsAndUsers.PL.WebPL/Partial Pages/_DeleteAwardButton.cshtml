@@ -1,0 +1,10 @@
+﻿@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+@{
+    List<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
+}
+
+@if (awards.Count != 0)
+{
+    <button tupe="submit" class="btn btn-primary">Edit Award</button>
+}

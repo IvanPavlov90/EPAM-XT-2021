@@ -4,8 +4,9 @@
 
 @{
     Layout = "~/Layouts/_OptionPage.cshtml";
-
     Page.Title = "Edit User";
+    InputHelper help = new InputHelper();
+    List<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
 
     if (IsPost)
     {
@@ -13,12 +14,27 @@
         {
             string userID = Request["UserList"];
             Guid id = Guid.Parse(userID);
-            List<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
             int userIndex = users.FindIndex(item => item.id == id);
             string username = Request["username"];
-            DateTime birthdate = InputHelper.InputDate(Request["birthdate"]);
-            users[userIndex].EditUser(username, birthdate);
-            DependencyResolver.Instance.UsersAndAwardsBLL.EditUser(users[userIndex]);
+            DateTime birthdate = help.InputDate(Request["birthdate"]);
+            if (help.CheckAuthParametres(username))
+            {
+                if (DependencyResolver.Instance.UsersAndAwardsBLL.RemoveRole(users[userIndex].Name))
+                {
+                    users[userIndex].EditUser(username, birthdate);
+                    DependencyResolver.Instance.UsersAndAwardsBLL.EditUser(users[userIndex]);
+                    AppRoles approle = new AppRoles();
+                    string isAdmin = Request["isUserAdmin"];
+                    if (isAdmin == "on")
+                    {
+                        approle.AddUsersToRoles(new string[] { username }, new string[] { "Administrator" });
+                    }
+                    else
+                    {
+                        approle.AddUsersToRoles(new string[] { username }, new string[] { "User" });
+                    }
+                }
+            }
         }
         catch (Exception e)
         {
@@ -39,7 +55,11 @@
         <label for="birthdate" class="form-label">Birthdate</label>
         <input name="birthdate" type="text" class="form-control" id="birthdate" placeholder="date should be in this format ----> 12.12.1997" required>
     </div>
-    @if (DataModel.UserCount != 0)
+    <div class="mb-3 form-check">
+        <input name="isUserAdmin" type="checkbox" class="form-check-input" id="isUserAdmin">
+        <label class="form-check-label" for="isUserAdmin">Admin</label>
+    </div>
+    @if (users.Count != 0)
     {
         <button id="editUser" tupe="submit" class="btn btn-primary">Edit User</button>
     }

@@ -8,6 +8,7 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
     {
 
         void SetBase();
+
         void RecordUserToFile(User user);
 
         void RecordAwardToFile(Award award);
@@ -19,6 +20,10 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
         void RemoveUser(Guid id);
 
         void RemoveAward(Guid id);
+
+        void RemoveAuthData(Guid id);
+
+        void RemoveRolesData(string username);
 
         List<User> GetAllUsers();
 

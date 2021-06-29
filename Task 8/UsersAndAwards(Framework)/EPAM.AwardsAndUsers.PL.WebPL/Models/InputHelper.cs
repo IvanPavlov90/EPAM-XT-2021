@@ -15,13 +15,11 @@ namespace EPAM.AwardsAndUsers.PL.WebPL.Models
                 throw new ArgumentException("Date isn't in correct format");
         }
 
-        public string CheckAuthParametres(string param)
+        public bool CheckAuthParametres(string param)
         {
-            if (param.Trim().Length == 0 || param == String.Empty)
-            {
-                throw new ArgumentException($"You can't put empty or white space string into username");
-            }
-            return param;
+            if (param.Trim().Length == 0 || param == String.Empty || param == null)
+                return false;
+            return true;
         }
     }
 }

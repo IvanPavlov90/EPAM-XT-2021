@@ -3,7 +3,6 @@
 @using EPAM.AwardsAndUsers.PL.WebPL.Models;
 @{
     List<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
-    DataModel.UserCount = users.Count;
 }
 
 @if (users.Count == 0)

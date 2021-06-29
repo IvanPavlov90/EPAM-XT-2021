@@ -16,6 +16,8 @@ namespace EPAM.AwardsAndUsers.BLL.Interfaces
 
         void RemoveAward(Guid id, bool userAction);
 
+        bool RemoveRole(string username);
+
         List<User> GetAllUsers();
 
         List<Award> GetAllAwards();

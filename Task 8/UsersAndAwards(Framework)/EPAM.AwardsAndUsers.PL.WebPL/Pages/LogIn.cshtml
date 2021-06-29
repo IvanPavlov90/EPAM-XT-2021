@@ -4,34 +4,35 @@
 
 @{
     Layout = "~/Layouts/_BasicLayout.cshtml";
-
     Page.Title = "Log In";
-
     FormsAuthentication.SignOut();
-
-    DataModel.WrongPassword = false;
+    DataModel dataModel = new DataModel();
+    dataModel.WrongPassword = false;
+    InputHelper help = new InputHelper();
 
     if (IsPost)
     {
-        InputHelper help = new InputHelper();
-        string username = help.CheckAuthParametres(Request["username"]);
-        string password = help.CheckAuthParametres(Request["password"]);
+        var username = Request["username"];
+        var password = Request["password"];
 
-        if (DependencyResolver.Instance.UsersAndAwardsBLL.FindUser(username))
+        if (help.CheckAuthParametres(username) && help.CheckAuthParametres(password))
         {
-            if (DependencyResolver.Instance.UsersAndAwardsBLL.AuthUser(password.GetHashCode()))
+            if (DependencyResolver.Instance.UsersAndAwardsBLL.FindUser(username))
             {
-                FormsAuthentication.SetAuthCookie(username, createPersistentCookie: true);
-                Response.Redirect("~");
+                if (DependencyResolver.Instance.UsersAndAwardsBLL.AuthUser(password.GetHashCode()))
+                {
+                    FormsAuthentication.SetAuthCookie(username, createPersistentCookie: true);
+                    Response.Redirect("~");
+                }
+                else
+                {
+                    dataModel.WrongPassword = true;
+                }
             }
             else
             {
-                DataModel.WrongPassword = true;
+                Response.Redirect("~/Pages/RegisterNewUser");
             }
-        }
-        else
-        {
-            Response.Redirect("~/Pages/RegisterNewUser");
         }
     }
 }
@@ -47,9 +48,15 @@
     </div>
     <button type="submit" class="btn btn-primary">Logging In</button>
 </form>
-@if (DataModel.WrongPassword == true)
+@if (dataModel.WrongPassword == true)
 {
     <div class="alert alert-info" role="alert">
         You have entered wrong password!
+    </div>
+}
+@if (IsPost && (!help.CheckAuthParametres(Request["username"]) || !help.CheckAuthParametres(Request["password"])))
+{
+    <div class="alert alert-info" role="alert">
+        You have entered empty username or password!
     </div>
 }

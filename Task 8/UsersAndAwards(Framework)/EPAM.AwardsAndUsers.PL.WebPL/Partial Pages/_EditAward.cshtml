@@ -3,14 +3,15 @@
 @using EPAM.AwardsAndUsers.PL.WebPL.Models;
 @{
     List<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
-    DataModel.AwardCount = awards.Count;
+    DataModel dataModel = new DataModel();
+    dataModel.AwardCount = awards.Count;
 }
 
 @if (awards.Count == 0)
 {
      <label for="disabledSelect" class="form-label">Select award</label>
      <select id="disabledSelect" class="form-select" name="AwardList" disabled>
-        <option>You haven't added any user.</option>
+        <option>You haven't added any award.</option>
      </select>
 }
 else
