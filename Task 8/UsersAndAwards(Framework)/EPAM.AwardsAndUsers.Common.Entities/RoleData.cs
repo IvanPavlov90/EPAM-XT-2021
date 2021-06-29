@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Text.Json.Serialization;
 
 namespace EPAM.AwardsAndUsers.Common.Entities
@@ -12,8 +13,8 @@ namespace EPAM.AwardsAndUsers.Common.Entities
 
         public RoleData(string[] usernames, string[] roleNames)
         {
-            Usernames = usernames;
-            RoleNames = roleNames;
+            Usernames = CheckincomingArray(usernames);
+            RoleNames = CheckincomingArray(roleNames);
         }
 
         [JsonInclude]
@@ -21,5 +22,12 @@ namespace EPAM.AwardsAndUsers.Common.Entities
 
         [JsonInclude]
         public string[] RoleNames { get; private set; }
+
+        private string[] CheckincomingArray (string[] arr)
+        {
+            if (arr.Length == 0)
+                throw new ArgumentException("You can't put empty array here.");
+            else return arr;
+        }
     }
 }

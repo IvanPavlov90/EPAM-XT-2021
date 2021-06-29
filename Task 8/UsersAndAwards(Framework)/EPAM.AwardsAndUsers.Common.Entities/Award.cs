@@ -29,7 +29,7 @@ namespace EPAM.AwardsAndUsers.Common.Entities
 
         private string checkTitle(string title)
         {
-            if (title.Trim().Length == 0 || title == String.Empty)
+            if (title.Trim().Length == 0 || title == String.Empty || title == null)
             {
                 throw new ArgumentException($"You can't put empty or white space string into title");
             }

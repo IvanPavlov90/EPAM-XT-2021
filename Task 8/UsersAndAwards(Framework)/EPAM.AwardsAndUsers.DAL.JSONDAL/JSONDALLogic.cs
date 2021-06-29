@@ -20,7 +20,7 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
 
         private string _rolesPath = AppDomain.CurrentDomain.BaseDirectory + @"\Files\Roles\";
 
-        public void SetBase()
+        public bool SetBase()
         {
             User user = new User("Administrator", new DateTime(1990, 5, 11));
             if (!Directory.Exists(_usersFolderPath))
@@ -41,6 +41,7 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
                 Directory.CreateDirectory(_rolesPath);
                 RecordRolesToFile(new RoleData(new string[] { "Administrator" }, new string[] { "Administrator" }));
             }
+            return true;
         }
 
         public void RecordUserToFile(User user)

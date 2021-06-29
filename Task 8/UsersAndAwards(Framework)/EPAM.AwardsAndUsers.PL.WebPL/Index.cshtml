@@ -3,15 +3,10 @@
 
 @{
     Layout = "~/Layouts/_BasicLayout.cshtml";
-
     Page.Title = "StartPage";
-
     DependencyResolver.Instance.UsersAndAwardsBLL.SetBase();
-
     Menu menu = new Menu();
-
     Dictionary<string, string> adminMenu = menu.AdminMenu;
-
     Dictionary<string, string> userMenu = menu.UserMenu;
 }
 

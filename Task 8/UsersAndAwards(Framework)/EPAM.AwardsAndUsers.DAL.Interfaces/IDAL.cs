@@ -7,7 +7,7 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
     public interface IDAL
     {
 
-        void SetBase();
+        bool SetBase();
 
         void RecordUserToFile(User user);
 
