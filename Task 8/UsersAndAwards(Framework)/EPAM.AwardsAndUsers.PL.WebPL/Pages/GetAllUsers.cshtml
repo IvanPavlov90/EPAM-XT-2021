@@ -4,10 +4,8 @@
 
 @{
     Layout = "~/Layouts/_OptionPage.cshtml";
-
     Page.Title = "Get all users";
-
-    List<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
+    IEnumerable<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
 
 }
 

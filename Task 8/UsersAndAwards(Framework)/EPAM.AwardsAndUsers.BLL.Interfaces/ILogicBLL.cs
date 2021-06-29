@@ -18,7 +18,7 @@ namespace EPAM.AwardsAndUsers.BLL.Interfaces
 
         bool RemoveRole(string username);
 
-        List<User> GetAllUsers();
+        IEnumerable<User> GetAllUsers();
 
         List<Award> GetAllAwards();
 

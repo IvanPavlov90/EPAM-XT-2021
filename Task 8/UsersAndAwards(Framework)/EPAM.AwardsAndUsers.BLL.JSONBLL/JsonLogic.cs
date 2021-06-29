@@ -68,7 +68,7 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
             return true;
         }
 
-        public List<User> GetAllUsers()
+        public IEnumerable<User> GetAllUsers()
         {
             return _daoLogic.GetAllUsers();
         }
@@ -120,7 +120,7 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
 
         public bool FindUser (string username)
         {
-            List<User> users = _daoLogic.GetAllUsers();
+            IEnumerable<User> users = _daoLogic.GetAllUsers();
             User user = users.FirstOrDefault(item => item.Name == username);
             if (user != null)
                 return true;

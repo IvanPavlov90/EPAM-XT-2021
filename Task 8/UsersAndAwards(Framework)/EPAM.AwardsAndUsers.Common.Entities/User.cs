@@ -10,6 +10,14 @@ namespace EPAM.AwardsAndUsers.Common.Entities
 
         }
 
+        public User(Guid ID, string username, string birthDate, int userAge)
+        {
+            id = ID;
+            Name = username;
+            DateOfBirth = birthDate;
+            Age = userAge;
+        }
+
         public User(string username, DateTime birthDate)
         {
             id = Guid.NewGuid();

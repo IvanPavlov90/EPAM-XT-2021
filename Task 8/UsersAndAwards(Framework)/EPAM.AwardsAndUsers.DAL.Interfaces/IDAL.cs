@@ -25,7 +25,7 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
 
         void RemoveRolesData(string username);
 
-        List<User> GetAllUsers();
+        IEnumerable<User> GetAllUsers();
 
         List<Award> GetAllAwards();
 

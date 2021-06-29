@@ -11,16 +11,33 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
     {
         private static string _connectionString = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
 
-        private static SqlConnection _connection = new SqlConnection(_connectionString);
-
         public List<Award> GetAllAwards()
         {
             throw new NotImplementedException();
         }
 
-        public List<User> GetAllUsers()
+        public IEnumerable<User> GetAllUsers()
         {
-            throw new NotImplementedException();
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                List<User> users = new List<User> { };
+                var procedure_getAllUsers = "GetAllUsers";
+                SqlCommand command = new SqlCommand(procedure_getAllUsers, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                _connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    yield return new User(
+                        ID: (Guid)reader["id"],
+                        username: (string)reader["Name"],
+                        birthDate: (string)reader["BirthDate"],
+                        userAge: (int)reader["Age"]
+                    );
+                }
+            }
         }
 
         public List<AuthData> LoadAuthData()
@@ -105,7 +122,7 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
 
         private bool FindUserByName(string username)
         {
-            using (_connection)
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
             {
                 var procedure_findUserByName = "FindUserByNameFromUsers";
                 SqlCommand command = new SqlCommand(procedure_findUserByName, _connection)
@@ -117,7 +134,7 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
                 var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    if(username == (string)reader[0])
+                    if (username == (string)reader[0])
                     {
                         return true;
                     }
@@ -128,7 +145,7 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
 
         private bool CreateAdmin(User admin)
         {
-            using (_connection)
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
             {
                 var procedure_createAdmin = "CreateAdmin";
                 SqlCommand command = new SqlCommand(procedure_createAdmin, _connection)
@@ -147,17 +164,20 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
 
         private bool CreateAdminRole (User admin)
         {
-            var procedure_createAdminRole = "CreateAdminRole";
-            SqlCommand command = new SqlCommand(procedure_createAdminRole, _connection)
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
             {
-                CommandType = System.Data.CommandType.StoredProcedure
-            };
-            command.Parameters.AddWithValue("@id_User", admin.id);
-            command.Parameters.AddWithValue("@Name", admin.Name);
-            command.Parameters.AddWithValue("@Role", "Administrator");
-            _connection.Open();
-            var result = command.ExecuteNonQuery();
-            return result > 0;
+                var procedure_createAdminRole = "CreateAdminRole";
+                SqlCommand command = new SqlCommand(procedure_createAdminRole, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@id_User", admin.id);
+                command.Parameters.AddWithValue("@Name", admin.Name);
+                command.Parameters.AddWithValue("@Role", "Administrator");
+                _connection.Open();
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+            }
         }
     }
 }

@@ -104,7 +104,7 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             File.Delete(pathToDelete);
         }
 
-        public List<User> GetAllUsers()
+        public IEnumerable<User> GetAllUsers()
         {
             string[] filePath = Directory.GetFiles(_usersFolderPath);
             List<User> users = Deserialize<User>(filePath);
