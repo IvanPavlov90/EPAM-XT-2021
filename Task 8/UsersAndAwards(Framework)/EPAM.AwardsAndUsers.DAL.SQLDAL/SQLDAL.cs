@@ -20,7 +20,6 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
         {
             using (SqlConnection _connection = new SqlConnection(_connectionString))
             {
-                List<User> users = new List<User> { };
                 var procedure_getAllUsers = "GetAllUsers";
                 SqlCommand command = new SqlCommand(procedure_getAllUsers, _connection)
                 {
@@ -40,9 +39,25 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
             }
         }
 
-        public List<AuthData> LoadAuthData()
+        public IEnumerable<AuthData> LoadAuthData()
         {
-            throw new NotImplementedException();
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_getAllAuthData = "GetAllAuthData";
+                SqlCommand command = new SqlCommand(procedure_getAllAuthData, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                _connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    yield return new AuthData(
+                        id: (Guid)reader["id_User"],
+                        hash: (int)reader["Password"]
+                    );
+                }
+            }
         }
 
         public Data LoadData()
@@ -55,10 +70,22 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
             throw new NotImplementedException();
         }
 
-        public void RecordAuthToFile(AuthData newData)
+        public bool RecordAuthToFile(AuthData newData)
         {
-            throw new NotImplementedException();
-        }
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_createAuthorizationData = "CreateAuthData";
+                SqlCommand command = new SqlCommand(procedure_createAuthorizationData, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@id_User", newData.UserID);
+                command.Parameters.AddWithValue("@Password", newData.UserPasswordHash);
+                _connection.Open();
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+            }
+        } 
 
         public void RecordAwardToFile(Award award)
         {
@@ -70,14 +97,40 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
             throw new NotImplementedException();
         }
 
-        public void RecordRolesToFile(RoleData roleData)
+        public bool RecordRolesToFile(RoleData roleData)
         {
-            throw new NotImplementedException();
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_createRole = "CreateRole";
+                SqlCommand command = new SqlCommand(procedure_createRole, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@Name", roleData.Usernames[0]);
+                command.Parameters.AddWithValue("@Role", roleData.RoleNames[0]);
+                _connection.Open();
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+            }
         }
 
-        public void RecordUserToFile(User user)
+        public bool RecordUserToFile(User user)
         {
-            throw new NotImplementedException();
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_createUser = "CreateUser";
+                SqlCommand command = new SqlCommand(procedure_createUser, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@id", user.id);
+                command.Parameters.AddWithValue("@Name", user.Name);
+                command.Parameters.AddWithValue("@BirthDate", user.DateOfBirth);
+                command.Parameters.AddWithValue("@Age", user.Age);
+                _connection.Open();
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+            }
         }
 
         public void RemoveAuthData(Guid id)
@@ -108,13 +161,9 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
                 return true;
             else
             {
-                if (CreateAdmin(user))
-                {
-                    if (CreateAdminRole(user))
-                        return true;
-                    else
-                        return false;
-                }
+                if (RecordUserToFile(user) && RecordRolesToFile(new RoleData(new string[] { user.Name }, new string[] { "Administrator" })) 
+                                           && RecordAuthToFile(new AuthData(user.id, "admin".GetHashCode())))
+                    return true;
                 else
                     return false;
             }
@@ -140,43 +189,6 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
                     }
                 }
                 return false;
-            }
-        }
-
-        private bool CreateAdmin(User admin)
-        {
-            using (SqlConnection _connection = new SqlConnection(_connectionString))
-            {
-                var procedure_createAdmin = "CreateAdmin";
-                SqlCommand command = new SqlCommand(procedure_createAdmin, _connection)
-                {
-                    CommandType = System.Data.CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@id", admin.id);
-                command.Parameters.AddWithValue("@Name", admin.Name);
-                command.Parameters.AddWithValue("@BirthDate", admin.DateOfBirth);
-                command.Parameters.AddWithValue("@Age", admin.Age);
-                _connection.Open();
-                var result = command.ExecuteNonQuery();
-                return result > 0;
-            }
-        }
-
-        private bool CreateAdminRole (User admin)
-        {
-            using (SqlConnection _connection = new SqlConnection(_connectionString))
-            {
-                var procedure_createAdminRole = "CreateAdminRole";
-                SqlCommand command = new SqlCommand(procedure_createAdminRole, _connection)
-                {
-                    CommandType = System.Data.CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@id_User", admin.id);
-                command.Parameters.AddWithValue("@Name", admin.Name);
-                command.Parameters.AddWithValue("@Role", "Administrator");
-                _connection.Open();
-                var result = command.ExecuteNonQuery();
-                return result > 0;
             }
         }
     }

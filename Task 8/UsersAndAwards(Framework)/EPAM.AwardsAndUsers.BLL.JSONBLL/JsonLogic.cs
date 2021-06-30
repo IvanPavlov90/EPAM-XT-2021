@@ -109,7 +109,7 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
 
         public bool AuthUser(int passwordHash)
         {
-            List<AuthData> authData = _daoLogic.LoadAuthData();
+            IEnumerable<AuthData> authData = _daoLogic.LoadAuthData();
             foreach (var item in authData)
             {
                 if (item.UserPasswordHash == passwordHash)

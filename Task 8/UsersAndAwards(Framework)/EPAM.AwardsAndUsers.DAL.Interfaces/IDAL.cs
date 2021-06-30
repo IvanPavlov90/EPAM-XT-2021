@@ -9,13 +9,13 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
 
         bool SetBase();
 
-        void RecordUserToFile(User user);
+        bool RecordUserToFile(User user);
 
         void RecordAwardToFile(Award award);
 
-        void RecordAuthToFile(AuthData newData);
+        bool RecordAuthToFile(AuthData newData);
 
-        void RecordRolesToFile(RoleData roleData);
+        bool RecordRolesToFile(RoleData roleData);
 
         void RemoveUser(Guid id);
 
@@ -33,7 +33,7 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
 
         void RecordData(Data data);
 
-        List<AuthData> LoadAuthData();
+        IEnumerable<AuthData> LoadAuthData();
 
         List<RoleData> LoadRolesData();
     }

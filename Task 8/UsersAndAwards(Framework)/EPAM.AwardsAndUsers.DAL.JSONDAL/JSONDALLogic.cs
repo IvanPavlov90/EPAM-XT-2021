@@ -44,12 +44,13 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             return true;
         }
 
-        public void RecordUserToFile(User user)
+        public bool RecordUserToFile(User user)
         {
             using (StreamWriter writer = new StreamWriter(getFilePath(_usersFolderPath, user.id), false, System.Text.Encoding.UTF8))
             {
                 writer.WriteLine(Serialize(user));
             }
+            return true;
         }
 
         public void RecordAwardToFile(Award award)
@@ -60,20 +61,22 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             }
         }
 
-        public void RecordAuthToFile(AuthData newData)
+        public bool RecordAuthToFile(AuthData newData)
         {
             using (StreamWriter writer = new StreamWriter(getFilePath(_authentificationPath, newData.UserID), false, System.Text.Encoding.UTF8))
             {
                 writer.WriteLine(Serialize(newData));
             }
+            return true;
         }
 
-        public void RecordRolesToFile(RoleData roleData)
+        public bool RecordRolesToFile(RoleData roleData)
         {
             using (StreamWriter writer = new StreamWriter(_rolesPath + roleData.Usernames[0] + ".json", false, System.Text.Encoding.UTF8))
             {
                 writer.WriteLine(Serialize(roleData));
             }
+            return true;
         }
 
         public void RemoveUser(Guid id)
@@ -139,7 +142,7 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             }
         }
 
-        public List<AuthData> LoadAuthData()
+        public IEnumerable<AuthData> LoadAuthData()
         {
             string[] filePath = Directory.GetFiles(_authentificationPath);
             return Deserialize<AuthData>(filePath);

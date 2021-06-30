@@ -25,8 +25,8 @@ namespace EPAM.AwardsAndUsers.Common.Entities
 
         private string[] CheckincomingArray (string[] arr)
         {
-            if (arr.Length == 0)
-                throw new ArgumentException("You can't put empty array here.");
+            if (arr.Length == 0 || arr.Length > 1)
+                throw new ArgumentException("You can't put empty array here or array with more then one element.");
             else return arr;
         }
     }
