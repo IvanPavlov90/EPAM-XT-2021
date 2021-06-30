@@ -31,15 +31,12 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
             _daoLogic.RecordAwardToFile(award);
         }
 
-        public void RemoveUser(Guid id)
+        public void RemoveUser(User user)
         {
-            //Data data = _daoLogic.LoadData();
-            //User user = _daoLogic.GetAllUsers().First(item => item.id == id);
-            //if (data.DataValue.Remove(id))
-            //    _daoLogic.RecordData(data);
-            //_daoLogic.RemoveUser(id);
-            //_daoLogic.RemoveAuthData(id);
-            //_daoLogic.RemoveRolesData(user.Name);
+            _daoLogic.RemoveData(user);
+            _daoLogic.RemoveUser(user.id);
+            _daoLogic.RemoveAuthData(user.id);
+            _daoLogic.RemoveRolesData(user.Name);
         }
 
         public void RemoveAward(Guid id, bool result)

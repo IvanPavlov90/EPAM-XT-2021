@@ -12,7 +12,7 @@ namespace EPAM.AwardsAndUsers.BLL.Interfaces
 
         void AddAward(Award award);
 
-        void RemoveUser(Guid id);
+        void RemoveUser(User user);
 
         void RemoveAward(Guid id, bool userAction);
 

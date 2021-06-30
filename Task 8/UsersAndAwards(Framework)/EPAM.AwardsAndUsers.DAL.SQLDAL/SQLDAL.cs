@@ -201,9 +201,20 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
             }
         }
 
-        public void RemoveAuthData(Guid id)
+        public bool RemoveAuthData(Guid id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_removeAuthData = "RemoveAuthData";
+                SqlCommand command = new SqlCommand(procedure_removeAuthData, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@id", id);
+                _connection.Open();
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+            }
         }
 
         public void RemoveAward(Guid id)
@@ -227,9 +238,36 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
             }
         }
 
-        public void RemoveUser(Guid id)
+        public bool RemoveUser(Guid id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_removeUser = "RemoveUser";
+                SqlCommand command = new SqlCommand(procedure_removeUser, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@id", id);
+                _connection.Open();
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+            }
+        }
+
+        public bool RemoveData (User user)
+        {
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_removeUsersAndAwardsData = "RemoveUserFromUsers_AwardsTable";
+                SqlCommand command = new SqlCommand(procedure_removeUsersAndAwardsData, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@id", user.id);
+                _connection.Open();
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+            }
         }
 
         public bool SetBase()

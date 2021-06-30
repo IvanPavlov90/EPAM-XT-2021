@@ -17,11 +17,13 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
 
         bool RecordRolesToFile(RoleData roleData);
 
-        void RemoveUser(Guid id);
+        bool RemoveUser(Guid id);
 
         void RemoveAward(Guid id);
 
-        void RemoveAuthData(Guid id);
+        bool RemoveAuthData(Guid id);
+
+        bool RemoveData(User user);
 
         bool RemoveRolesData(string username);
 

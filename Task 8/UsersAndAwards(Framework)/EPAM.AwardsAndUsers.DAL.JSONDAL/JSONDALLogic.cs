@@ -80,11 +80,12 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             return true;
         }
 
-        public void RemoveUser(Guid id)
+        public bool RemoveUser(Guid id)
         {
             string[] filePath = Directory.GetFiles(_usersFolderPath);
             string pathToDelete = filePath.FirstOrDefault(item => item == getFilePath(_usersFolderPath, id));
             File.Delete(pathToDelete);
+            return true;
         }
 
         public void RemoveAward(Guid id)
@@ -94,11 +95,12 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             File.Delete(pathToDelete);
         }
 
-        public void RemoveAuthData(Guid id)
+        public bool RemoveAuthData(Guid id)
         {
             string[] filePath = Directory.GetFiles(_authentificationPath);
             string pathToDelete = filePath.FirstOrDefault(item => item == getFilePath(_authentificationPath, id));
             File.Delete(pathToDelete);
+            return true;
         }
 
         public bool RemoveRolesData(string username)
@@ -106,6 +108,14 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             string[] filePath = Directory.GetFiles(_rolesPath);
             string pathToDelete = filePath.FirstOrDefault(item => item == _rolesPath + username + ".json");
             File.Delete(pathToDelete);
+            return true;
+        }
+
+        public bool RemoveData (User user)
+        {
+            Data data = LoadData();
+            if (data.DataValue.Remove(user.id))
+                RecordData(data);
             return true;
         }
 
@@ -140,6 +150,16 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             Data data = LoadData();
             data.AddKey(userID);
             data.AddData(userID, awardID);
+            File.Delete(_dataFilePath);
+            using (StreamWriter writer = new StreamWriter(_dataFilePath, true, System.Text.Encoding.UTF8))
+            {
+                writer.WriteLine(Serialize(data));
+            }
+            return true;
+        }
+
+        public bool RecordData(Data data)
+        {
             File.Delete(_dataFilePath);
             using (StreamWriter writer = new StreamWriter(_dataFilePath, true, System.Text.Encoding.UTF8))
             {
