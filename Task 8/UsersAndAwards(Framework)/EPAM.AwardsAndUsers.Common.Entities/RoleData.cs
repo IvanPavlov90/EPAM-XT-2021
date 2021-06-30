@@ -11,6 +11,12 @@ namespace EPAM.AwardsAndUsers.Common.Entities
 
         }
 
+        public RoleData(string Username, string RoleName)
+        {
+            Usernames = AddToArray(Username);
+            RoleNames = AddToArray(RoleName);
+        }
+
         public RoleData(string[] usernames, string[] roleNames)
         {
             Usernames = CheckincomingArray(usernames);
@@ -28,6 +34,13 @@ namespace EPAM.AwardsAndUsers.Common.Entities
             if (arr.Length == 0 || arr.Length > 1)
                 throw new ArgumentException("You can't put empty array here or array with more then one element.");
             else return arr;
+        }
+
+        private string[] AddToArray (string item)
+        {
+            if (item == null)
+                throw new ArgumentException("String can't be null.");
+            return new string[] { item };
         }
     }
 }

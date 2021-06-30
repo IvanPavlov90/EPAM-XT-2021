@@ -4,13 +4,11 @@
 
 @{
     Layout = "~/Layouts/_OptionPage.cshtml";
-
     Page.Title = "Get all awards";
-
-    List<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
+    IEnumerable<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
 }
 
-@if (awards.Count == 0)
+@if (awards.Count() == 0)
 {
     <div class="alert alert-danger" role="alert">
         You haven't added any awards.

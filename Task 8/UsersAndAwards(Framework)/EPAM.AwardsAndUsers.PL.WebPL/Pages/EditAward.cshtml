@@ -4,11 +4,9 @@
 
 @{
     Layout = "~/Layouts/_OptionPage.cshtml";
-
     Page.Title = "Edit Award";
-
     DataModel dataModel = new DataModel();
-    dataModel.AwardCount = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards().Count;
+    dataModel.AwardCount = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards().Count();
 
     if (IsPost)
     {
@@ -16,11 +14,11 @@
         {
             string awardID = Request["AwardList"];
             Guid id = Guid.Parse(awardID);
-            List<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
-            int awardIndex = awards.FindIndex(item => item.id == id);
+            IEnumerable<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
+            Award award = awards.FirstOrDefault(item => item.id == id);
             string awardTitle = Request["Title"];
-            awards[awardIndex].EdtiTitle(awardTitle);
-            DependencyResolver.Instance.UsersAndAwardsBLL.AddAward(awards[awardIndex]);
+            award.EdtiTitle(awardTitle);
+            DependencyResolver.Instance.UsersAndAwardsBLL.UpdateAward(award);
         }
         catch (Exception e)
         {

@@ -11,7 +11,7 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
 
         bool RecordUserToFile(User user);
 
-        void RecordAwardToFile(Award award);
+        bool RecordAwardToFile(Award award);
 
         bool RecordAuthToFile(AuthData newData);
 
@@ -27,7 +27,7 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
 
         IEnumerable<User> GetAllUsers();
 
-        List<Award> GetAllAwards();
+        IEnumerable<Award> GetAllAwards();
 
         Data LoadData();
 
@@ -35,6 +35,8 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
 
         IEnumerable<AuthData> LoadAuthData();
 
-        List<RoleData> LoadRolesData();
+        IEnumerable<RoleData> LoadRolesData();
+
+        bool UpdateAward(Award award);
     }
 }

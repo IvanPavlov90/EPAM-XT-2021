@@ -23,10 +23,7 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
 
         public void AddUser(User user)
         {
-            Data data = _daoLogic.LoadData();
-            data.AddKey(user.id);
             _daoLogic.RecordUserToFile(user);
-            _daoLogic.RecordData(data);
         }
 
         public void AddAward(Award award)
@@ -74,7 +71,7 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
         }
 
 
-        public List<Award> GetAllAwards()
+        public IEnumerable<Award> GetAllAwards()
         {
             return _daoLogic.GetAllAwards();
         }
@@ -98,6 +95,7 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
         public void RecordData(Guid userID, Guid awardID)
         {
             Data data = _daoLogic.LoadData();
+            data.AddKey(userID);
             data.AddData(userID, awardID);
             _daoLogic.RecordData(data);
         }
@@ -142,6 +140,11 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
         {
             RoleData user = _daoLogic.LoadRolesData().First(item => item.Usernames[0] == username);
             return user.RoleNames;
+        }
+
+        public void UpdateAward(Award award)
+        {
+            _daoLogic.UpdateAward(award);
         }
     }
 }

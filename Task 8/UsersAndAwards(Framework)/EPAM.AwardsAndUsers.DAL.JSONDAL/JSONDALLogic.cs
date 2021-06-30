@@ -53,12 +53,13 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             return true;
         }
 
-        public void RecordAwardToFile(Award award)
+        public bool RecordAwardToFile(Award award)
         {
             using (StreamWriter writer = new StreamWriter(getFilePath(_awardsFolderPath, award.id), false, System.Text.Encoding.UTF8))
             {
                 writer.WriteLine(Serialize(award));
             }
+            return true;
         }
 
         public bool RecordAuthToFile(AuthData newData)
@@ -114,7 +115,7 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             return users;
         }
 
-        public List<Award> GetAllAwards()
+        public IEnumerable<Award> GetAllAwards()
         {
             string[] filePath = Directory.GetFiles(_awardsFolderPath);
             List<Award> awards = Deserialize<Award>(filePath);
@@ -148,16 +149,21 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             return Deserialize<AuthData>(filePath);
         }
 
-        public List<RoleData> LoadRolesData()
+        public IEnumerable<RoleData> LoadRolesData()
         {
             string[] filePath = Directory.GetFiles(_rolesPath);
             return Deserialize<RoleData>(filePath);
         }
 
-        /// <summary>
-        /// This function is for building correct filepath
-        /// </summary>
-        private string getFilePath(string folder, Guid id)
+        public bool UpdateAward(Award award)
+        {
+            return RecordAwardToFile(award);
+        }
+
+            /// <summary>
+            /// This function is for building correct filepath
+            /// </summary>
+            private string getFilePath(string folder, Guid id)
         {
             return folder + id + ".json";
         }

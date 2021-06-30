@@ -10,6 +10,12 @@ namespace EPAM.AwardsAndUsers.Common.Entities
 
         }
 
+        public Award(Guid ID, string awardTitle)
+        {
+            id = ID;
+            Title = checkTitle(awardTitle);
+        }
+
         public Award(string title)
         {
             id = Guid.NewGuid();

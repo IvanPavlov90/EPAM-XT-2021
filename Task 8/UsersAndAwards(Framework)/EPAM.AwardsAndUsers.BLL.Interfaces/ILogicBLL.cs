@@ -20,7 +20,7 @@ namespace EPAM.AwardsAndUsers.BLL.Interfaces
 
         IEnumerable<User> GetAllUsers();
 
-        List<Award> GetAllAwards();
+        IEnumerable<Award> GetAllAwards();
 
         void EditUser(User user);
 
@@ -39,5 +39,7 @@ namespace EPAM.AwardsAndUsers.BLL.Interfaces
         void RecordRoleData(RoleData roleData);
 
         string[] FindRole (string username);
+
+        void UpdateAward(Award award);
     }
 }

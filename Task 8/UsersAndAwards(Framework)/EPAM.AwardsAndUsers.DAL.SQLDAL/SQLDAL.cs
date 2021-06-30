@@ -11,9 +11,25 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
     {
         private static string _connectionString = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
 
-        public List<Award> GetAllAwards()
+        public IEnumerable<Award> GetAllAwards()
         {
-            throw new NotImplementedException();
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_getAllAwards = "GetAllAwards";
+                SqlCommand command = new SqlCommand(procedure_getAllAwards, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                _connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    yield return new Award(
+                        ID: (Guid)reader["id"],
+                        awardTitle: (string)reader["Title"]
+                    );
+                }
+            }
         }
 
         public IEnumerable<User> GetAllUsers()
@@ -65,9 +81,25 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
             throw new NotImplementedException();
         }
 
-        public List<RoleData> LoadRolesData()
+        public IEnumerable<RoleData> LoadRolesData ()
         {
-            throw new NotImplementedException();
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_getRoleByUsername = "getRoles";
+                SqlCommand command = new SqlCommand(procedure_getRoleByUsername, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                _connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    yield return new RoleData(
+                        Username: (string)reader["Name"],
+                        RoleName: (string)reader["Role"]
+                    );
+                }
+            }
         }
 
         public bool RecordAuthToFile(AuthData newData)
@@ -87,9 +119,21 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
             }
         } 
 
-        public void RecordAwardToFile(Award award)
+        public bool RecordAwardToFile(Award award)
         {
-            throw new NotImplementedException();
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_createAward = "CreateAward";
+                SqlCommand command = new SqlCommand(procedure_createAward, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@id", award.id);
+                command.Parameters.AddWithValue("@Title", award.Title);
+                _connection.Open();
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+            }
         }
 
         public void RecordData(Data data)
@@ -166,6 +210,23 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
                     return true;
                 else
                     return false;
+            }
+        }
+
+        public bool UpdateAward(Award award)
+        {
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_updateAward = "UpdateAward";
+                SqlCommand command = new SqlCommand(procedure_updateAward, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@id", award.id);
+                command.Parameters.AddWithValue("@Title", award.Title);
+                _connection.Open();
+                var result = command.ExecuteNonQuery();
+                return result > 0;
             }
         }
 
