@@ -78,7 +78,19 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
 
         public Data LoadData()
         {
-            throw new NotImplementedException();
+            IEnumerable<AwardAndUsersData> allData = LoadAwardsAndUsers();
+            Data data = new Data();
+            foreach (var item in allData)
+            {
+                if (data.DataValue.ContainsKey(item.UserID))
+                    data.AddData(item.UserID, item.AwardID);
+                else
+                {
+                    data.AddKey(item.UserID);
+                    data.AddData(item.UserID, item.AwardID);
+                }
+            }
+            return data;
         }
 
         public IEnumerable<RoleData> LoadRolesData ()
@@ -292,6 +304,27 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
                     }
                 }
                 return false;
+            }
+        }
+
+        private IEnumerable<AwardAndUsersData> LoadAwardsAndUsers ()
+        {
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_getAllAwardsAndUsersData = "GetAllAwardsAndUsers";
+                SqlCommand command = new SqlCommand(procedure_getAllAwardsAndUsersData, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                _connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    yield return new AwardAndUsersData(
+                        userid: (Guid)reader[0],
+                        awardid: (Guid)reader[1]
+                    );
+                }
             }
         }
     }
