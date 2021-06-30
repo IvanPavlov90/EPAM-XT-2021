@@ -101,11 +101,12 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             File.Delete(pathToDelete);
         }
 
-        public void RemoveRolesData(string username)
+        public bool RemoveRolesData(string username)
         {
             string[] filePath = Directory.GetFiles(_rolesPath);
             string pathToDelete = filePath.FirstOrDefault(item => item == _rolesPath + username + ".json");
             File.Delete(pathToDelete);
+            return true;
         }
 
         public IEnumerable<User> GetAllUsers()
@@ -134,13 +135,17 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             }
         }
 
-        public void RecordData(Data data)
+        public bool RecordData(Guid userID, Guid awardID)
         {
+            Data data = LoadData();
+            data.AddKey(userID);
+            data.AddData(userID, awardID);
             File.Delete(_dataFilePath);
             using (StreamWriter writer = new StreamWriter(_dataFilePath, true, System.Text.Encoding.UTF8))
             {
                 writer.WriteLine(Serialize(data));
             }
+            return true;
         }
 
         public IEnumerable<AuthData> LoadAuthData()
@@ -160,10 +165,15 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             return RecordAwardToFile(award);
         }
 
-            /// <summary>
-            /// This function is for building correct filepath
-            /// </summary>
-            private string getFilePath(string folder, Guid id)
+        public bool UpdateUser(User user)
+        {
+            return RecordUserToFile(user);
+        }
+
+        /// <summary>
+        /// This function is for building correct filepath
+        /// </summary>
+        private string getFilePath(string folder, Guid id)
         {
             return folder + id + ".json";
         }

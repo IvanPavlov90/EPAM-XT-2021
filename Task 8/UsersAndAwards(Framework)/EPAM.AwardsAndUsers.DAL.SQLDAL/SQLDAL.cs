@@ -136,9 +136,21 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
             }
         }
 
-        public void RecordData(Data data)
+        public bool RecordData(Guid userID, Guid awardID)
         {
-            throw new NotImplementedException();
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_addAwardToUser = "AddAwardToUser";
+                SqlCommand command = new SqlCommand(procedure_addAwardToUser, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@id_User", userID);
+                command.Parameters.AddWithValue("@id_Award", awardID);
+                _connection.Open();
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+            }
         }
 
         public bool RecordRolesToFile(RoleData roleData)
@@ -187,9 +199,20 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
             throw new NotImplementedException();
         }
 
-        public void RemoveRolesData(string username)
+        public bool RemoveRolesData(string username)
         {
-            throw new NotImplementedException();
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_removeRole = "RemoveRole";
+                SqlCommand command = new SqlCommand(procedure_removeRole, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@Name", username);
+                _connection.Open();
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+            }
         }
 
         public void RemoveUser(Guid id)
@@ -224,6 +247,25 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
                 };
                 command.Parameters.AddWithValue("@id", award.id);
                 command.Parameters.AddWithValue("@Title", award.Title);
+                _connection.Open();
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+            }
+        }
+
+        public bool UpdateUser(User user)
+        {
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_updateUser = "UpdateUser";
+                SqlCommand command = new SqlCommand(procedure_updateUser, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@id", user.id);
+                command.Parameters.AddWithValue("@Name", user.Name);
+                command.Parameters.AddWithValue("@BirthDate", user.DateOfBirth);
+                command.Parameters.AddWithValue("@Age", user.Age);
                 _connection.Open();
                 var result = command.ExecuteNonQuery();
                 return result > 0;

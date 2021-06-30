@@ -4,11 +4,9 @@
 
 @{
     Layout = "~/Layouts/_OptionPage.cshtml";
-
     Page.Title = "Remove Award";
-
     DataModel dataModel = new DataModel();
-    dataModel.AwardCount = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards().Count;
+    dataModel.AwardCount = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards().Count();
 
     if (IsPost)
     {

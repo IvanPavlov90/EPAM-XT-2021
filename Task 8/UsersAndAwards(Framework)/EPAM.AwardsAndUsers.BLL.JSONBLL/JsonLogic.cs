@@ -33,30 +33,30 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
 
         public void RemoveUser(Guid id)
         {
-            Data data = _daoLogic.LoadData();
-            User user = _daoLogic.GetAllUsers().First(item => item.id == id);
-            if (data.DataValue.Remove(id))
-                _daoLogic.RecordData(data);
-            _daoLogic.RemoveUser(id);
-            _daoLogic.RemoveAuthData(id);
-            _daoLogic.RemoveRolesData(user.Name);
+            //Data data = _daoLogic.LoadData();
+            //User user = _daoLogic.GetAllUsers().First(item => item.id == id);
+            //if (data.DataValue.Remove(id))
+            //    _daoLogic.RecordData(data);
+            //_daoLogic.RemoveUser(id);
+            //_daoLogic.RemoveAuthData(id);
+            //_daoLogic.RemoveRolesData(user.Name);
         }
 
         public void RemoveAward(Guid id, bool result)
         {
-            if (result == true)
-            {
-                Data data = _daoLogic.LoadData();
-                foreach (var item in data.DataValue)
-                {
-                    if (item.Value.Contains(id))
-                        item.Value.Remove(id);
-                }
-                _daoLogic.RecordData(data);
-                _daoLogic.RemoveAward(id);
-            }
-            else if (result == false)
-                _daoLogic.RemoveAward(id);
+            //if (result == true)
+            //{
+            //    Data data = _daoLogic.LoadData();
+            //    foreach (var item in data.DataValue)
+            //    {
+            //        if (item.Value.Contains(id))
+            //            item.Value.Remove(id);
+            //    }
+            //    _daoLogic.RecordData(data);
+            //    _daoLogic.RemoveAward(id);
+            //}
+            //else if (result == false)
+            //    _daoLogic.RemoveAward(id);
         }
 
         public bool RemoveRole(string username)
@@ -78,7 +78,7 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
 
         public void EditUser(User user)
         {
-            _daoLogic.RecordUserToFile(user);
+            _daoLogic.UpdateUser(user);
         }
 
         public bool CheckUsersHasAward(Guid id)
@@ -94,10 +94,7 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
 
         public void RecordData(Guid userID, Guid awardID)
         {
-            Data data = _daoLogic.LoadData();
-            data.AddKey(userID);
-            data.AddData(userID, awardID);
-            _daoLogic.RecordData(data);
+            _daoLogic.RecordData(userID, awardID);
         }
 
         public Data LoadData()

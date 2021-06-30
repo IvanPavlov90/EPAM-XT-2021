@@ -23,7 +23,7 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
 
         void RemoveAuthData(Guid id);
 
-        void RemoveRolesData(string username);
+        bool RemoveRolesData(string username);
 
         IEnumerable<User> GetAllUsers();
 
@@ -31,12 +31,14 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
 
         Data LoadData();
 
-        void RecordData(Data data);
+        bool RecordData(Guid userID, Guid awardID);
 
         IEnumerable<AuthData> LoadAuthData();
 
         IEnumerable<RoleData> LoadRolesData();
 
         bool UpdateAward(Award award);
+
+        bool UpdateUser(User user);
     }
 }
