@@ -69,8 +69,8 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
                 while (reader.Read())
                 {
                     yield return new AuthData(
-                        id: (Guid)reader["id_User"],
-                        hash: (int)reader["Password"]
+                        id: (Guid)reader[0],
+                        hash: (int)reader[1]
                     );
                 }
             }
@@ -165,6 +165,22 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
             }
         }
 
+        public bool RemoveAwardFromTableWithUsersAndAwards(Guid id)
+        {
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_removeAwardFromUsersAndAwards = "RemoveAwardFromUsers_AwardsTable";
+                SqlCommand command = new SqlCommand(procedure_removeAwardFromUsersAndAwards, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@id", id);
+                _connection.Open();
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+            }
+        }
+
         public bool RecordRolesToFile(RoleData roleData)
         {
             using (SqlConnection _connection = new SqlConnection(_connectionString))
@@ -217,9 +233,20 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
             }
         }
 
-        public void RemoveAward(Guid id)
+        public bool RemoveAward(Guid id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection _connection = new SqlConnection(_connectionString))
+            {
+                var procedure_removeAward = "RemoveAward";
+                SqlCommand command = new SqlCommand(procedure_removeAward, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@id", id);
+                _connection.Open();
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+            }
         }
 
         public bool RemoveRolesData(string username)

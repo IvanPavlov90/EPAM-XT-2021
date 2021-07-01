@@ -19,13 +19,15 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
 
         bool RemoveUser(Guid id);
 
-        void RemoveAward(Guid id);
+        bool RemoveAward(Guid id);
 
         bool RemoveAuthData(Guid id);
 
         bool RemoveData(User user);
 
         bool RemoveRolesData(string username);
+
+        bool RemoveAwardFromTableWithUsersAndAwards(Guid id);
 
         IEnumerable<User> GetAllUsers();
 

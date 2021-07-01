@@ -88,11 +88,12 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             return true;
         }
 
-        public void RemoveAward(Guid id)
+        public bool RemoveAward(Guid id)
         {
             string[] filePath = Directory.GetFiles(_awardsFolderPath);
             string pathToDelete = filePath.FirstOrDefault(item => item == getFilePath(_awardsFolderPath, id));
             File.Delete(pathToDelete);
+            return true;
         }
 
         public bool RemoveAuthData(Guid id)
@@ -158,13 +159,15 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             return true;
         }
 
-        public bool RecordData(Data data)
+        public bool RemoveAwardFromTableWithUsersAndAwards(Guid id)
         {
-            File.Delete(_dataFilePath);
-            using (StreamWriter writer = new StreamWriter(_dataFilePath, true, System.Text.Encoding.UTF8))
+            Data data = LoadData();
+            foreach (var item in data.DataValue)
             {
-                writer.WriteLine(Serialize(data));
+                if (item.Value.Contains(id))
+                    item.Value.Remove(id);
             }
+            RecordData(data);
             return true;
         }
 
@@ -237,6 +240,16 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
                 content = reader.ReadToEnd();
             }
             return content;
+        }
+
+        private bool RecordData (Data data)
+        {
+            File.Delete(_dataFilePath);
+            using (StreamWriter writer = new StreamWriter(_dataFilePath, true, System.Text.Encoding.UTF8))
+            {
+                writer.WriteLine(Serialize(data));
+            }
+            return true;
         }
     }
 }

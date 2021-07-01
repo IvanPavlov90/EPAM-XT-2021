@@ -41,19 +41,13 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
 
         public void RemoveAward(Guid id, bool result)
         {
-            //if (result == true)
-            //{
-            //    Data data = _daoLogic.LoadData();
-            //    foreach (var item in data.DataValue)
-            //    {
-            //        if (item.Value.Contains(id))
-            //            item.Value.Remove(id);
-            //    }
-            //    _daoLogic.RecordData(data);
-            //    _daoLogic.RemoveAward(id);
-            //}
-            //else if (result == false)
-            //    _daoLogic.RemoveAward(id);
+            if (result == true)
+            {
+                _daoLogic.RemoveAwardFromTableWithUsersAndAwards(id);
+                _daoLogic.RemoveAward(id);
+            }
+            else if (result == false)
+                _daoLogic.RemoveAward(id);
         }
 
         public bool RemoveRole(string username)
