@@ -178,6 +178,7 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
                 _connection.Open();
                 var result = command.ExecuteNonQuery();
                 return result > 0;
+                throw new InvalidOperationException("Cannot find Award with such ID = " + id);
             }
         }
 
@@ -230,6 +231,7 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
                 _connection.Open();
                 var result = command.ExecuteNonQuery();
                 return result > 0;
+                throw new InvalidOperationException("Cannot find User with such ID = " + id);
             }
         }
 
@@ -246,6 +248,7 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
                 _connection.Open();
                 var result = command.ExecuteNonQuery();
                 return result > 0;
+                throw new InvalidOperationException("Cannot find Award with such ID = " + id);
             }
         }
 
@@ -262,6 +265,7 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
                 _connection.Open();
                 var result = command.ExecuteNonQuery();
                 return result > 0;
+                throw new InvalidOperationException("Cannot find User with such username = " + username);
             }
         }
 
@@ -278,6 +282,7 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
                 _connection.Open();
                 var result = command.ExecuteNonQuery();
                 return result > 0;
+                throw new InvalidOperationException("Cannot find User with such ID = " + id);
             }
         }
 
@@ -294,6 +299,7 @@ namespace EPAM.AwardsAndUsers.DAL.SQLDAL
                 _connection.Open();
                 var result = command.ExecuteNonQuery();
                 return result > 0;
+                throw new InvalidOperationException("Cannot find User with such ID = " + id);
             }
         }
 

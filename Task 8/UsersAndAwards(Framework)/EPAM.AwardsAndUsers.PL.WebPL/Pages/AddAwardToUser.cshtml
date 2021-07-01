@@ -14,7 +14,6 @@
             string awardID = Request["AwardList"];
             Guid awardid = Guid.Parse(awardID);
             DependencyResolver.Instance.UsersAndAwardsBLL.RecordData(userid, awardid);
-
         }
         catch (Exception e)
         {

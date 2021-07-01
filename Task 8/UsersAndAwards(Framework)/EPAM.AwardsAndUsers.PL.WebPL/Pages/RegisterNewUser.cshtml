@@ -35,6 +35,9 @@
 }
 
 <h3>Registry Form. Please enter your name and password</h3>
+<div class="alert alert-info" role="alert">
+    Password should contains at least one letter and one digit.
+</div>
 <form id="userForm" method="post">
     <div class="mb-3">
         <label for="username" class="form-label">Username</label>
@@ -48,17 +51,43 @@
         <label for="password" class="form-label">Password</label>
         <input name="password" type="password" class="form-control" id="password" required>
     </div>
-    <button type="submit" class="btn btn-primary">Register</button>
+    <div id="formBtn">
+
+    </div>
 </form>
+<div id="info">
+
+</div>
 @if (dataModel.UserAlreadyHasBeenCreated == true)
 {
     <div class="alert alert-info" role="alert">
         User with such nickname has already been created, please change your nickname.
     </div>
 }
-@if (IsPost && (!help.CheckAuthParametres(Request["username"]) || !help.CheckAuthParametres(Request["password"])))
-{
-    <div class="alert alert-info" role="alert">
-        You have entered empty username or password!
-    </div>
-}
+
+<script type="text/javascript">
+    let birthdateregExp = new RegExp(/^(\d{2}.{1}){2}\d{4}$/);
+    let passwordExp = new RegExp(/\d{1}(?=[A-Za-z])|[A-Za-z]{1}(?=\d)/);
+    let usernameExp = new RegExp(/^\w+$/);
+    let userForm = document.getElementById("userForm");
+    let formBtn = document.getElementById("formBtn");
+    let infoDiv = document.getElementById("info");
+    userForm.addEventListener("keyup", () => {
+        if (birthdateregExp.test(userForm.birthdate.value) && passwordExp.test(userForm.password.value)
+            && usernameExp.test(userForm.password.value)) {
+            formBtn.innerHTML = "";
+            formBtn.insertAdjacentHTML("afterbegin", `
+                <button type="submit" class="btn btn-primary">Submit</button>
+            `)
+            infoDiv.innerHTML = "";
+        } else {
+            infoDiv.innerHTML = "";
+            formBtn.innerHTML = "";
+            infoDiv.insertAdjacentHTML("afterbegin", `
+                <div class="alert alert-info" role="alert">
+                    Please fill in all required fields.
+                </div>
+            `)
+        }
+    })
+</script>

@@ -92,7 +92,7 @@
 
 <script type="text/javascript">
     let birthdateregExp = new RegExp(/^(\d{2}.{1}){2}\d{4}$/);
-    let passwordExp = new RegExp(/\d[A-Za-z]/);
+    let passwordExp = new RegExp(/\d{1}(?=[A-Za-z])|[A-Za-z]{1}(?=\d)/);
     let usernameExp = new RegExp(/^\w+$/);
     let userForm = document.getElementById("userForm");
     let formBtn = document.getElementById("formBtn");
@@ -110,7 +110,7 @@
             formBtn.innerHTML = "";
             infoDiv.insertAdjacentHTML("afterbegin", `
                 <div class="alert alert-info" role="alert">
-                    Your data isn't valid
+                    Please fill in all required fields.
                 </div>
             `)
         }
