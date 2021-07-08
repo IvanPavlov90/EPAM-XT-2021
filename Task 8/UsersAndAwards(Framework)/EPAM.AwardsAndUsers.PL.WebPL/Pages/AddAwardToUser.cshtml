@@ -4,9 +4,7 @@
 
 @{
     Layout = "~/Layouts/_OptionPage.cshtml";
-
     Page.Title = "Add award to user";
-
     if (IsPost)
     {
         try
@@ -16,7 +14,6 @@
             string awardID = Request["AwardList"];
             Guid awardid = Guid.Parse(awardID);
             DependencyResolver.Instance.UsersAndAwardsBLL.RecordData(userid, awardid);
-
         }
         catch (Exception e)
         {

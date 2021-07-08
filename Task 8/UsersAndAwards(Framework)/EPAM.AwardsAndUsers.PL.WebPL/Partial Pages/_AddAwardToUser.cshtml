@@ -1,11 +1,11 @@
 ﻿@using EPAM.AwardsAndUsers.Common.Dependencies;
 @using EPAM.AwardsAndUsers.Common.Entities;
 @{
-    List<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
-    List<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
+    IEnumerable<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
+    IEnumerable<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
 }
 
-@if (awards.Count == 0 || users.Count == 0)
+@if (awards.Count() == 0 || users.Count() == 0)
 {
 <form method="post">
     <div class="mb-3">

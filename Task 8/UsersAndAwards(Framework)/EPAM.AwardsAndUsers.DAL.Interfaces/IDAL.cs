@@ -7,34 +7,42 @@ namespace EPAM.AwardsAndUsers.DAL.Interfaces
     public interface IDAL
     {
 
-        void SetBase();
+        bool SetBase();
 
-        void RecordUserToFile(User user);
+        bool RecordUserToFile(User user);
 
-        void RecordAwardToFile(Award award);
+        bool RecordAwardToFile(Award award);
 
-        void RecordAuthToFile(AuthData newData);
+        bool RecordAuthToFile(AuthData newData);
 
-        void RecordRolesToFile(RoleData roleData);
+        bool RecordRolesToFile(RoleData roleData);
 
-        void RemoveUser(Guid id);
+        bool RemoveUser(Guid id);
 
-        void RemoveAward(Guid id);
+        bool RemoveAward(Guid id);
 
-        void RemoveAuthData(Guid id);
+        bool RemoveAuthData(Guid id);
 
-        void RemoveRolesData(string username);
+        bool RemoveData(User user);
 
-        List<User> GetAllUsers();
+        bool RemoveRolesData(string username);
 
-        List<Award> GetAllAwards();
+        bool RemoveAwardFromTableWithUsersAndAwards(Guid id);
+
+        IEnumerable<User> GetAllUsers();
+
+        IEnumerable<Award> GetAllAwards();
 
         Data LoadData();
 
-        void RecordData(Data data);
+        bool RecordData(Guid userID, Guid awardID);
 
-        List<AuthData> LoadAuthData();
+        IEnumerable<AuthData> LoadAuthData();
 
-        List<RoleData> LoadRolesData();
+        IEnumerable<RoleData> LoadRolesData();
+
+        bool UpdateAward(Award award);
+
+        bool UpdateUser(User user);
     }
 }

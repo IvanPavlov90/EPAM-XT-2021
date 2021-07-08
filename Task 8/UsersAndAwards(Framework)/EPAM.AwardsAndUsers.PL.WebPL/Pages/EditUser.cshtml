@@ -6,7 +6,7 @@
     Layout = "~/Layouts/_OptionPage.cshtml";
     Page.Title = "Edit User";
     InputHelper help = new InputHelper();
-    List<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
+    IEnumerable<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
 
     if (IsPost)
     {
@@ -14,15 +14,15 @@
         {
             string userID = Request["UserList"];
             Guid id = Guid.Parse(userID);
-            int userIndex = users.FindIndex(item => item.id == id);
+            User user = users.FirstOrDefault(item => item.id == id);
             string username = Request["username"];
             DateTime birthdate = help.InputDate(Request["birthdate"]);
             if (help.CheckAuthParametres(username))
             {
-                if (DependencyResolver.Instance.UsersAndAwardsBLL.RemoveRole(users[userIndex].Name))
+                if (DependencyResolver.Instance.UsersAndAwardsBLL.RemoveRole(user.Name))
                 {
-                    users[userIndex].EditUser(username, birthdate);
-                    DependencyResolver.Instance.UsersAndAwardsBLL.EditUser(users[userIndex]);
+                    user.EditUser(username, birthdate);
+                    DependencyResolver.Instance.UsersAndAwardsBLL.EditUser(user);
                     AppRoles approle = new AppRoles();
                     string isAdmin = Request["isUserAdmin"];
                     if (isAdmin == "on")
@@ -59,7 +59,7 @@
         <input name="isUserAdmin" type="checkbox" class="form-check-input" id="isUserAdmin">
         <label class="form-check-label" for="isUserAdmin">Admin</label>
     </div>
-    @if (users.Count != 0)
+    @if (users.Count() != 0)
     {
         <button id="editUser" tupe="submit" class="btn btn-primary">Edit User</button>
     }

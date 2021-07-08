@@ -23,10 +23,7 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
 
         public void AddUser(User user)
         {
-            Data data = _daoLogic.LoadData();
-            data.AddKey(user.id);
             _daoLogic.RecordUserToFile(user);
-            _daoLogic.RecordData(data);
         }
 
         public void AddAward(Award award)
@@ -34,14 +31,11 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
             _daoLogic.RecordAwardToFile(award);
         }
 
-        public void RemoveUser(Guid id)
+        public void RemoveUser(User user)
         {
-            Data data = _daoLogic.LoadData();
-            User user = _daoLogic.GetAllUsers().First(item => item.id == id);
-            if (data.DataValue.Remove(id))
-                _daoLogic.RecordData(data);
-            _daoLogic.RemoveUser(id);
-            _daoLogic.RemoveAuthData(id);
+            _daoLogic.RemoveData(user);
+            _daoLogic.RemoveUser(user.id);
+            _daoLogic.RemoveAuthData(user.id);
             _daoLogic.RemoveRolesData(user.Name);
         }
 
@@ -49,13 +43,7 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
         {
             if (result == true)
             {
-                Data data = _daoLogic.LoadData();
-                foreach (var item in data.DataValue)
-                {
-                    if (item.Value.Contains(id))
-                        item.Value.Remove(id);
-                }
-                _daoLogic.RecordData(data);
+                _daoLogic.RemoveAwardFromTableWithUsersAndAwards(id);
                 _daoLogic.RemoveAward(id);
             }
             else if (result == false)
@@ -68,20 +56,20 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
             return true;
         }
 
-        public List<User> GetAllUsers()
+        public IEnumerable<User> GetAllUsers()
         {
             return _daoLogic.GetAllUsers();
         }
 
 
-        public List<Award> GetAllAwards()
+        public IEnumerable<Award> GetAllAwards()
         {
             return _daoLogic.GetAllAwards();
         }
 
         public void EditUser(User user)
         {
-            _daoLogic.RecordUserToFile(user);
+            _daoLogic.UpdateUser(user);
         }
 
         public bool CheckUsersHasAward(Guid id)
@@ -97,9 +85,7 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
 
         public void RecordData(Guid userID, Guid awardID)
         {
-            Data data = _daoLogic.LoadData();
-            data.AddData(userID, awardID);
-            _daoLogic.RecordData(data);
+            _daoLogic.RecordData(userID, awardID);
         }
 
         public Data LoadData()
@@ -109,7 +95,7 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
 
         public bool AuthUser(int passwordHash)
         {
-            List<AuthData> authData = _daoLogic.LoadAuthData();
+            IEnumerable<AuthData> authData = _daoLogic.LoadAuthData();
             foreach (var item in authData)
             {
                 if (item.UserPasswordHash == passwordHash)
@@ -120,7 +106,7 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
 
         public bool FindUser (string username)
         {
-            List<User> users = _daoLogic.GetAllUsers();
+            IEnumerable<User> users = _daoLogic.GetAllUsers();
             User user = users.FirstOrDefault(item => item.Name == username);
             if (user != null)
                 return true;
@@ -142,6 +128,11 @@ namespace EPAM.AwardsAndUsers.BLL.JSONBLL
         {
             RoleData user = _daoLogic.LoadRolesData().First(item => item.Usernames[0] == username);
             return user.RoleNames;
+        }
+
+        public void UpdateAward(Award award)
+        {
+            _daoLogic.UpdateAward(award);
         }
     }
 }

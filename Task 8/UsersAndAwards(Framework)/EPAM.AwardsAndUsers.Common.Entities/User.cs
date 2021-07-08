@@ -10,6 +10,14 @@ namespace EPAM.AwardsAndUsers.Common.Entities
 
         }
 
+        public User(Guid ID, string username, string birthDate, int userAge)
+        {
+            id = ID;
+            Name = username;
+            DateOfBirth = birthDate;
+            Age = userAge;
+        }
+
         public User(string username, DateTime birthDate)
         {
             id = Guid.NewGuid();
@@ -39,7 +47,7 @@ namespace EPAM.AwardsAndUsers.Common.Entities
 
         private string checkUsername(string username)
         {
-            if (username.Trim().Length == 0 || username == String.Empty)
+            if (username.Trim().Length == 0 || username == String.Empty || username == null)
             {
                 throw new ArgumentException($"You can't put empty or white space string into username");
             }

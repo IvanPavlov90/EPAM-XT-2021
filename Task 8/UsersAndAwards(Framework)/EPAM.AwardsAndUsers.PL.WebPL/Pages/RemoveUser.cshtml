@@ -4,11 +4,8 @@
 
 @{
     Layout = "~/Layouts/_OptionPage.cshtml";
-
     Page.Title = "RemoveUser";
-
     DataModel dataModel = new DataModel();
-
     dataModel.DeletingAdministrator = false;
 
     if (IsPost)
@@ -17,14 +14,14 @@
         {
             string userID = Request["UserList"];
             Guid id = Guid.Parse(userID);
-            List<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
+            IEnumerable<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
             User user = users.FirstOrDefault(item => item.id == id);
             if (user.Name == "Administrator")
             {
                 dataModel.DeletingAdministrator = true;
             } else
             {
-                DependencyResolver.Instance.UsersAndAwardsBLL.RemoveUser(id);
+                DependencyResolver.Instance.UsersAndAwardsBLL.RemoveUser(user);
             }
         }
         catch (Exception e)

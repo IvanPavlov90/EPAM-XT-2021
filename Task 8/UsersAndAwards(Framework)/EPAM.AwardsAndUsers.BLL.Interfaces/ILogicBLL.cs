@@ -12,15 +12,15 @@ namespace EPAM.AwardsAndUsers.BLL.Interfaces
 
         void AddAward(Award award);
 
-        void RemoveUser(Guid id);
+        void RemoveUser(User user);
 
         void RemoveAward(Guid id, bool userAction);
 
         bool RemoveRole(string username);
 
-        List<User> GetAllUsers();
+        IEnumerable<User> GetAllUsers();
 
-        List<Award> GetAllAwards();
+        IEnumerable<Award> GetAllAwards();
 
         void EditUser(User user);
 
@@ -39,5 +39,7 @@ namespace EPAM.AwardsAndUsers.BLL.Interfaces
         void RecordRoleData(RoleData roleData);
 
         string[] FindRole (string username);
+
+        void UpdateAward(Award award);
     }
 }

@@ -2,12 +2,10 @@
 @using EPAM.AwardsAndUsers.Common.Entities;
 @using EPAM.AwardsAndUsers.PL.WebPL.Models;
 @{
-    List<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
-    DataModel dataModel = new DataModel();
-    dataModel.AwardCount = awards.Count;
+    IEnumerable<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
 }
 
-@if (awards.Count == 0)
+@if (awards.Count() == 0)
 {
      <label for="disabledSelect" class="form-label">Select award</label>
      <select id="disabledSelect" class="form-select" name="AwardList" disabled>

@@ -6,14 +6,12 @@
     Layout = "~/Layouts/_OptionPage.cshtml";
 
     Page.Title = "Get all awards";
-
-    List<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
-    List<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
+    IEnumerable<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
+    IEnumerable<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
     Data data = DependencyResolver.Instance.UsersAndAwardsBLL.LoadData();
-
 }
 
-@if (awards.Count == 0 || users.Count == 0)
+@if (awards.Count() == 0 || users.Count() == 0)
 {
     <div class="alert alert-danger" role="alert">
         You haven't added any awards or users.

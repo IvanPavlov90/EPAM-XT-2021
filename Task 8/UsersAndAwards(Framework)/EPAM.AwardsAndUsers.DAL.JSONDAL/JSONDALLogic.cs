@@ -20,7 +20,7 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
 
         private string _rolesPath = AppDomain.CurrentDomain.BaseDirectory + @"\Files\Roles\";
 
-        public void SetBase()
+        public bool SetBase()
         {
             User user = new User("Administrator", new DateTime(1990, 5, 11));
             if (!Directory.Exists(_usersFolderPath))
@@ -41,76 +41,93 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
                 Directory.CreateDirectory(_rolesPath);
                 RecordRolesToFile(new RoleData(new string[] { "Administrator" }, new string[] { "Administrator" }));
             }
+            return true;
         }
 
-        public void RecordUserToFile(User user)
+        public bool RecordUserToFile(User user)
         {
             using (StreamWriter writer = new StreamWriter(getFilePath(_usersFolderPath, user.id), false, System.Text.Encoding.UTF8))
             {
                 writer.WriteLine(Serialize(user));
             }
+            return true;
         }
 
-        public void RecordAwardToFile(Award award)
+        public bool RecordAwardToFile(Award award)
         {
             using (StreamWriter writer = new StreamWriter(getFilePath(_awardsFolderPath, award.id), false, System.Text.Encoding.UTF8))
             {
                 writer.WriteLine(Serialize(award));
             }
+            return true;
         }
 
-        public void RecordAuthToFile(AuthData newData)
+        public bool RecordAuthToFile(AuthData newData)
         {
             using (StreamWriter writer = new StreamWriter(getFilePath(_authentificationPath, newData.UserID), false, System.Text.Encoding.UTF8))
             {
                 writer.WriteLine(Serialize(newData));
             }
+            return true;
         }
 
-        public void RecordRolesToFile(RoleData roleData)
+        public bool RecordRolesToFile(RoleData roleData)
         {
             using (StreamWriter writer = new StreamWriter(_rolesPath + roleData.Usernames[0] + ".json", false, System.Text.Encoding.UTF8))
             {
                 writer.WriteLine(Serialize(roleData));
             }
+            return true;
         }
 
-        public void RemoveUser(Guid id)
+        public bool RemoveUser(Guid id)
         {
             string[] filePath = Directory.GetFiles(_usersFolderPath);
             string pathToDelete = filePath.FirstOrDefault(item => item == getFilePath(_usersFolderPath, id));
             File.Delete(pathToDelete);
+            return true;
         }
 
-        public void RemoveAward(Guid id)
+        public bool RemoveAward(Guid id)
         {
             string[] filePath = Directory.GetFiles(_awardsFolderPath);
             string pathToDelete = filePath.FirstOrDefault(item => item == getFilePath(_awardsFolderPath, id));
             File.Delete(pathToDelete);
+            return true;
         }
 
-        public void RemoveAuthData(Guid id)
+        public bool RemoveAuthData(Guid id)
         {
             string[] filePath = Directory.GetFiles(_authentificationPath);
             string pathToDelete = filePath.FirstOrDefault(item => item == getFilePath(_authentificationPath, id));
             File.Delete(pathToDelete);
+            return true;
         }
 
-        public void RemoveRolesData(string username)
+        public bool RemoveRolesData(string username)
         {
             string[] filePath = Directory.GetFiles(_rolesPath);
             string pathToDelete = filePath.FirstOrDefault(item => item == _rolesPath + username + ".json");
             File.Delete(pathToDelete);
+            return true;
         }
 
-        public List<User> GetAllUsers()
+        public bool RemoveData (User user)
+        {
+            Data data = LoadData();
+            if (data.DataValue.Remove(user.id))
+                RecordData(data);
+            return true;
+        }
+
+        public IEnumerable<User> GetAllUsers()
         {
             string[] filePath = Directory.GetFiles(_usersFolderPath);
             List<User> users = Deserialize<User>(filePath);
             return users;
         }
 
-        public List<Award> GetAllAwards()
+        public IEnumerable<Award> GetAllAwards()
         {
             string[] filePath = Directory.GetFiles(_awardsFolderPath);
             List<Award> awards = Deserialize<Award>(filePath);
@@ -129,25 +146,51 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
             }
         }
 
-        public void RecordData(Data data)
+        public bool RecordData(Guid userID, Guid awardID)
         {
+            Data data = LoadData();
+            data.AddKey(userID);
+            data.AddData(userID, awardID);
             File.Delete(_dataFilePath);
             using (StreamWriter writer = new StreamWriter(_dataFilePath, true, System.Text.Encoding.UTF8))
             {
                 writer.WriteLine(Serialize(data));
             }
+            return true;
         }
 
-        public List<AuthData> LoadAuthData()
+        public bool RemoveAwardFromTableWithUsersAndAwards(Guid id)
+        {
+            Data data = LoadData();
+            foreach (var item in data.DataValue)
+            {
+                if (item.Value.Contains(id))
+                    item.Value.Remove(id);
+            }
+            RecordData(data);
+            return true;
+        }
+
+        public IEnumerable<AuthData> LoadAuthData()
         {
             string[] filePath = Directory.GetFiles(_authentificationPath);
             return Deserialize<AuthData>(filePath);
         }
 
-        public List<RoleData> LoadRolesData()
+        public IEnumerable<RoleData> LoadRolesData()
         {
             string[] filePath = Directory.GetFiles(_rolesPath);
             return Deserialize<RoleData>(filePath);
+        }
+
+        public bool UpdateAward(Award award)
+        {
+            return RecordAwardToFile(award);
+        }
+
+        public bool UpdateUser(User user)
+        {
+            return RecordUserToFile(user);
         }
 
         /// <summary>
@@ -197,6 +240,16 @@ namespace EPAM.AwardsAndUsers.DAL.JSONDAL
                 content = reader.ReadToEnd();
             }
             return content;
+        }
+
+        private bool RecordData (Data data)
+        {
+            File.Delete(_dataFilePath);
+            using (StreamWriter writer = new StreamWriter(_dataFilePath, true, System.Text.Encoding.UTF8))
+            {
+                writer.WriteLine(Serialize(data));
+            }
+            return true;
         }
     }
 }
