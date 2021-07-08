@@ -1,0 +1,24 @@
+﻿@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@{
+    IEnumerable<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
+}
+
+@if (users.Count() == 0)
+{
+    <label for="disabledSelect" class="form-label">Select user</label>
+    <select id="disabledSelect" class="form-select" name="UserList" disabled>
+        <option>Please, add user before edit him.</option>
+    </select>
+}
+else
+{
+    <label for="disabledSelect" class="form-label">Select user</label>
+    <select id="disabledSelect" class="form-select" name="UserList">
+        @foreach (var item in users)
+        {
+            <option value="@item.id">@item.Name, @item.DateOfBirth</option>
+        }
+    </select>
+}

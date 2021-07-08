@@ -1,0 +1,49 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+
+@{
+    Layout = "~/Layouts/_BasicLayout.cshtml";
+    Page.Title = "StartPage";
+    DependencyResolver.Instance.UsersAndAwardsBLL.SetBase();
+    Menu menu = new Menu();
+    Dictionary<string, string> adminMenu = menu.AdminMenu;
+    Dictionary<string, string> userMenu = menu.UserMenu;
+}
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
+{
+    <h4>Main Menu</h4>
+    <ul>
+        @foreach (var item in adminMenu)
+        {
+            <li><a href="@item.Value">@item.Key</a></li>
+        }
+    </ul>
+
+    <button id="signout" type="button" class="btn btn-warning">Sign out</button>
+}
+else if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+{
+    <h4>Main Menu</h4>
+    <ul>
+        @foreach (var item in userMenu)
+        {
+            <li><a href="@item.Value">@item.Key</a></li>
+        }
+    </ul>
+
+    <button id="signout" type="button" class="btn btn-warning">Sign out</button>
+}
+else
+{
+    <button id="login" type="button" class="btn btn-warning">Please Log In</button>
+}
+
+<script>
+    $("#signout").click(function () {
+        location.href = "/Pages/LogIn";
+    })
+    $("#login").click(function () {
+        location.href = "/Pages/LogIn";
+    })
+</script>

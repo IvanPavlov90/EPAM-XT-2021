@@ -1,0 +1,35 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+
+@{
+    Layout = "~/Layouts/_OptionPage.cshtml";
+    Page.Title = "AddAward";
+    if (IsPost)
+    {
+        try
+        {
+            string title = Request["title"];
+            DependencyResolver.Instance.UsersAndAwardsBLL.AddAward(new Award(title));
+        }
+        catch (Exception e)
+        {
+            Response.Redirect("~/Pages/errorPage");
+        }
+    }
+}
+
+<form id="userForm" method="post">
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input name="title" type="text" class="form-control" id="title" aria-describedby="emailHelp" placeholder="Any text..." required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+@if (IsPost)
+{
+    <br />
+    <div class="alert alert-success" role="alert">
+         Award has been succesfully added!
+    </div>
+}

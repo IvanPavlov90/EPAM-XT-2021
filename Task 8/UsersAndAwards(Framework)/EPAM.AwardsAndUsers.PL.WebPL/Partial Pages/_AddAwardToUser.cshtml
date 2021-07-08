@@ -1,0 +1,49 @@
+﻿@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+@{
+    IEnumerable<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
+    IEnumerable<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
+}
+
+@if (awards.Count() == 0 || users.Count() == 0)
+{
+<form method="post">
+    <div class="mb-3">
+        <label for="disabledSelect" class="form-label">Select user</label>
+        <select id="disabledSelect" class="form-select" name="UserList" disabled>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="disabledSelect" class="form-label">Select award</label>
+        <select id="disabledSelect" class="form-select" name="AwardList" disabled>
+        </select>
+    </div>
+    <div class="alert alert-danger" role="alert">
+        You have't added at least one user or one award.
+    </div>
+</form>
+}
+else
+{
+<form method="post">
+    <div class="mb-3">
+        <label for="disabledSelect" class="form-label">Select user</label>
+        <select id="disabledSelect" class="form-select" name="UserList">
+            @foreach (var item in users)
+            {
+                <option value="@item.id">@item.Name, @item.DateOfBirth</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="disabledSelect" class="form-label">Select award</label>
+        <select id="disabledSelect" class="form-select" name="AwardList">
+            @foreach (var item in awards)
+            {
+                <option value="@item.id">@item.Title</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+}

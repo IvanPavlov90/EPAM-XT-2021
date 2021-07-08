@@ -1,0 +1,31 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+
+@{
+    Layout = "~/Layouts/_OptionPage.cshtml";
+    Page.Title = "Get all users";
+    IEnumerable<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
+
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">BirthDate</th>
+            <th scope="col">Age</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in users)
+         {
+             <tr>
+                 <td>@item.Name</td>
+                 <td>@item.DateOfBirth</td>
+                 <td>@item.Age</td>
+             </tr>
+         }
+    </tbody>
+</table>
+

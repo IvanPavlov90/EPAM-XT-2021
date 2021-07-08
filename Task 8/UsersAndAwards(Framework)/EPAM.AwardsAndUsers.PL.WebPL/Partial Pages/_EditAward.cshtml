@@ -1,0 +1,24 @@
+﻿@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@{
+    IEnumerable<Award> awards = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllAwards();
+}
+
+@if (awards.Count() == 0)
+{
+     <label for="disabledSelect" class="form-label">Select award</label>
+     <select id="disabledSelect" class="form-select" name="AwardList" disabled>
+        <option>You haven't added any award.</option>
+     </select>
+}
+else
+{
+     <label for="select" class="form-label">Select award</label>
+     <select id="select" class="form-select" name="AwardList">
+        @foreach (var item in awards)
+        {
+            <option value="@item.id">@item.Title</option>
+        }
+     </select>
+}

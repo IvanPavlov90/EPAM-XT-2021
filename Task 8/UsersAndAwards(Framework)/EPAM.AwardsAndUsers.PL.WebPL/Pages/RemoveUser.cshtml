@@ -1,0 +1,49 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+
+@{
+    Layout = "~/Layouts/_OptionPage.cshtml";
+    Page.Title = "RemoveUser";
+    DataModel dataModel = new DataModel();
+    dataModel.DeletingAdministrator = false;
+
+    if (IsPost)
+    {
+        try
+        {
+            string userID = Request["UserList"];
+            Guid id = Guid.Parse(userID);
+            IEnumerable<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
+            User user = users.FirstOrDefault(item => item.id == id);
+            if (user.Name == "Administrator")
+            {
+                dataModel.DeletingAdministrator = true;
+            } else
+            {
+                DependencyResolver.Instance.UsersAndAwardsBLL.RemoveUser(user);
+            }
+        }
+        catch (Exception e)
+        {
+            Response.Redirect("~/Pages/errorPage");
+        }
+    }
+}
+
+@RenderPage("~/Partial Pages/_RemoveUserList.cshtml")
+
+@if (IsPost && !dataModel.DeletingAdministrator)
+{
+    <br />
+    <div class="alert alert-success" role="alert">
+        User has been succesfully deleted!
+    </div>
+}
+@if (IsPost && dataModel.DeletingAdministrator)
+{
+    <br />
+    <div class="alert alert-success" role="alert">
+        You're trying to delete default administrator, it's impossible!
+    </div>
+}

@@ -1,0 +1,45 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+
+@{
+    Layout = "~/Layouts/_OptionPage.cshtml";
+    Page.Title = "Confirm Deleting";
+    string result = Request["deletingAward"];
+    if (IsPost)
+    {
+        try
+        {
+            if (result == "on")
+            {
+                DependencyResolver.Instance.UsersAndAwardsBLL.RemoveAward(DataModel.awardID, true);
+            }
+        }
+        catch (Exception e)
+        {
+            Response.Redirect("~/Pages/errorPage");
+        }
+    }
+}
+
+@if (result != "on")
+{
+    <form method="post">
+        <div class="mb-3 form-check">
+            <input name="deletingAward" type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Some users have this award. Do you really want to delete it?</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+}
+
+@if (IsPost && result == "on")
+{
+    <br />
+    <div class="alert alert-success" role="alert">
+        Award has been succesfully deleted!
+    </div>
+}
+
+
+

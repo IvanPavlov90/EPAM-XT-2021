@@ -1,0 +1,93 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+
+@{
+    Layout = "~/Layouts/_BasicLayout.cshtml";
+    Page.Title = "Register New User";
+    DataModel dataModel = new DataModel();
+    dataModel.UserAlreadyHasBeenCreated = false;
+    InputHelper help = new InputHelper();
+
+    if (IsPost)
+    {
+        string username = Request["username"];
+        string password = Request["password"];
+        DateTime birthdate = help.InputDate(Request["birthdate"]);
+        if (help.CheckAuthParametres(username) && help.CheckAuthParametres(password))
+        {
+            if (DependencyResolver.Instance.UsersAndAwardsBLL.FindUser(username))
+            {
+                dataModel.UserAlreadyHasBeenCreated = true;
+            }
+            else
+            {
+                User newUser = new User(username, birthdate);
+                DependencyResolver.Instance.UsersAndAwardsBLL.AddUser(newUser);
+                AuthData authUser = new AuthData(newUser.id, password.GetHashCode());
+                DependencyResolver.Instance.UsersAndAwardsBLL.RecordAuthData(authUser);
+                AppRoles approle = new AppRoles();
+                approle.AddUsersToRoles(new string[] { username }, new string[] { "User" });
+                Response.Redirect("~/Pages/LogIn");
+            }
+        }
+    }
+}
+
+<h3>Registry Form. Please enter your name and password</h3>
+<div class="alert alert-info" role="alert">
+    Password should contains at least one letter and one digit.
+</div>
+<form id="userForm" method="post">
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input name="username" type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Lionel Messi" required>
+    </div>
+    <div class="mb-3">
+        <label for="birthdate" class="form-label">Birthdate</label>
+        <input name="birthdate" type="text" class="form-control" id="birthdate" placeholder="date should be in this format ----> 12.12.1997" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input name="password" type="password" class="form-control" id="password" required>
+    </div>
+    <div id="formBtn">
+
+    </div>
+</form>
+<div id="info">
+
+</div>
+@if (dataModel.UserAlreadyHasBeenCreated == true)
+{
+    <div class="alert alert-info" role="alert">
+        User with such nickname has already been created, please change your nickname.
+    </div>
+}
+
+<script type="text/javascript">
+    let birthdateregExp = new RegExp(/^(\d{2}.{1}){2}\d{4}$/);
+    let passwordExp = new RegExp(/\d{1}(?=[A-Za-z])|[A-Za-z]{1}(?=\d)/);
+    let usernameExp = new RegExp(/^\w+$/);
+    let userForm = document.getElementById("userForm");
+    let formBtn = document.getElementById("formBtn");
+    let infoDiv = document.getElementById("info");
+    userForm.addEventListener("keyup", () => {
+        if (birthdateregExp.test(userForm.birthdate.value) && passwordExp.test(userForm.password.value)
+            && usernameExp.test(userForm.password.value)) {
+            formBtn.innerHTML = "";
+            formBtn.insertAdjacentHTML("afterbegin", `
+                <button type="submit" class="btn btn-primary">Submit</button>
+            `)
+            infoDiv.innerHTML = "";
+        } else {
+            infoDiv.innerHTML = "";
+            formBtn.innerHTML = "";
+            infoDiv.insertAdjacentHTML("afterbegin", `
+                <div class="alert alert-info" role="alert">
+                    Please fill in all required fields.
+                </div>
+            `)
+        }
+    })
+</script>

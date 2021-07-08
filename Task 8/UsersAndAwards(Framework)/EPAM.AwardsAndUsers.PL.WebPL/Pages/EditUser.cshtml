@@ -1,0 +1,77 @@
+﻿@using EPAM.AwardsAndUsers.PL.WebPL.Models;
+@using EPAM.AwardsAndUsers.Common.Dependencies;
+@using EPAM.AwardsAndUsers.Common.Entities;
+
+@{
+    Layout = "~/Layouts/_OptionPage.cshtml";
+    Page.Title = "Edit User";
+    InputHelper help = new InputHelper();
+    IEnumerable<User> users = DependencyResolver.Instance.UsersAndAwardsBLL.GetAllUsers();
+
+    if (IsPost)
+    {
+        try
+        {
+            string userID = Request["UserList"];
+            Guid id = Guid.Parse(userID);
+            User user = users.FirstOrDefault(item => item.id == id);
+            string username = Request["username"];
+            DateTime birthdate = help.InputDate(Request["birthdate"]);
+            if (help.CheckAuthParametres(username))
+            {
+                if (DependencyResolver.Instance.UsersAndAwardsBLL.RemoveRole(user.Name))
+                {
+                    user.EditUser(username, birthdate);
+                    DependencyResolver.Instance.UsersAndAwardsBLL.EditUser(user);
+                    AppRoles approle = new AppRoles();
+                    string isAdmin = Request["isUserAdmin"];
+                    if (isAdmin == "on")
+                    {
+                        approle.AddUsersToRoles(new string[] { username }, new string[] { "Administrator" });
+                    }
+                    else
+                    {
+                        approle.AddUsersToRoles(new string[] { username }, new string[] { "User" });
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Response.Redirect("~/Pages/errorPage");
+        }
+    }
+}
+
+<form method="post">
+    <div class="mb-3">
+        @RenderPage("~/Partial Pages/_EditUser.cshtml")
+    </div>
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input name="username" type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Lionel Messi" required>
+    </div>
+    <div class="mb-3">
+        <label for="birthdate" class="form-label">Birthdate</label>
+        <input name="birthdate" type="text" class="form-control" id="birthdate" placeholder="date should be in this format ----> 12.12.1997" required>
+    </div>
+    <div class="mb-3 form-check">
+        <input name="isUserAdmin" type="checkbox" class="form-check-input" id="isUserAdmin">
+        <label class="form-check-label" for="isUserAdmin">Admin</label>
+    </div>
+    @if (users.Count() != 0)
+    {
+        <button id="editUser" tupe="submit" class="btn btn-primary">Edit User</button>
+    }
+</form>
+
+@if (IsPost)
+{
+    <br />
+    <div class="alert alert-success" role="alert">
+        User has been succesfully edited!
+    </div>
+}
+
+
+
